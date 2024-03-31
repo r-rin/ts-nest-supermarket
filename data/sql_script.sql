@@ -9,6 +9,7 @@
     How to run:
     > mysql -u your_user -p < path/to/sql_script.sql
  */
+DROP DATABASE Supermarket;
 SET GLOBAL event_scheduler = ON;
 
 CREATE DATABASE IF NOT EXISTS Supermarket;
