@@ -26,18 +26,18 @@ INSERT INTO Global_Variables (variable, value) VALUES ('vat', '0.2');
 
 CREATE TABLE IF NOT EXISTS Employee
 (
-    employee_id         VARCHAR(10) PRIMARY KEY NOT NULL,
-    employee_surname    VARCHAR(50)             NOT NULL,
-    employee_name       VARCHAR(50)             NOT NULL,
-    employee_patronymic VARCHAR(50)             NULL,
-    employee_role       VARCHAR(10)             NOT NULL,
-    salary              DECIMAL(13, 4)          NOT NULL,
-    start_date          DATE                    NOT NULL,
-    birth_date          DATE                    NOT NULL,
-    phone_number        VARCHAR(13)             NOT NULL,
-    city                VARCHAR(50)             NOT NULL,
-    street              VARCHAR(50)             NOT NULL,
-    zip_code            VARCHAR(9)              NOT NULL
+    employee_id                 VARCHAR(10) PRIMARY KEY NOT NULL,
+    employee_surname            VARCHAR(50)             NOT NULL,
+    employee_name               VARCHAR(50)             NOT NULL,
+    employee_patronymic         VARCHAR(50)             NULL,
+    employee_role               VARCHAR(10)             NOT NULL,
+    employee_salary             DECIMAL(13, 4)          NOT NULL,
+    employee_start_date         DATE                    NOT NULL,
+    employee_birth_date         DATE                    NOT NULL,
+    employee_phone_number       VARCHAR(13)             NOT NULL,
+    employee_city               VARCHAR(50)             NOT NULL,
+    employee_street             VARCHAR(50)             NOT NULL,
+    employee_zip_code           VARCHAR(9)              NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Category
@@ -58,15 +58,15 @@ CREATE TABLE IF NOT EXISTS Product
 
 CREATE TABLE IF NOT EXISTS Customer_Card
 (
-    card_number         VARCHAR(13) PRIMARY KEY NOT NULL,
-    customer_surname    VARCHAR(50)             NOT NULL,
-    customer_name       VARCHAR(50)             NOT NULL,
-    customer_patronymic VARCHAR(50)             NULL,
-    phone_number        VARCHAR(13)             NOT NULL,
-    city                VARCHAR(50)             NULL,
-    street              VARCHAR(50)             NULL,
-    zip_code            VARCHAR(9)              NULL,
-    percent             INT                     NOT NULL
+    card_number                 VARCHAR(13) PRIMARY KEY NOT NULL,
+    customer_surname            VARCHAR(50)             NOT NULL,
+    customer_name               VARCHAR(50)             NOT NULL,
+    customer_patronymic         VARCHAR(50)             NULL,
+    customer_phone_number       VARCHAR(13)             NOT NULL,
+    customer_city               VARCHAR(50)             NULL,
+    customer_street             VARCHAR(50)             NULL,
+    customer_zip_code           VARCHAR(9)              NULL,
+    customer_percent            INT                     NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Receipt
