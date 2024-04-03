@@ -1,0 +1,15 @@
+@import 'node_modules/bootstrap/scss/bootstrap';
+
+body {
+  height: 100vh;
+  min-height: 100vh;
+}
+
+.row > * {
+  align-content: center;
+}
+
+.side-panel {
+  color: $white;
+  background-color: $body-bg-dark;
+}

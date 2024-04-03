@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS Global_Variables
 );
 
 INSERT INTO Global_Variables (variable, value) VALUES ('vat', '0.2');
+-- INSERT INTO Global_Variables (variable, value) VALUES ('sale_percent', '0.8');
 
 CREATE TABLE IF NOT EXISTS Employee
 (
