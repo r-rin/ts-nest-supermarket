@@ -6,7 +6,7 @@ USE supermarket;
 INSERT INTO employee (employee_id, employee_surname, employee_name, employee_patronymic, employee_role,
                       employee_salary, employee_start_date, employee_birth_date, employee_phone_number,
                       employee_city, employee_street, employee_zip_code)
-VALUES ('', '', '', NULL, '', 0, '0-0-0', '0-0-0', '', '', '', '');
+VALUES ('', '', '', NULL, 0, 0, '0000-00-00', '0000-00-00', '', '', '', '');
 
 -- Додавання нового клієнта:
 INSERT INTO Customer_Card (card_number, customer_surname, customer_name, customer_patronymic, customer_phone_number,
@@ -34,10 +34,10 @@ SET employee_id = '',
     employee_surname = '',
     employee_name = '',
     employee_patronymic = NULL,
-    employee_role = '',
+    employee_role = 0,
     employee_salary = 0,
-    employee_start_date = '0-0-0',
-    employee_birth_date = '0-0-0',
+    employee_start_date = '0000-00-00',
+    employee_birth_date = '0000-00-00',
     employee_phone_number = '0',
     employee_city = '',
     employee_street = '',
@@ -111,7 +111,6 @@ WHERE receipt_id = '';
 -- 4. Видруковувати звіти з інформацією про усіх працівників, постійних клієнтів, категорії товарів, товари, товари у магазині, чеки;
 
 -- Звіт про усіх працівників:
-USE supermarket;
 SELECT *
 FROM Employee;
 
@@ -145,7 +144,7 @@ ORDER BY employee_surname;
 -- 6. Отримати інформацію про усіх працівників, що займають посаду касира, відсортованих за прізвищем;
 SELECT *
 FROM Employee
-WHERE employee_role = 'Cashier'
+WHERE employee_role = 2
 ORDER BY employee_surname;
 
 
@@ -189,7 +188,7 @@ ORDER BY customer_surname;
 -- 13. Здійснити пошук усіх товарів, що належать певній категорії, відсортованих за назвою;
 SELECT *
 FROM Product
-WHERE category_number = 1
+WHERE category_number = 0
 ORDER BY product_name;
 
 
@@ -236,32 +235,87 @@ FROM (Product
 WHERE Store_Product.is_promotional = FALSE
 ORDER BY Product.product_name;
 
+
 -- 17. Отримати інформацію про усі чеки, створені певним касиром за певний період часу
 -- (з можливістю перегляду куплених товарів у цьому чеку, їх назви, к-сті та ціни);
-
+SELECT Receipt.receipt_id, Receipt.employee_id,
+       Employee.employee_surname, Employee.employee_name,
+       Receipt.print_date, Receipt.sum_total,
+       Product.product_name, Sale.selling_price, Sale.products_amount
+FROM ((((Receipt
+    INNER JOIN Sale ON Receipt.receipt_id = Sale.receipt_id)
+    INNER JOIN Store_Product ON Sale.UPC = Store_Product.UPC)
+    INNER JOIN Product ON Store_Product.product_id = Product.product_id)
+    INNER JOIN Employee ON Receipt.employee_id = Employee.employee_id)
+WHERE Employee.employee_role = 2
+  AND Receipt.employee_id = 'певний_касир'
+  AND Receipt.print_date >= 'початкова_дата'
+  AND Receipt.print_date <= 'кінцева_дата'
+ORDER BY Receipt.print_date DESC;
 
 
 -- 18. Отримати інформацію про усі чеки, створені усіма касирами за певний період часу
 -- (з можливістю перегляду куплених товарів у цьому чеку, їх назва, к-сті та ціни);
 
+-- колеги, увага! може тут треба LEFT JOIN??? в моменті з JOIN Employee
+SELECT Receipt.receipt_id, Receipt.employee_id,
+       Employee.employee_surname, Employee.employee_name,
+       Receipt.print_date, Receipt.sum_total,
+       Product.product_name, Sale.selling_price, Sale.products_amount
+FROM ((((Receipt
+    INNER JOIN Sale ON Receipt.receipt_id = Sale.receipt_id)
+    INNER JOIN Store_Product ON Sale.UPC = Store_Product.UPC)
+    INNER JOIN Product ON Store_Product.product_id = Product.product_id)
+    INNER JOIN Employee ON Receipt.employee_id = Employee.employee_id)
+WHERE Employee.employee_role = 2
+  AND Receipt.print_date >= 'початкова_дата'
+  AND Receipt.print_date <= 'кінцева_дата'
+ORDER BY Receipt.print_date DESC;
 
 
 -- 19. Визначити загальну суму проданих товарів з чеків, створених певним касиром за певний період часу;
+
+-- я не впевнена, чи треба об'єднувати з Employee, просто нам же треба якось
+-- обмежити, щоб тільки айді касирів могли перевіряти, тому і додала
+-- перевірку на employee_role = 2. що думаєте??
 SELECT SUM(Receipt.sum_total) AS total_amount_of_products
 FROM (Receipt
     INNER JOIN Employee ON Receipt.employee_id = Employee.employee_id)
-WHERE Employee.employee_role = 'Cashier'
+WHERE Employee.employee_role = 2
+  AND Employee.employee_id = 'певний_касир'
   AND Receipt.print_date >= 'початкова_дата'
   AND Receipt.print_date <= 'кінцева_дата';
 
+-- якщо вважаєш, шо нам не треба тут перевірка на роль, то бери тоді цей варіант
+SELECT SUM(Receipt.sum_total) AS total_amount_of_products
+FROM Receipt
+WHERE Receipt.employee_id = 'певний_касир'
+  AND Receipt.print_date >= 'початкова_дата'
+  AND Receipt.print_date <= 'кінцева_дата';
+
+
 -- 20. Визначити загальну суму проданих товарів з чеків, створених усіма касиром за певний період часу;
 
+-- колеги, тут схожа ситуація, тому пишу два запити, треба вирішити, який
+-- доцільніше взяти
+SELECT SUM(Receipt.sum_total) AS total_amount_of_products
+FROM (Receipt
+    INNER JOIN Employee ON Receipt.employee_id = Employee.employee_id)
+WHERE Employee.employee_role = 2
+  AND Receipt.print_date >= 'початкова_дата'
+  AND Receipt.print_date <= 'кінцева_дата';
+
+-- на випадок, якщо нам не треба перевірка на роль:
+SELECT SUM(Receipt.sum_total) AS total_amount_of_products
+FROM Receipt
+WHERE Receipt.print_date >= 'початкова_дата'
+  AND Receipt.print_date <= 'кінцева_дата';
 
 
 -- 21. Визначити загальну кількість одиниць певного товару, проданого за певний період часу.
 SELECT SUM(Sale.products_amount) AS total_units_sold
-FROM ((Receipt
-    INNER JOIN Sale ON Receipt.receipt_id = Sale.receipt_id)
+FROM ((Sale
+    INNER JOIN Receipt ON Receipt.receipt_id = Sale.receipt_id)
     INNER JOIN Store_Product ON Sale.UPC = Store_Product.UPC)
 WHERE Store_Product.product_id = 'ID_товару'
   AND Receipt.print_date >= 'початкова_дата'
