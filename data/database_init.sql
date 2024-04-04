@@ -7,7 +7,7 @@
       DB_HOST, DB_USER, DB_PASSWORD, DB_NAME
 
     How to run:
-    > mysql -u your_user -p < path/to/sql_script.sql
+    > mysql -u your_user -p < path/to/database_init.sql
  */
 
 DROP DATABASE IF EXISTS Supermarket;
@@ -18,28 +18,53 @@ USE Supermarket;
 
 CREATE TABLE IF NOT EXISTS Global_Variables
 (
-    variable VARCHAR(50) PRIMARY KEY NOT NULL,
-    value    TEXT                    NOT NULL
+    variable_name  VARCHAR(50) PRIMARY KEY NOT NULL,
+    variable_value TEXT                    NOT NULL
 );
 
-INSERT INTO Global_Variables (variable, value) VALUES ('vat', '0.2');
--- INSERT INTO Global_Variables (variable, value) VALUES ('sale_percent', '0.8');
+INSERT INTO Global_Variables (variable_name, variable_value) VALUES ('vat', '0.2');
+INSERT INTO Global_Variables (variable_name, variable_value) VALUES ('sale_percent', '0.8');
+
+CREATE TABLE IF NOT EXISTS Role
+(
+    role_id    INT PRIMARY KEY NOT NULL,
+    role_title VARCHAR(50)     NOT NULL
+);
+
+INSERT INTO Role(role_id, role_title) VALUES (0, 'Адміністратор');
+INSERT INTO Role(role_id, role_title) VALUES (1, 'Менеджер');
+INSERT INTO Role(role_id, role_title) VALUES (2, 'Касир');
 
 CREATE TABLE IF NOT EXISTS Employee
 (
-    employee_id                 VARCHAR(10) PRIMARY KEY NOT NULL,
-    employee_surname            VARCHAR(50)             NOT NULL,
-    employee_name               VARCHAR(50)             NOT NULL,
-    employee_patronymic         VARCHAR(50)             NULL,
-    employee_role               VARCHAR(10)             NOT NULL,
-    employee_salary             DECIMAL(13, 4)          NOT NULL,
-    employee_start_date         DATE                    NOT NULL,
-    employee_birth_date         DATE                    NOT NULL,
-    employee_phone_number       VARCHAR(13)             NOT NULL,
-    employee_city               VARCHAR(50)             NOT NULL,
-    employee_street             VARCHAR(50)             NOT NULL,
-    employee_zip_code           VARCHAR(9)              NOT NULL
+    employee_id           VARCHAR(10) PRIMARY KEY NOT NULL,
+    employee_surname      VARCHAR(50)             NOT NULL,
+    employee_name         VARCHAR(50)             NOT NULL,
+    employee_patronymic   VARCHAR(50)             NULL,
+    employee_role         INT                     NOT NULL,
+    employee_salary       DECIMAL(13, 4)          NOT NULL,
+    employee_start_date   DATE                    NOT NULL,
+    employee_birth_date   DATE                    NOT NULL,
+    employee_phone_number VARCHAR(13)             NOT NULL,
+    employee_city         VARCHAR(50)             NOT NULL,
+    employee_street       VARCHAR(50)             NOT NULL,
+    employee_zip_code     VARCHAR(9)              NOT NULL,
+    FOREIGN KEY (employee_role) REFERENCES Role (role_id)
+        ON UPDATE CASCADE ON DELETE NO ACTION
 );
+
+INSERT INTO Employee (employee_id, employee_surname, employee_name, employee_patronymic, employee_role, employee_salary, employee_start_date, employee_birth_date, employee_phone_number, employee_city, employee_street, employee_zip_code)
+VALUES ('ADMIN00001', '', 'Адміністратор', '', 0, 0, '1991-01-01', '1991-01-01', '1991-01-01', '', '', '');
+
+CREATE TABLE IF NOT EXISTS Auth_data
+(
+    employee_id   VARCHAR(10) PRIMARY KEY NOT NULL,
+    password_hash BINARY(60)              NOT NULL,
+    FOREIGN KEY (employee_id) REFERENCES Employee (employee_id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+INSERT INTO Auth_data(employee_id, password_hash) VALUES ('ADMIN00001', '$2a$10$TPM0CXfSEJrRjlnJKYSfjubP5rxnxKw2rQ9hMVYz.lgUkvxJnhq62');
 
 CREATE TABLE IF NOT EXISTS Category
 (
