@@ -6,9 +6,8 @@ export class ApiService {
   constructor(private databaseService: DatabaseService) {}
 
   async getProducts() {
-    const [rows, fields] = await this.databaseService.query(
+    return await this.databaseService.query(
       'SELECT * FROM Product;',
     );
-    return rows;
   }
 }

@@ -26,17 +26,17 @@
       <div class="col-12 col-md-8 d-flex justify-content-center align-items-center">
 
         <div class="w-50">
-          <form>
+          <form action="/login" method="POST">
             <div class="mb-3">
               <label for="employee_id" class="form-label">ID Працівника</label>
-              <input type="text" class="form-control" id="employee_id" aria-describedby="Ідентифікатор працівника">
+              <input type="text" class="form-control" name="employee_id" id="employee_id" aria-describedby="Ідентифікатор працівника">
             </div>
             <div class="mb-3">
               <label for="password" class="form-label">Пароль</label>
-              <input type="password" class="form-control" id="password">
+              <input type="password" class="form-control" name="password" id="password">
             </div>
             <div class="mb-3 form-check">
-              <input type="checkbox" class="form-check-input" id="remember_me">
+              <input type="checkbox" class="form-check-input" name="remember_me" id="remember_me">
               <label class="form-check-label" for="remember_me">Запамʼятати мене</label>
             </div>
             <button type="submit" class="btn btn-primary">Увійти</button>

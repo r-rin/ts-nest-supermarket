@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as mysql from 'mysql2/promise';
+import { RowDataPacket } from 'mysql2/promise';
 
 @Injectable()
 export class DatabaseService {
@@ -18,10 +19,10 @@ export class DatabaseService {
     });
   }
 
-  async query(sql: string, params?: any[]) {
+  async query(sql: string, params?: any[]): Promise<RowDataPacket[]> {
     try {
-      const [rows, fields] = await this.connection.execute(sql, params);
-      return [rows, fields];
+      const [rows] = await this.connection.query<mysql.RowDataPacket[]>(sql, params);
+      return rows;
     } catch (error) {
       console.error('MySQL Query Error:', error);
       throw error;
