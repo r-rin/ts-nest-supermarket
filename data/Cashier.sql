@@ -94,8 +94,47 @@ WHERE Receipt.receipt_id = '';
 
 
 -- 12. Отримати інформацію про усі акційні товари, відсортовані за кількістю одиниць товару/ за назвою;
--- 13. Отримати інформацію про усі не акційні товарів, відсортовані за кількістю одиниць товару/ за назвою;
+
+-- відсортовані за кількістю одиниць товару:
+SELECT Store_Product.UPC, Product.product_id, Product.product_name, Product.characteristics,
+       Store_Product.products_amount, Store_Product.selling_price
+FROM (Store_Product
+    INNER JOIN Product ON Store_Product.product_id = Product.product_id)
+WHERE Store_Product.is_promotional = TRUE
+ORDER BY Store_Product.products_amount DESC;
+
+-- відсортовані за назвою:
+SELECT Store_Product.UPC, Product.product_id, Product.product_name, Product.characteristics,
+       Store_Product.products_amount, Store_Product.selling_price
+FROM (Store_Product
+    INNER JOIN Product ON Store_Product.product_id = Product.product_id)
+WHERE Store_Product.is_promotional = TRUE
+ORDER BY Product.product_name;
+
+
+-- 13. Отримати інформацію про усі НЕ акційні товарів, відсортовані за кількістю одиниць товару/ за назвою;
+
+-- відсортовані за кількістю одиниць товару:
+SELECT Store_Product.UPC, Product.product_id, Product.product_name, Product.characteristics,
+       Store_Product.products_amount, Store_Product.selling_price
+FROM (Store_Product
+    INNER JOIN Product ON Store_Product.product_id = Product.product_id)
+WHERE Store_Product.is_promotional = FALSE
+ORDER BY Store_Product.products_amount DESC;
+
+-- відсортовані за назвою:
+SELECT Store_Product.UPC, Product.product_id, Product.product_name, Product.characteristics,
+       Store_Product.products_amount, Store_Product.selling_price
+FROM (Store_Product
+    INNER JOIN Product ON Store_Product.product_id = Product.product_id)
+WHERE Store_Product.is_promotional = FALSE
+ORDER BY Product.product_name;
+
+
 -- 14. За UPC-товару знайти ціну продажу товару, кількість наявних одиниць товару.
+SELECT selling_price, products_amount
+FROM Store_Product
+WHERE UPC = '';
 
 
 -- 15. Можливість отримати усю інформацію про себе.
