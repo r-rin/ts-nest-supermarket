@@ -31,9 +31,8 @@ CREATE TABLE IF NOT EXISTS Role
     role_title VARCHAR(50)     NOT NULL
 );
 
-INSERT INTO Role(role_id, role_title) VALUES (0, 'Адміністратор');
-INSERT INTO Role(role_id, role_title) VALUES (1, 'Менеджер');
-INSERT INTO Role(role_id, role_title) VALUES (2, 'Касир');
+INSERT INTO Role(role_id, role_title) VALUES (0, 'Менеджер');
+INSERT INTO Role(role_id, role_title) VALUES (1, 'Касир');
 
 CREATE TABLE IF NOT EXISTS Employee
 (
