@@ -9,12 +9,20 @@ export class AuthController {
 
   @Post('login')
   async signIn(@Body() signInDto: SignInDTO, @Res() res: Response) {
-    const result = await this.authService.signIn(signInDto.employee_id, signInDto.password);
+    const result = await this.authService.signIn(
+      signInDto.employee_id,
+      signInDto.password,
+    );
 
     if (result.result === 'error') {
       return res.status(HttpStatus.UNAUTHORIZED).json(result);
     }
-    //TODO: JWT token authorization
+
+    res.cookie('access_token', result.access_token, {
+      expires: new Date(Date.now() + 12 * 60 * 60 * 1000),
+      sameSite: 'strict',
+      httpOnly: true,
+    });
     return res.redirect('/home');
   }
 }

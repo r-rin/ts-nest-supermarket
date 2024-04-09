@@ -21,7 +21,10 @@ export class DatabaseService {
 
   async query(sql: string, params?: any[]): Promise<RowDataPacket[]> {
     try {
-      const [rows] = await this.connection.query<mysql.RowDataPacket[]>(sql, params);
+      const [rows] = await this.connection.query<mysql.RowDataPacket[]>(
+        sql,
+        params,
+      );
       return rows;
     } catch (error) {
       console.error('MySQL Query Error:', error);
