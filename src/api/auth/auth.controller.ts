@@ -1,5 +1,5 @@
 import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
-import { Response } from 'express';
+import { CookieOptions, Response } from 'express';
 import { AuthService } from './auth.service';
 import { SignInDTO } from '../dto/sign-in.dto';
 
@@ -18,11 +18,19 @@ export class AuthController {
       return res.status(HttpStatus.UNAUTHORIZED).json(result);
     }
 
-    res.cookie('access_token', result.access_token, {
-      expires: new Date(Date.now() + 12 * 60 * 60 * 1000),
+    const cookieOptions: CookieOptions = {
       sameSite: 'strict',
       httpOnly: true,
-    });
+    };
+
+    if (!signInDto.remember_me) {
+      cookieOptions.expires = undefined;
+    } else {
+      cookieOptions.expires = new Date(Date.now() + 12 * 60 * 60 * 1000);
+    }
+
+    res.cookie('access_token', result.access_token, cookieOptions);
     return res.redirect('/home');
   }
+
 }

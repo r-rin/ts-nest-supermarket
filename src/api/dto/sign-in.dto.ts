@@ -6,4 +6,6 @@ export class SignInDTO {
 
   @IsNotEmpty()
   password: string;
+
+  remember_me: boolean;
 }
