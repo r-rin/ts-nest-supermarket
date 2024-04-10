@@ -10,7 +10,7 @@ export class UsersService {
   async findOne(employee_id: string): Promise<IEmployeeAuth | null> {
     const query_result: mysql2.RowDataPacket[] =
       await this.databaseService.query(
-       `SELECT * 
+        `SELECT * 
         FROM Auth_data 
         WHERE employee_id='${employee_id}';`,
       );
@@ -23,7 +23,7 @@ export class UsersService {
     };
   }
 
-  async getRole(employee_id: string): Promise<string | null> {
+  async getRole(employee_id: string): Promise<number | null> {
     const queryResult: mysql2.RowDataPacket[] =
       await this.databaseService.query(
         `SELECT employee_role
@@ -33,6 +33,6 @@ export class UsersService {
 
     if (queryResult.length == 0) return null;
 
-    return String(queryResult[0]);
+    return Number(queryResult[0].employee_role);
   }
 }
