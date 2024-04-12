@@ -32,5 +32,4 @@ export class AuthController {
     res.cookie('access_token', result.access_token, cookieOptions);
     return res.redirect('/home');
   }
-
 }
