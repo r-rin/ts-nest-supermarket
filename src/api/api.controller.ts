@@ -10,6 +10,6 @@ export class ApiController {
   @Roles(Role.Cashier, Role.Manager)
   @Get('user')
   async currentEmployee(@Req() req) {
-    return await this.apiService.getCurrentEmployee(req.employeeId);
+    return req.currentEmployee;
   }
 }

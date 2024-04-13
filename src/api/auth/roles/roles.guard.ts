@@ -1,16 +1,11 @@
-import {
-  CanActivate,
-  ExecutionContext,
-  Inject,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { CanActivate, ExecutionContext, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as process from 'process';
 import { UsersService } from '../users/users.service';
 import { Reflector } from '@nestjs/core';
 import { Role } from './role.enum';
 import { ROLES_KEY } from './roles.decorator';
+import { IEmployee } from '../../interfaces/IEmployee.interface';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -39,9 +34,7 @@ export class RolesGuard implements CanActivate {
       });
 
       const userRole: number = await this.userService.getRole(payload.sub);
-
-      request.employeeRole = userRole;
-      request.employeeId = payload.sub;
+      request.currentEmployee = await this.userService.getEmployee(payload.sub);
 
       return requiredRoles.some((role) => role === userRole);
     } catch {
