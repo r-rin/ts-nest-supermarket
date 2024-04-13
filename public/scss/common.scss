@@ -1,9 +1,32 @@
+@import 'node_modules/bootstrap/scss/bootstrap';
+
 body {
   height: 100vh;
 }
 
-aside .logo-container {
-  .fs-7 {
-    transform: translateY(-7px);
+aside {
+  display: flex;
+  flex-direction: column;
+  background-color: $body-tertiary-bg;
+  width: 280px;
+
+  i {
+    width: 20px;
+    text-align: center;
   }
+
+  .logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .fs-7 {
+      transform: translateY(-7px);
+    }
+  }
+}
+
+#page-content {
+  overflow: scroll;
 }

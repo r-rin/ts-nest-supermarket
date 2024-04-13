@@ -14,7 +14,7 @@ export class ClientController {
     return;
   }
 
-  @Roles(Role.Manager, Role.Cashier)
+  @Roles(Role.Cashier, Role.Manager)
   @Get('home')
   @Render('home')
   async home(@Req() req) {
@@ -23,8 +23,9 @@ export class ClientController {
     );
 
     return {
-      title: 'Home',
+      title: 'Злагода: Головна',
       currentUser: currentEmployee,
+      isHome: true,
     };
   }
 }

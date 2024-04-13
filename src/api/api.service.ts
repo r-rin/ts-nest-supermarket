@@ -18,7 +18,7 @@ export class ApiService {
     }
 
     const employeeData = queryResult[0];
-    let employee: IEmployee = {
+    const employee: IEmployee = {
       employee_id: employeeData.employee_id,
       employee_surname: employeeData.employee_surname,
       employee_name: employeeData.employee_name,
