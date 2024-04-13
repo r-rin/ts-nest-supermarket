@@ -4,11 +4,18 @@ body {
   height: 100vh;
 }
 
+.content-section {
+  background-color: $body-tertiary-bg;
+  border-radius: 0.25rem;
+  border: $secondary-bg-subtle solid 1px;
+}
+
 aside {
   display: flex;
   flex-direction: column;
   background-color: $body-tertiary-bg;
   width: 280px;
+  border-right: $secondary-bg-subtle solid 1px;
 
   i {
     width: 20px;
