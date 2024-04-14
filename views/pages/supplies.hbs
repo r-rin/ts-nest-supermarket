@@ -1,7 +1,223 @@
 {{#> layout }}
   {{#*inline "pageContent"}}
-    <section class="content-section">
+    <section class="content-section mb-2">
       <h1 class="text-center">Товари</h1>
+    </section>
+
+    <section class="content-section p-2 my-2">
+      <div class="container-fluid">
+
+        <div class="row mb-2">
+          <div class="col-3">
+            <label for="supplyUPC" class="form-label">UPC товару</label>
+            <input type="text" class="form-control" placeholder="UPC товару" id="supplyUPC">
+          </div>
+
+          <div class="col-3">
+            <label for="supplyType" class="form-label">Тип</label>
+            <select name="supplyType" id="supplyType" class="form-select">
+              <option value="all">Усі</option>
+              <option value="default">Звичайні</option>
+              <option value="promotional">Акційні</option>
+            </select>
+          </div>
+
+          <div class="col-3">
+            <label for="sortBy" class="form-label">Сортувати за</label>
+            <select name="sortBy" id="sortBy" class="form-select">
+              <option value="price">Ціною</option>
+              <option value="amount">Кількістю</option>
+              <option value="mfc_date">Датою виготовлення</option>
+              <option value="exp_date">Терміном придатності</option>
+            </select>
+          </div>
+
+          <div class="col-3">
+            <label for="orderBy" class="form-label">Порядок</label>
+            <select name="orderBy" id="orderBy" class="form-select">
+              <option value="ascending">За зростанням</option>
+              <option value="descending">За спаданням</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+
+          <div class="col-12">
+            <div class="btn-group w-100" role="group" aria-label="Actions">
+              <button class="btn btn-primary w-75">
+                Пошук
+              </button>
+              <button type="button" class="btn btn-outline-primary">
+                Додати товар
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="content-section p-2 my-2">
+      <div class="table-container">
+        <table class="m-0 table table-striped table-hover table-bordered">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>UPC</th>
+              <th>Акційний UPC</th>
+              <th>ID продукту</th>
+              <th>Ціна</th>
+              <th>Кількість</th>
+              <th>Акційний</th>
+              <th>Дії</th>
+            </tr>
+          </thead>
+
+          <tbody class="table-group-divider">
+            <tr>
+              <td>1</td>
+              <td>123456789012</td>
+              <td>987654321098</td>
+              <td>001</td>
+              <td>10.99</td>
+              <td>50</td>
+              <td>Так</td>
+              <td>
+                <button class="btn btn-primary"><i class="fa-solid fa-info"></i></button>
+                <button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>234567890123</td>
+              <td>876543210987</td>
+              <td>002</td>
+              <td>5.49</td>
+              <td>100</td>
+              <td>Ні</td>
+              <td>
+                <button class="btn btn-primary"><i class="fa-solid fa-info"></i></button>
+                <button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>345678901234</td>
+              <td>765432109876</td>
+              <td>003</td>
+              <td>7.99</td>
+              <td>30</td>
+              <td>Так</td>
+              <td>
+                <button class="btn btn-primary"><i class="fa-solid fa-info"></i></button>
+                <button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>456789012345</td>
+              <td>654321098765</td>
+              <td>004</td>
+              <td>3.29</td>
+              <td>80</td>
+              <td>Ні</td>
+              <td>
+                <button class="btn btn-primary"><i class="fa-solid fa-info"></i></button>
+                <button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>567890123456</td>
+              <td>543210987654</td>
+              <td>005</td>
+              <td>6.79</td>
+              <td>65</td>
+              <td>Так</td>
+              <td>
+                <button class="btn btn-primary"><i class="fa-solid fa-info"></i></button>
+                <button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>678901234567</td>
+              <td>432109876543</td>
+              <td>006</td>
+              <td>8.49</td>
+              <td>40</td>
+              <td>Ні</td>
+              <td>
+                <button class="btn btn-primary"><i class="fa-solid fa-info"></i></button>
+                <button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>789012345678</td>
+              <td>321098765432</td>
+              <td>007</td>
+              <td>4.99</td>
+              <td>75</td>
+              <td>Так</td>
+              <td>
+                <button class="btn btn-primary"><i class="fa-solid fa-info"></i></button>
+                <button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>890123456789</td>
+              <td>210987654321</td>
+              <td>008</td>
+              <td>9.29</td>
+              <td>55</td>
+              <td>Ні</td>
+              <td>
+                <button class="btn btn-primary"><i class="fa-solid fa-info"></i></button>
+                <button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td>901234567890</td>
+              <td>109876543210</td>
+              <td>009</td>
+              <td>2.99</td>
+              <td>90</td>
+              <td>Так</td>
+              <td>
+                <button class="btn btn-primary"><i class="fa-solid fa-info"></i></button>
+                <button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>012345678901</td>
+              <td>098765432109</td>
+              <td>010</td>
+              <td>7.49</td>
+              <td>70</td>
+              <td>Ні</td>
+              <td>
+                <button class="btn btn-primary"><i class="fa-solid fa-info"></i></button>
+                <button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
   {{/inline}}
 {{/layout}}

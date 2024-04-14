@@ -10,6 +10,11 @@ body {
   border: $secondary-bg-subtle solid 1px;
 }
 
+.table-container {
+  border-radius: 0.2rem;
+  border: $secondary-bg-subtle solid 1px;
+}
+
 aside {
   display: flex;
   flex-direction: column;
