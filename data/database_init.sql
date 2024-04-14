@@ -109,15 +109,17 @@ CREATE TABLE IF NOT EXISTS Receipt
 
 CREATE TABLE IF NOT EXISTS Store_Product
 (
-    UPC             VARCHAR(12) PRIMARY KEY NOT NULL,
---    UPC_prom        VARCHAR(12)             NULL,
-    product_id      INT                     NOT NULL,
-    selling_price   DECIMAL(13, 4)          NOT NULL,
+    UPC                VARCHAR(12) PRIMARY KEY NOT NULL,
+    UPC_prom           VARCHAR(12)             NULL,
+    product_id         INT                     NOT NULL,
+    selling_price      DECIMAL(13, 4)          NOT NULL,
     -- selling_price is already with VAT, user inputs price without VAT, website calculates it with VAT and shows it.
-    products_amount INT                     NOT NULL,
-    is_promotional  BOOL                    NOT NULL,
---    FOREIGN KEY (UPC_prom) REFERENCES Store_Product (UPC)
---        ON UPDATE CASCADE ON DELETE SET NULL,
+    products_amount    INT                     NOT NULL,
+    is_promotional     BOOL                    NOT NULL,
+    manufacturing_date DATE                    NOT NULL,
+    expiration_date    DATE                    NOT NULL,
+    FOREIGN KEY (UPC_prom) REFERENCES Store_Product (UPC)
+        ON UPDATE CASCADE ON DELETE SET NULL,
     FOREIGN KEY (product_id) references Product (product_id)
         ON UPDATE CASCADE ON DELETE NO ACTION
 );
