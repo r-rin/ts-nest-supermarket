@@ -3,5 +3,258 @@
     <section class="content-section">
       <h1 class="text-center">Працівники</h1>
     </section>
+
+    <section class="content-section p-2 my-2">
+      <div class="container-fluid">
+
+        <div class="row mb-2">
+          <div class="col-3">
+            <label for="supplyUPC" class="form-label">ID працівника</label>
+            <input type="text" class="form-control" placeholder="ID працівника" id="employeeId">
+          </div>
+
+          <div class="col-2">
+            <label for="employeeRole" class="form-label">Роль</label>
+            <select name="employeeRole" id="employeeRole" class="form-select">
+              <option value="all">Усі</option>
+              <option value="admin">Адміністратор</option>
+              <option value="manager">Менеджер</option>
+              <option value="cashier">Касир</option>
+            </select>
+          </div>
+
+          <div class="col-2">
+            <label for="employeeCity" class="form-label">Місто</label>
+            <select name="employeeCity" id="employeeCity" class="form-select">
+              <option value="all">Усі</option>
+              <option value="LosAngeles">Los Angeles</option>
+              <option value="Houston">Houston</option>
+              <option value="Seattle">Seattle</option>
+              <option value="Chicago">Chicago</option>
+            </select>
+          </div>
+
+          <div class="col-2">
+            <label for="sortBy" class="form-label">Сортувати за</label>
+            <select name="sortBy" id="sortBy" class="form-select">
+              <option value="employee_surname">Прізвищем</option>
+              <option value="employee_name">Ім'ям</option>
+              <option value="employee_role">Роллю</option>
+              <option value="employee_salary">Зарплатою</option>
+              <option value="employee_start_date">Датою початку роботи</option>
+              <option value="employee_birth_date">Датою народження</option>
+              <option value="employee_city">Містом</option>
+            </select>
+          </div>
+
+          <div class="col-3">
+            <label for="orderBy" class="form-label">Порядок</label>
+            <select name="orderBy" id="orderBy" class="form-select">
+              <option value="ascending">За зростанням</option>
+              <option value="descending">За спаданням</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+
+          <div class="col-12">
+            <div class="btn-group w-100" role="group" aria-label="Actions">
+              <button class="btn btn-primary w-75">
+                Пошук
+              </button>
+              <button type="button" class="btn btn-outline-primary">
+                Додати працівника
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="content-section p-2 my-2">
+      <div class="table-container">
+        <table class="m-0 table table-striped table-hover table-bordered">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>ID працівника</th>
+            <th>Прізвище</th>
+            <th>Ім'я</th>
+            <th>Роль</th>
+            <th>Зарплата</th>
+            <th>Дата початку роботи</th>
+            <th>Дата народження</th>
+            <th>Місто</th>
+            <th>Дії</th>
+          </tr>
+          </thead>
+
+          <tbody class="table-group-divider">
+          <tr>
+            <td>1</td>
+            <td>ADMIN00001</td>
+            <td>Рафіков</td>
+            <td>Рінат</td>
+            <td>2</td>
+            <td>2к стипендії</td>
+            <td>2023-01-15</td>
+            <td>2000-01-01</td>
+            <td>Київ</td>
+            <td>
+              <button class="btn btn-primary"><i class="fa-solid fa-info"></i></button>
+              <button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+              <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>EMP005</td>
+            <td>Brown</td>
+            <td>Michael</td>
+            <td>0</td>
+            <td>3200</td>
+            <td>2023-02-05</td>
+            <td>1988-03-25</td>
+            <td>Houston</td>
+            <td>
+              <button class="btn btn-primary"><i class="fa-solid fa-info"></i></button>
+              <button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+              <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>EMP007</td>
+            <td>Garcia</td>
+            <td>Sophia</td>
+            <td>0</td>
+            <td>3400</td>
+            <td>2023-03-15</td>
+            <td>1991-07-18</td>
+            <td>Los Angeles</td>
+            <td>
+              <button class="btn btn-primary"><i class="fa-solid fa-info"></i></button>
+              <button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+              <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>EMP009</td>
+            <td>Martinez</td>
+            <td>Daniel</td>
+            <td>0</td>
+            <td>3300</td>
+            <td>2023-04-10</td>
+            <td>1993-11-30</td>
+            <td>Atlanta</td>
+            <td>
+              <button class="btn btn-primary"><i class="fa-solid fa-info"></i></button>
+              <button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+              <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>EMP002</td>
+            <td>Johnson</td>
+            <td>Emily</td>
+            <td>0</td>
+            <td>3500</td>
+            <td>2022-11-20</td>
+            <td>1985-09-12</td>
+            <td>Los Angeles</td>
+            <td>
+              <button class="btn btn-primary"><i class="fa-solid fa-info"></i></button>
+              <button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+              <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>EMP001</td>
+            <td>Smith</td>
+            <td>John</td>
+            <td>1</td>
+            <td>2500</td>
+            <td>2023-01-15</td>
+            <td>1990-05-20</td>
+            <td>New York</td>
+            <td>
+              <button class="btn btn-primary"><i class="fa-solid fa-info"></i></button>
+              <button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+              <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>EMP003</td>
+            <td>Williams</td>
+            <td>David</td>
+            <td>1</td>
+            <td>2300</td>
+            <td>2023-03-10</td>
+            <td>1995-02-28</td>
+            <td>Chicago</td>
+            <td>
+              <button class="btn btn-primary"><i class="fa-solid fa-info"></i></button>
+              <button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+              <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>EMP004</td>
+            <td>Jones</td>
+            <td>Jessica</td>
+            <td>1</td>
+            <td>2400</td>
+            <td>2023-01-25</td>
+            <td>1992-09-15</td>
+            <td>San Francisco</td>
+            <td>
+              <button class="btn btn-primary"><i class="fa-solid fa-info"></i></button>
+              <button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+              <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>EMP006</td>
+            <td>Davis</td>
+            <td>Robert</td>
+            <td>1</td>
+            <td>2500</td>
+            <td>2023-04-05</td>
+            <td>1994-06-10</td>
+            <td>New York</td>
+            <td>
+              <button class="btn btn-primary"><i class="fa-solid fa-info"></i></button>
+              <button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+              <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>EMP008</td>
+            <td>Rodriguez</td>
+            <td>Amanda</td>
+            <td>1</td>
+            <td>2700</td>
+            <td>2023-02-28</td>
+            <td>1993-12-20</td>
+            <td>Phoenix</td>
+            <td>
+              <button class="btn btn-primary"><i class="fa-solid fa-info"></i></button>
+              <button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+              <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
   {{/inline}}
 {{/layout}}
