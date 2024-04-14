@@ -1,7 +1,6 @@
 import { Controller, Get, Render, Req } from '@nestjs/common';
 import { Roles } from '../api/auth/roles/roles.decorator';
 import { Role } from '../api/auth/roles/role.enum';
-import { IEmployee } from '../api/interfaces/IEmployee.interface';
 import { ApiService } from '../api/api.service';
 
 @Controller()
@@ -19,6 +18,7 @@ export class ClientController {
   @Render('home')
   async home(@Req() req) {
     return {
+      style: 'home',
       title: 'Злагода: Головна',
       currentUser: req.currentEmployee,
       isHome: true,
@@ -30,6 +30,7 @@ export class ClientController {
   @Render('categories')
   async categories(@Req() req) {
     return {
+      style: 'categories',
       title: 'Злагода: Категорії',
       currentUser: req.currentEmployee,
       isCategories: true,
@@ -41,6 +42,7 @@ export class ClientController {
   @Render('clients')
   async clients(@Req() req) {
     return {
+      style: 'clients',
       title: 'Злагода: Клієнти',
       currentUser: req.currentEmployee,
       isClients: true,
@@ -52,6 +54,7 @@ export class ClientController {
   @Render('products')
   async products(@Req() req) {
     return {
+      style: 'products',
       title: 'Злагода: Продукти',
       currentUser: req.currentEmployee,
       isProducts: true,
@@ -63,6 +66,7 @@ export class ClientController {
   @Render('receipts')
   async receipts(@Req() req) {
     return {
+      style: 'receipts',
       title: 'Злагода: Чеки',
       currentUser: req.currentEmployee,
       isReceipts: true,
@@ -74,6 +78,7 @@ export class ClientController {
   @Render('supplies')
   async supplies(@Req() req) {
     return {
+      style: 'supplies',
       title: 'Злагода: Товари',
       currentUser: req.currentEmployee,
       isSupplies: true,
@@ -85,6 +90,7 @@ export class ClientController {
   @Render('employees')
   async employees(@Req() req) {
     return {
+      style: 'employees',
       title: 'Злагода: Працівники',
       currentUser: req.currentEmployee,
       isEmployees: true,
