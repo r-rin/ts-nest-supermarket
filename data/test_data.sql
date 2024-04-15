@@ -1,15 +1,5 @@
 USE supermarket;
 
-INSERT INTO Global_Variables (variable_name, variable_value) VALUES ('vat', '0.2');
-INSERT INTO Global_Variables (variable_name, variable_value) VALUES ('sale_percent', '0.8');
-
-
--- ROLE
-INSERT INTO Role(role_id, role_title) VALUES (0, 'Менеджер');
-INSERT INTO Role(role_id, role_title) VALUES (1, 'Касир');
-INSERT INTO Role(role_id, role_title) VALUES (2, 'Адміністратор');
-
-
 -- EMPLOYEE
 -- managers
 INSERT INTO employee (employee_id, employee_surname, employee_name, employee_patronymic, employee_role,
@@ -242,10 +232,10 @@ INSERT INTO Store_Product (UPC, UPC_prom, product_id, selling_price, products_am
 VALUES ('799439112766', NULL, 1, 1.20, 500, FALSE, '2024-04-15', '2025-04-15');
 
 INSERT INTO Store_Product (UPC, UPC_prom, product_id, selling_price, products_amount, is_promotional, manufacturing_date, expiration_date)
-VALUES ('835492647199', '835346892595', 2, 0.90, 300, FALSE, '2024-04-15', '2024-10-15');
+VALUES ('835346892595', NULL, 2, 0.80, 100, TRUE, '2024-04-15', '2024-10-15');
 
 INSERT INTO Store_Product (UPC, UPC_prom, product_id, selling_price, products_amount, is_promotional, manufacturing_date, expiration_date)
-VALUES ('835346892595', NULL, 2, 0.80, 100, TRUE, '2024-04-15', '2024-10-15');
+VALUES ('835492647199', '835346892595', 2, 0.90, 300, FALSE, '2024-04-15', '2024-10-15');
 
 INSERT INTO Store_Product (UPC, UPC_prom, product_id, selling_price, products_amount, is_promotional, manufacturing_date, expiration_date)
 VALUES ('745395624954', NULL, 3, 7.50, 200, FALSE, '2024-04-15', '2025-01-01');
@@ -257,10 +247,11 @@ INSERT INTO Store_Product (UPC, UPC_prom, product_id, selling_price, products_am
 VALUES ('639364958364', NULL, 5, 1.80, 400, FALSE, '2024-04-15', '2025-04-30');
 
 INSERT INTO Store_Product (UPC, UPC_prom, product_id, selling_price, products_amount, is_promotional, manufacturing_date, expiration_date)
-VALUES ('363856387564', '764573470741', 6, 1.60, 350, FALSE, '2024-04-15', '2024-08-15');
+VALUES ('764573470741', NULL, 6, 1.40, 50, TRUE, '2024-04-15', '2024-08-15');
+
 
 INSERT INTO Store_Product (UPC, UPC_prom, product_id, selling_price, products_amount, is_promotional, manufacturing_date, expiration_date)
-VALUES ('764573470741', NULL, 6, 1.40, 50, TRUE, '2024-04-15', '2024-08-15');
+VALUES ('363856387564', '764573470741', 6, 1.60, 350, FALSE, '2024-04-15', '2024-08-15');
 
 INSERT INTO Store_Product (UPC, UPC_prom, product_id, selling_price, products_amount, is_promotional, manufacturing_date, expiration_date)
 VALUES ('237236478662', NULL, 7, 2.50, 600, FALSE, '2024-04-15', '2025-02-28');
@@ -269,10 +260,10 @@ INSERT INTO Store_Product (UPC, UPC_prom, product_id, selling_price, products_am
 VALUES ('284585633733', NULL, 8, 2.00, 450, FALSE, '2024-04-15', '2024-12-31');
 
 INSERT INTO Store_Product (UPC, UPC_prom, product_id, selling_price, products_amount, is_promotional, manufacturing_date, expiration_date)
-VALUES ('848758399847', '844578742257', 9, 3.60, 200, FALSE, '2024-04-15', '2025-03-15');
+VALUES ('844578742257', NULL, 9, 3.00, 50, TRUE, '2024-04-15', '2025-03-15');
 
 INSERT INTO Store_Product (UPC, UPC_prom, product_id, selling_price, products_amount, is_promotional, manufacturing_date, expiration_date)
-VALUES ('844578742257', NULL, 9, 3.00, 50, TRUE, '2024-04-15', '2025-03-15');
+VALUES ('848758399847', '844578742257', 9, 3.60, 200, FALSE, '2024-04-15', '2025-03-15');
 
 INSERT INTO Store_Product (UPC, UPC_prom, product_id, selling_price, products_amount, is_promotional, manufacturing_date, expiration_date)
 VALUES ('194548204654', NULL, 10, 1.20, 700, FALSE, '2024-04-15', '2024-11-30');
@@ -284,16 +275,16 @@ INSERT INTO Store_Product (UPC, UPC_prom, product_id, selling_price, products_am
 VALUES ('273778543627', NULL, 12, 10.50, 250, FALSE, '2024-04-15', '2025-05-15');
 
 INSERT INTO Store_Product (UPC, UPC_prom, product_id, selling_price, products_amount, is_promotional, manufacturing_date, expiration_date)
-VALUES ('3938473682735', '963145796352', 13, 5.00, 400, FALSE, '2024-04-15', '2024-09-30');
-
-INSERT INTO Store_Product (UPC, UPC_prom, product_id, selling_price, products_amount, is_promotional, manufacturing_date, expiration_date)
 VALUES ('963145796352', NULL, 13, 4.00, 100, TRUE, '2024-04-15', '2024-09-30');
 
 INSERT INTO Store_Product (UPC, UPC_prom, product_id, selling_price, products_amount, is_promotional, manufacturing_date, expiration_date)
-VALUES ('9374757843773', NULL, 14, 2.20, 300, FALSE, '2024-04-15', '2024-12-15');
+VALUES ('393847682735', '963145796352', 13, 5.00, 400, FALSE, '2024-04-15', '2024-09-30');
 
 INSERT INTO Store_Product (UPC, UPC_prom, product_id, selling_price, products_amount, is_promotional, manufacturing_date, expiration_date)
-VALUES ('9374748296470', NULL, 15, 1.60, 500, FALSE, '2024-04-15', '2025-01-31');
+VALUES ('937475784373', NULL, 14, 2.20, 300, FALSE, '2024-04-15', '2024-12-15');
+
+INSERT INTO Store_Product (UPC, UPC_prom, product_id, selling_price, products_amount, is_promotional, manufacturing_date, expiration_date)
+VALUES ('937474829670', NULL, 15, 1.60, 500, FALSE, '2024-04-15', '2025-01-31');
 
 
 -- SALE
@@ -334,13 +325,13 @@ INSERT INTO Sale (UPC, receipt_id, products_amount, selling_price)
 VALUES ('273778543627', 'RCP006', 1, 10.50);
 
 INSERT INTO Sale (UPC, receipt_id, products_amount, selling_price)
-VALUES ('3938473682735', 'RCP007', 2, 10.00);
+VALUES ('393847682735', 'RCP007', 2, 10.00);
 
 INSERT INTO Sale (UPC, receipt_id, products_amount, selling_price)
-VALUES ('9374757843773', 'RCP007', 3, 6.60);
+VALUES ('937475784373', 'RCP007', 3, 6.60);
 
 INSERT INTO Sale (UPC, receipt_id, products_amount, selling_price)
-VALUES ('9374748296470', 'RCP008', 2, 3.20);
+VALUES ('937474829670', 'RCP008', 2, 3.20);
 
 INSERT INTO Sale (UPC, receipt_id, products_amount, selling_price)
 VALUES ('799439112766', 'RCP008', 1, 1.20);

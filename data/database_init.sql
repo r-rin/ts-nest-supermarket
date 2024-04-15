@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS Role
 
 INSERT INTO Role(role_id, role_title) VALUES (0, 'Менеджер');
 INSERT INTO Role(role_id, role_title) VALUES (1, 'Касир');
+INSERT INTO Role(role_id, role_title) VALUES (2, 'Адміністратор');
 
 CREATE TABLE IF NOT EXISTS Employee
 (
