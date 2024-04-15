@@ -8,12 +8,17 @@
       <div class="container-fluid">
 
         <div class="row mb-2">
-          <div class="col-4">
+          <div class="col-3">
             <label for="categoryID" class="form-label">Номер категорії</label>
             <input type="text" class="form-control" placeholder="Номер категорії" id="categoryID">
           </div>
 
-          <div class="col-4">
+          <div class="col-3">
+            <label for="searchByText" class="form-label">Пошук за текстом</label>
+            <input type="text" class="form-control" placeholder="Текст" id="searchByText">
+          </div>
+
+          <div class="col-3">
             <label for="sortBy" class="form-label">Сортувати за</label>
             <select name="sortBy" id="sortBy" class="form-select">
               <option value="category_number">Номером категорії</option>
@@ -21,7 +26,7 @@
             </select>
           </div>
 
-          <div class="col-4">
+          <div class="col-3">
             <label for="orderBy" class="form-label">Порядок</label>
             <select name="orderBy" id="orderBy" class="form-select">
               <option value="ascending">За зростанням</option>
