@@ -7,7 +7,7 @@ import { Role } from './auth/roles/role.enum';
 export class ApiController {
   constructor(private apiService: ApiService) {}
 
-  @Roles(Role.Cashier, Role.Manager)
+  @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('user')
   async currentEmployee(@Req() req) {
     return req.currentEmployee;

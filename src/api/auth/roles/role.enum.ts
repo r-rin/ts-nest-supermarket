@@ -1,4 +1,5 @@
 export enum Role {
-  Manager = 0,
-  Cashier = 1,
+  Cashier = 0,
+  Manager = 1,
+  Admin = 2,
 }
