@@ -31,8 +31,8 @@ CREATE TABLE IF NOT EXISTS Role
     role_title VARCHAR(50)     NOT NULL
 );
 
-INSERT INTO Role(role_id, role_title) VALUES (0, 'Менеджер');
-INSERT INTO Role(role_id, role_title) VALUES (1, 'Касир');
+INSERT INTO Role(role_id, role_title) VALUES (1, 'Менеджер');
+INSERT INTO Role(role_id, role_title) VALUES (0, 'Касир');
 INSERT INTO Role(role_id, role_title) VALUES (2, 'Адміністратор');
 
 CREATE TABLE IF NOT EXISTS Employee
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS Employee
 );
 
 INSERT INTO Employee (employee_id, employee_surname, employee_name, employee_patronymic, employee_role, employee_salary, employee_start_date, employee_birth_date, employee_phone_number, employee_city, employee_street, employee_zip_code)
-VALUES ('ADMIN00001', '', 'Адміністратор', '', 0, 0, '1991-01-01', '1991-01-01', '1991-01-01', '', '', '');
+VALUES ('ADMIN00001', '', 'Адміністратор', '', 2, 0, '1991-01-01', '1991-01-01', '1991-01-01', '', '', '');
 
 CREATE TABLE IF NOT EXISTS Auth_data
 (
