@@ -1,0 +1,13 @@
+@import 'node_modules/bootstrap/scss/bootstrap';
+
+.profile-pic-container {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  ;
+
+  > img {
+    border: $secondary-bg-subtle solid 1px;
+    border-radius: 50%
+  }
+}
