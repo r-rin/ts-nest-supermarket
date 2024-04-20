@@ -31,7 +31,7 @@ export class SuppliesService {
     return this.databaseService.query(
       `SELECT * 
       FROM Store_Product
-      WHERE UPC LIKE '%${upcToFind}%';`,
+      WHERE UPC='${upcToFind}';`,
     );
   }
 }

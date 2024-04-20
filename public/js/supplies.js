@@ -1,10 +1,16 @@
-const itemsPerPage = 10;
+const itemsPerPage = 7;
 let currentPage = 1;
-const totalAmount = document.querySelector('#rows-amount');
+let totalRowsAmount = 0;
+
 let userRole = 0;
 fetchUserRole().then((role) => {
   userRole = role;
 });
+
+// SELECTORS
+const totalAmountSpan = document.querySelector('#rows-amount');
+
+// PAGINATION SELECTORS
 
 async function fetchUserRole() {
   const response = await fetch('/api/user');
@@ -19,7 +25,7 @@ async function init() {
 }
 
 async function generateInteractionButtons(UPC) {
-  let htmlContent = `<button class="btn btn-primary" href="/api/supplies/find/${UPC}"><i class="fa-solid fa-info"></i></button>`;
+  let htmlContent = `<button class="btn btn-primary" data-upc="${UPC}"><i class="fa-solid fa-info"></i></button>`;
 
   if (userRole === 0) {
     htmlContent = htmlContent.concat(
@@ -47,7 +53,8 @@ async function loadTableData(currentPage) {
 
   tableBody.innerHTML = '';
 
-  totalAmount.innerText = data.amount;
+  totalRowsAmount = data.amount;
+  totalAmountSpan.innerText = data.amount;
 
   let counter = 0;
   data.rows.forEach((supply) => {
@@ -62,14 +69,16 @@ async function loadTableData(currentPage) {
     rowColumns[5].innerText = supply.products_amount;
     rowColumns[6].innerText = supply.is_promotional ? 'Так' : 'Ні';
     generateInteractionButtons(supply.UPC).then((res) => {
-      rowColumns[7].innerHTML = res;
+      rowColumns[7].innerHTML = `<div class="actions-container">${res}</div>`;
     });
 
     tableBody.appendChild(rowClone);
   });
 }
 
-function loadPagination(currentPage) {}
+function loadPagination(currentPage) {
+
+}
 
 let addSupplyButton = document.querySelector('#addSupplyBtn');
 

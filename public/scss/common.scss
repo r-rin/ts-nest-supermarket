@@ -8,11 +8,27 @@ body {
   background-color: $body-tertiary-bg;
   border-radius: 0.25rem;
   border: $secondary-bg-subtle solid 1px;
+  min-width: 1000px;
 }
 
 .table-container {
   border-radius: 0.2rem;
   border: $secondary-bg-subtle solid 1px;
+}
+
+.actions-container {
+  display: flex;
+  justify-content: space-evenly;
+
+  > button {
+    width: 38px;
+  }
+}
+
+.pagination {
+  li:hover {
+    cursor: pointer;
+  }
 }
 
 aside {

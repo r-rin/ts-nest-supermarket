@@ -1,10 +1,13 @@
 const itemsPerPage = 1;
 let currentPage = 1;
-const totalAmount = document.querySelector('#rows-amount');
 let userRole = 0;
+let totalRowsAmount = 0;
+
 fetchUserRole().then((role) => {
   userRole = role;
 });
+
+const totalAmountElement = document.querySelector('#rows-amount');
 
 async function fetchUserRole() {
   const response = await fetch('/api/user');
@@ -49,8 +52,9 @@ async function loadTableData(currentPage) {
     rowTemplate.appendChild(td);
   }
   tableBody.innerHTML = '';
-  totalAmount.innerText = data.amount;
-  console.log(data);
+  totalRowsAmount = data.amount;
+  totalAmountElement.innerText = data.amount;
+
   let counter = 0;
   data.rows.forEach((supply) => {
     let rowClone = rowTemplate.cloneNode(true);
@@ -61,7 +65,7 @@ async function loadTableData(currentPage) {
     rowColumns[2].innerText = supply.category_name;
 
     generateInteractionButtons(supply.category_name).then((res) => {
-      rowColumns[3].innerHTML = res;
+      rowColumns[3].innerHTML = `<div class="actions-container">${res}</div>`;
     });
 
     tableBody.appendChild(rowClone);
@@ -69,12 +73,8 @@ async function loadTableData(currentPage) {
 }
 
 async function loadPagination(currentPage) {
-  const response = await fetch(
-    `/api/categories/all?limit=${itemsPerPage}&page=${currentPage}`,
-  );
-  const data = await response.json();
-  const totalAmount = data.amount;
-  const totalPages = Math.ceil(totalAmount / itemsPerPage);
+
+  const totalPages = Math.ceil(totalRowsAmount / itemsPerPage);
 
   const paginationContainer = document.querySelector('.pagination');
   paginationContainer.innerHTML = '';
@@ -87,13 +87,13 @@ async function loadPagination(currentPage) {
   const previousPageLink = document.createElement('a');
   previousPageLink.classList.add('page-link');
   previousPageLink.innerText = 'Минула';
-  previousPageLink.addEventListener('click', () => {
+  previousPageLink.onclick = () => {
     if (currentPage > 1) {
       currentPage--;
       loadTableData(currentPage);
       loadPagination(currentPage);
     }
-  });
+  };
   previousPageButton.appendChild(previousPageLink);
   paginationContainer.appendChild(previousPageButton);
 
@@ -107,12 +107,11 @@ async function loadPagination(currentPage) {
     const pageLink = document.createElement('a');
     pageLink.classList.add('page-link');
     pageLink.innerText = i;
-    pageLink.href = `javascript:void(0);`;
-    pageLink.addEventListener('click', () => {
+    pageLink.onclick = () => {
       currentPage = i;
       loadTableData(currentPage);
       loadPagination(currentPage);
-    });
+    };
     pageButton.appendChild(pageLink);
     paginationContainer.appendChild(pageButton);
   }
@@ -125,13 +124,20 @@ async function loadPagination(currentPage) {
   const nextPageLink = document.createElement('a');
   nextPageLink.classList.add('page-link');
   nextPageLink.innerText = 'Наступна';
-  nextPageLink.addEventListener('click', () => {
+  nextPageLink.onclick = () => {
     if (currentPage < totalPages) {
       currentPage++;
       loadTableData(currentPage);
       loadPagination(currentPage);
     }
-  });
+  };
   nextPageButton.appendChild(nextPageLink);
   paginationContainer.appendChild(nextPageButton);
 }
+
+let addSupplyButton = document.querySelector('#addCategoryBtn');
+
+addSupplyButton.onclick = function () {
+  window.open('/categories/add-category', '_blank');
+};
+
