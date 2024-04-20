@@ -1,4 +1,4 @@
-const itemsPerPage = 1;
+const itemsPerPage = 2;
 let currentPage = 1;
 let userRole = 0;
 let totalRowsAmount = 0;
@@ -47,6 +47,7 @@ async function loadTableData(currentPage) {
   const data = await response.json();
   const tableBody = document.querySelector('#data-table tbody');
   const rowTemplate = document.createElement('tr');
+
   for (let i = 0; i < 4; i++) {
     const td = document.createElement('td');
     rowTemplate.appendChild(td);
@@ -86,6 +87,7 @@ async function loadPagination(currentPage) {
   }
   const previousPageLink = document.createElement('a');
   previousPageLink.classList.add('page-link');
+  previousPageLink.style['user-select'] = 'none';
   previousPageLink.innerText = 'Минула';
   previousPageLink.onclick = () => {
     if (currentPage > 1) {
@@ -118,6 +120,7 @@ async function loadPagination(currentPage) {
 
   const nextPageButton = document.createElement('li');
   nextPageButton.classList.add('page-item');
+  nextPageButton.style['user-select'] = 'none';
   if (currentPage === totalPages) {
     nextPageButton.classList.add('disabled');
   }
