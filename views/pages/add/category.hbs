@@ -1,0 +1,41 @@
+{{#> layout }}
+  {{#*inline "pageContent"}}
+    <section class="content-section">
+      <h1 class="text-center">Додавання категорії</h1>
+    </section>
+
+    <section class="d-flex justify-content-center flex-column align-items-center h-75" >
+      <section class="content-section p-3 my-2" style="width: 500px;">
+
+
+          <div class="row mb-3">
+            <div>
+              <label for="categoryID" class="form-label text-center">Номер категорії:</label>
+              <input type="text" class="form-control text-center" placeholder="Наприклад: 1" id="categoryID">
+            </div>
+          </div>
+
+          <div class="row mb-4 ">
+            <div>
+              <label for="categoryName" class="form-label text-center">Назва:</label>
+              <input type="text" class="form-control text-center" placeholder="Наприклад: Овочі та фрукти" id="categoryName">
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <div class="btn-group w-100" role="group" aria-label="Actions">
+                <button class="btn btn-primary w-100">
+                  Додати категорію
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+      </section>
+    </section>
+
+
+  {{/inline}}
+{{/layout}}
