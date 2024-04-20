@@ -5,10 +5,10 @@ body {
 }
 
 .content-section {
+  width: 100%;
   background-color: $body-tertiary-bg;
   border-radius: 0.25rem;
   border: $secondary-bg-subtle solid 1px;
-  min-width: 1000px;
 }
 
 .table-container {

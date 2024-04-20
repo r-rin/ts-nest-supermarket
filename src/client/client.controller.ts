@@ -1,11 +1,15 @@
-import { Controller, Get, Render, Req } from '@nestjs/common';
+import { Controller, Get, Query, Render, Req } from '@nestjs/common';
 import { Roles } from '../api/auth/roles/roles.decorator';
 import { Role } from '../api/auth/roles/role.enum';
-import { ApiService } from '../api/api.service';
+import { EmployeesService } from '../api/modules/employees/employees.service';
+import { ClientService } from './client.service';
 
 @Controller()
 export class ClientController {
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private employeesService: EmployeesService,
+    private clientService: ClientService,
+  ) {}
 
   @Get('login')
   @Render('login')
@@ -168,5 +172,37 @@ export class ClientController {
       currentUser: req.currentEmployee,
       isEmployees: true,
     };
+  }
+
+  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Get('profile')
+  @Render('details/profile')
+  async profile(@Req() req, @Query('id') employee_id?) {
+    const toRender = {
+      title: 'Профіль',
+      style: 'profile',
+      currentUser: req.currentEmployee,
+      isEmployees: true,
+      employee: undefined,
+      isFound: true,
+    };
+
+    if (employee_id) {
+      toRender.employee = await this.employeesService.getEmployee(employee_id);
+      if (toRender.employee === null) toRender.isFound = false;
+    } else {
+      toRender.employee = req.currentEmployee;
+    }
+
+    if (toRender.isFound) {
+      toRender.employee.employee_start_date = this.clientService.formatDate(
+        toRender.employee.employee_start_date,
+      );
+      toRender.employee.employee_birth_date = this.clientService.formatDate(
+        toRender.employee.employee_birth_date,
+      );
+    }
+
+    return toRender;
   }
 }

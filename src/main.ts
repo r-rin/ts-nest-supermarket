@@ -15,6 +15,9 @@ async function bootstrap() {
   app.setBaseViewsDir(join(__dirname, '..', 'views/pages'));
   app.setViewEngine('hbs');
   hbs.registerPartials(join(__dirname, '..', '/views/templates'));
+  hbs.registerHelper('ifEquals', function (arg1: any, arg2: any, options: any) {
+    return arg1 == arg2 ? options.fn(this) : options.inverse(this);
+  });
 
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe());
