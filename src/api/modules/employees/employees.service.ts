@@ -27,19 +27,12 @@ export class EmployeesService {
     return response_data;
   }
 
-  findByPIB(employeeName: string, employeeSurname: string, employeePatronimic: string) {
-    return this.databaseService.query(
-      `SELECT * 
-      FROM Employee
-      WHERE employee_name LIKE '%${employeeName}%'
-        AND employee_surname  LIKE '%${employeeSurname}%'
-        AND employee_patronymic LIKE '%${employeePatronimic}%';`,
-    );
-  }
-
   async getEmployee(employee_id: string): Promise<IEmployee> {
     const queryResult = await this.databaseService.query(
+      `SELECT * 
+      FROM Employee
       WHERE employee_id = '${employee_id}';`,
+    );
 
     if (queryResult.length == 0) return null;
 
@@ -60,3 +53,16 @@ export class EmployeesService {
     };
 
     return employee;
+  }
+
+  findByPIB(employeeName: string, employeeSurname: string, employeePatronimic: string) {
+    return this.databaseService.query(
+      `SELECT * 
+      FROM Employee
+      WHERE employee_name LIKE '%${employeeName}%'
+        AND employee_surname  LIKE '%${employeeSurname}%'
+        AND employee_patronymic LIKE '%${employeePatronimic}%';`,
+    );
+  };
+}
+
