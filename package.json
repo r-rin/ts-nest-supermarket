@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "compile-scss": "node_modules/node-sass/bin/node-sass public/scss -o public/css",
+    "compile-scss": "node-sass public/scss -o public/css",
     "css-watch": "npm run compile-scss && onchange 'public/scss/*.scss' -- npm run compile-scss",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

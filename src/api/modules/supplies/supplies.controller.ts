@@ -9,7 +9,10 @@ export class SuppliesController {
 
   @Get('all')
   @Roles(Role.Admin, Role.Cashier, Role.Manager)
-  async allSupplies(@Query('limit', ParseIntPipe) limit: number, @Query('page', ParseIntPipe) page: number) {
+  async allSupplies(
+    @Query('limit', ParseIntPipe) limit: number,
+    @Query('page', ParseIntPipe) page: number,
+  ) {
     return await this.suppliesService.getAllSupplies(limit, page);
   }
 

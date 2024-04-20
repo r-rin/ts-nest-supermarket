@@ -6,22 +6,23 @@ export class SuppliesService {
   constructor(private databaseService: DatabaseService) {}
 
   async getAllSupplies(limit, page) {
-
-    let response_data = {
+    const response_data = {
       rows: [],
       amount: undefined,
-    }
+    };
 
     response_data.rows = await this.databaseService.query(
       `SELECT * 
       FROM Store_Product
-      LIMIT ${limit} OFFSET ${(page - 1)*limit};`);
+      LIMIT ${limit} OFFSET ${(page - 1) * limit};`,
+    );
 
     const amount = await this.databaseService.query(
       `SELECT COUNT(UPC)
-       FROM Store_Product;`);
+       FROM Store_Product;`,
+    );
 
-    response_data.amount = amount[0]["COUNT(UPC)"];
+    response_data.amount = amount[0]['COUNT(UPC)'];
 
     return response_data;
   }
@@ -30,6 +31,7 @@ export class SuppliesService {
     return this.databaseService.query(
       `SELECT * 
       FROM Store_Product
-      WHERE UPC LIKE '%${upcToFind}%';`);
+      WHERE UPC LIKE '%${upcToFind}%';`,
+    );
   }
 }
