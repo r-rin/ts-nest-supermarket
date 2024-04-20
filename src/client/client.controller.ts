@@ -106,7 +106,7 @@ export class ClientController {
   //сторінки для додавання
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('categories/add-category')
-  @Render('add-category')
+  @Render('add/category')
   async renderAddCategoryPage(@Req() req) {
     return {
       title: 'Додати категорію',
@@ -117,7 +117,7 @@ export class ClientController {
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('clients/add-client')
-  @Render('add-client')
+  @Render('add/client')
   async renderAddClientPage(@Req() req) {
     return {
       title: 'Додати клієнта',
@@ -128,7 +128,7 @@ export class ClientController {
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('products/add-product')
-  @Render('add-product')
+  @Render('add/product')
   async renderAddProductPage(@Req() req) {
     return {
       title: 'Додати товар',
@@ -139,7 +139,7 @@ export class ClientController {
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('receipts/add-receipt')
-  @Render('add-receipt')
+  @Render('add/receipt')
   async renderAddReceiptPage(@Req() req) {
     return {
       title: 'Додати чек',
@@ -150,7 +150,7 @@ export class ClientController {
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('supplies/add-supply')
-  @Render('add-supply')
+  @Render('add/supply')
   async renderAddESupplyPage(@Req() req) {
     return {
       title: 'Додати товар',
@@ -161,7 +161,7 @@ export class ClientController {
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('employees/add-employee')
-  @Render('add-employee')
+  @Render('add/employee')
   async renderAddEmployeePage(@Req() req) {
     return {
       title: 'Додати працівника',
