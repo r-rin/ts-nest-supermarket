@@ -1,0 +1,76 @@
+{{#> layout}}
+  {{#*inline "pageContent"}}
+    <section class="content-section mb-4">
+      <h1 class="text-center">Додавання чека</h1>
+    </section>
+
+    <section class="d-flex justify-content-center flex-column align-items-center h-75">
+      <section class="content-section p-3 my-2 mt-5" style="width: 500px;">
+
+        <form id="addReceiptForm" action="/submit-receipt" method="POST">
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="receiptId" class="form-label text-center">ID чека:</label>
+              <input type="text" class="form-control text-center" placeholder="Наприклад: RCP001" id="receiptId"
+                     name="receiptId" required>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="employeeIdName" class="form-label text-center">ID та прізвище працівника:</label>
+              <input list="employeeOptions" class="form-control text-center" placeholder="Наприклад: EMP001 - Петров"
+                     id="employeeIdName" name="employeeId" required>
+
+              <datalist id="employeeOptions">
+                <option value="EMP001 - Петров"></option>
+                <option value="EMP002 - Іванов"></option>
+                <option value="EMP003 - Сидоров"></option>
+              </datalist>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="cardNumberSurname" class="form-label text-center">Номер картки та прізвище клієнта:</label>
+              <input list="customerOptions" class="form-control text-center" placeholder="Наприклад: CARD003 - Іванов"
+                     id="cardNumberSurname" name="cardNumberSurname" required>
+
+              <datalist id="customerOptions">
+                <option value="CARD001 - Іванов"></option>
+                <option value="CARD002 - Петров"></option>
+                <option value="CARD003 - Сидорова"></option>
+              </datalist>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="printDate" class="form-label text-center">Дата друку:</label>
+              <input type="datetime-local" class="form-control text-center" id="printDate" name="printDate" required>
+            </div>
+
+            <div class="col">
+              <label for="sumTotal" class="form-label text-center">Загальна сума:</label>
+              <input type="number" class="form-control text-center" placeholder="Загальна сума" id="sumTotal"
+                     name="sumTotal" min="0" step="0.01" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <div class="btn-group w-100" role="group" aria-label="Actions">
+                <button type="submit" class="btn btn-primary w-100">
+                  Додати чек
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </form>
+
+      </section>
+    </section>
+  {{/inline}}
+{{/layout}}
