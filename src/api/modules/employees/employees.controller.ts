@@ -9,7 +9,7 @@ export class EmployeesController {
 
   @Get('all')
   @Roles(Role.Admin, Role.Cashier, Role.Manager)
-  async allCategories(
+  async allEmployees(
     @Query('limit', ParseIntPipe) limit: number,
     @Query('page', ParseIntPipe) page: number,
   ) {
@@ -18,7 +18,7 @@ export class EmployeesController {
 
   @Get('find/:employeeName/:employeeSurname/:employeePatronimic')
   @Roles(Role.Admin, Role.Cashier, Role.Manager)
-  async findCategory(
+  async findEmployee(
     @Param('employeeName') employeeName: string,
     @Param('employeeSurname') employeeSurname: string,
     @Param('employeePatronimic') employeePatronimic: string,

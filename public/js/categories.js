@@ -1,4 +1,4 @@
-const itemsPerPage = 2;
+const itemsPerPage = 7;
 let currentPage = 1;
 let userRole = 0;
 let totalRowsAmount = 0;
