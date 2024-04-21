@@ -1,0 +1,79 @@
+{{#> layout }}
+  {{#*inline "pageContent"}}
+    <section class="content-section mb-5">
+      <h1 class="text-center">Додавання картки клієнта</h1>
+    </section>
+
+    <section class="d-flex justify-content-center flex-column align-items-center h-75" >
+      <section class="content-section p-3 my-2 " style="width: 500px;">
+
+        <form id="addCustomerForm" action="/submit-customer" method="POST">
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="cardNumber" class="form-label text-center">Номер картки клієнта:</label>
+              <input type="text" class="form-control text-center" placeholder="Наприклад: CARD001" id="cardNumber" name="cardNumber">
+            </div>
+            <div class="col">
+              <label for="customerSurname" class="form-label text-center">Прізвище:</label>
+              <input type="text" class="form-control text-center" placeholder="Прізвище" id="customerSurname" name="customerSurname">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="customerName" class="form-label text-center">Ім'я:</label>
+              <input type="text" class="form-control text-center" placeholder="Ім'я" id="customerName" name="customerName">
+            </div>
+            <div class="col">
+              <label for="customerPatronymic" class="form-label text-center">По батькові:</label>
+              <input type="text" class="form-control text-center" placeholder="По батькові" id="customerPatronymic" name="customerPatronymic">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="customerPhoneNumber" class="form-label text-center">Номер телефону:</label>
+              <input type="tel" class="form-control text-center" placeholder="+380000000000" id="customerPhoneNumber"
+                     name="customerPhoneNumber" maxlength="13" pattern="^\+[0-9]{1,12}$">
+            </div>
+            <div class="col">
+              <label for="customerCity" class="form-label text-center">Місто:</label>
+              <input type="text" class="form-control text-center" placeholder="Місто" id="customerCity" name="customerCity">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="customerStreet" class="form-label text-center">Вулиця:</label>
+              <input type="text" class="form-control text-center" placeholder="Вулиця" id="customerStreet" name="customerStreet">
+            </div>
+            <div class="col">
+              <label for="customerZipCode" class="form-label text-center">Поштовий індекс:</label>
+              <input type="text" class="form-control text-center" placeholder="Поштовий індекс" id="customerZipCode" name="customerZipCode">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="customerPercent" class="form-label text-center">Відсоток знижки:</label>
+              <input type="text" class="form-control text-center" placeholder="Відсоток знижки" id="customerPercent" name="customerPercent">
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <div class="btn-group w-100" role="group" aria-label="Actions">
+                <button type="submit" class="btn btn-primary w-100">
+                  Додати картку
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </form>
+
+      </section>
+    </section>
+  {{/inline}}
+{{/layout}}

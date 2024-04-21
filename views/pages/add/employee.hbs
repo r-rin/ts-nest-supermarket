@@ -1,0 +1,103 @@
+{{#> layout }}
+  {{#*inline "pageContent"}}
+    <section class="content-section mb-5">
+      <h1 class="text-center">Додавання працівника</h1>
+    </section>
+
+    <section class="d-flex justify-content-center flex-column align-items-center h-75">
+      <section class="content-section p-3 my-2 mt-5" style="width: 500px;">
+
+        <form id="addEmployeeForm" action="/submit-employee" method="POST">
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="employeeId" class="form-label text-center">ID працівника:</label>
+              <input type="text" class="form-control text-center" placeholder="Наприклад: EMP002" id="employeeId" name="employeeId">
+            </div>
+
+            <div class="col">
+              <label for="employeeSurname" class="form-label text-center">Прізвище:</label>
+              <input type="text" class="form-control text-center" placeholder="Прізвище" id="employeeSurname" name="employeeSurname">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="employeeName" class="form-label text-center">Ім'я:</label>
+              <input type="text" class="form-control text-center" placeholder="Ім'я" id="employeeName" name="employeeName">
+            </div>
+
+            <div class="col">
+              <label for="employeePatronymic" class="form-label text-center">По батькові:</label>
+              <input type="text" class="form-control text-center" placeholder="По батькові" id="employeePatronymic" name="employeePatronymic">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="employeeRole" class="form-label text-center">Роль:</label>
+              <select class="form-select text-center" id="employeeRole" name="employeeRole">
+                <option value="Cashier">Касир</option>
+                <option value="Manager">Менеджер</option>
+                <option value="Admin">Адміністратор</option>
+              </select>
+            </div>
+
+            <div class="col">
+              <label for="employeeSalary" class="form-label text-center">Заробітна плата:</label>
+              <input type="text" class="form-control text-center" placeholder="Заробітна плата" id="employeeSalary" name="employeeSalary">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="employeeStartDate" class="form-label text-center">Дата початку роботи:</label>
+              <input type="date" class="form-control text-center" id="employeeStartDate" name="employeeStartDate">
+            </div>
+
+            <div class="col">
+              <label for="employeeBirthDate" class="form-label text-center">Дата народження:</label>
+              <input type="date" class="form-control text-center" id="employeeBirthDate" name="employeeBirthDate">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="employeePhoneNumber" class="form-label text-center">Номер телефону:</label>
+              <input type="tel" class="form-control text-center" placeholder="+380000000000" id="employeePhoneNumber" name="employeePhoneNumber" maxlength="13" pattern="^\+[0-9]{1,12}$">
+            </div>
+
+            <div class="col">
+              <label for="employeeCity" class="form-label text-center">Місто:</label>
+              <input type="text" class="form-control text-center" placeholder="Місто" id="employeeCity" name="employeeCity">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="employeeStreet" class="form-label text-center">Вулиця:</label>
+              <input type="text" class="form-control text-center" placeholder="Вулиця" id="employeeStreet" name="employeeStreet">
+            </div>
+
+            <div class="col">
+              <label for="employeeZipCode" class="form-label text-center">Поштовий індекс:</label>
+              <input type="text" class="form-control text-center" placeholder="Поштовий індекс" id="employeeZipCode" name="employeeZipCode">
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <div class="btn-group w-100" role="group" aria-label="Actions">
+                <button type="submit" class="btn btn-primary w-100">
+                  Додати працівника
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </form>
+
+      </section>
+    </section>
+  {{/inline}}
+{{/layout}}
