@@ -21,8 +21,8 @@ async function init() {
   loadPagination(currentPage);
 }
 
-async function generateInteractionButtons(category_name) {
-  let htmlContent = `<button class="btn btn-primary" href="/api/products/find/${category_name}"><i class="fa-solid fa-info"></i></button>`;
+async function generateInteractionButtons(product_id) {
+  let htmlContent = `<button class="btn btn-primary" data-id="${product_id}" onclick="openProductInfo(this)"><i class="fa-solid fa-info"></i></button>`;
 
   if (userRole === 0) {
     htmlContent = htmlContent.concat(
@@ -66,7 +66,7 @@ async function loadTableData(currentPage) {
     rowColumns[2].innerText = supply.category_number;
     rowColumns[3].innerText = supply.product_name;
     rowColumns[4].innerText = supply.characteristics;
-    generateInteractionButtons(supply.category_name).then((res) => {
+    generateInteractionButtons(supply.product_id).then((res) => {
       rowColumns[5].innerHTML = `<div class="actions-container">${res}</div>`;
     });
 
@@ -143,3 +143,12 @@ let addProductButton = document.querySelector('#addProductBtn');
 addProductButton.onclick = function () {
   window.open('/products/add-product', '_blank');
 };
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function openProductInfo(button) {
+  let id = button.getAttribute('data-id');
+
+  let newTab = window.open('/products/about?id=' + id, '_blank');
+
+  newTab.focus();
+}

@@ -25,7 +25,7 @@ async function init() {
 }
 
 async function generateInteractionButtons(UPC) {
-  let htmlContent = `<button class="btn btn-primary" data-upc="${UPC}"><i class="fa-solid fa-info"></i></button>`;
+  let htmlContent = `<button class="btn btn-primary" data-upc="${UPC}" onclick="openSupplyInfo(this)"><i class="fa-solid fa-info"></i></button>`;
 
   if (userRole === 0) {
     htmlContent = htmlContent.concat(
@@ -145,3 +145,12 @@ let addSupplyButton = document.querySelector('#addSupplyBtn');
 addSupplyButton.onclick = function () {
   window.open('/supplies/add-supply', '_blank');
 };
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function openSupplyInfo(button) {
+  let upc = button.getAttribute('data-upc');
+
+  let newTab = window.open('/supplies/about?upc=' + upc, '_blank');
+
+  newTab.focus();
+}

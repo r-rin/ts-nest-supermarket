@@ -174,9 +174,10 @@ export class ClientController {
     };
   }
 
+  //сторінки для перегляду детальної інформації про..
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('profile')
-  @Render('details/profile')
+  @Render('info/profile')
   async profile(@Req() req, @Query('id') employee_id?) {
     const toRender = {
       title: 'Профіль',
@@ -204,5 +205,60 @@ export class ClientController {
     }
 
     return toRender;
+  }
+
+  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Get('categories/about')
+  @Render('info/about-category')
+  async renderAboutCategoryPage(@Req() req) {
+    return {
+      title: 'Інформація про категорію',
+      currentUser: req.currentEmployee,
+      isCategories: true,
+    };
+  }
+
+  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Get('clients/about')
+  @Render('info/about-client')
+  async renderAboutClientPage(@Req() req) {
+    return {
+      title: 'Інформація про клієнта',
+      currentUser: req.currentEmployee,
+      isClients: true,
+    };
+  }
+
+  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Get('products/about')
+  @Render('info/about-product')
+  async renderAboutProductPage(@Req() req) {
+    return {
+      title: 'Інформація про предмет',
+      currentUser: req.currentEmployee,
+      isProducts: true,
+    };
+  }
+
+  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Get('receipts/about')
+  @Render('info/about-receipt')
+  async renderAboutReceiptPage(@Req() req) {
+    return {
+      title: 'Інформація про чек',
+      currentUser: req.currentEmployee,
+      isReceipts: true,
+    };
+  }
+
+  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Get('supplies/about')
+  @Render('info/about-supply')
+  async renderAboutESupplyPage(@Req() req) {
+    return {
+      title: 'Інформація про товар',
+      currentUser: req.currentEmployee,
+      isSupplies: true,
+    };
   }
 }

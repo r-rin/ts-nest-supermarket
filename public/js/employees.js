@@ -21,8 +21,8 @@ async function init() {
   loadPagination(currentPage);
 }
 
-async function generateInteractionButtons(category_name) {
-  let htmlContent = `<button class="btn btn-primary" href="/api/categories/find/${category_name}"><i class="fa-solid fa-info"></i></button>`;
+async function generateInteractionButtons(employee_id) {
+  let htmlContent = `<button class="btn btn-primary" data-id="${employee_id}" onclick="openEmployeeInfo(this)"><i class="fa-solid fa-info"></i></button>`;
 
   if (userRole === 0) {
     htmlContent = htmlContent.concat(
@@ -33,7 +33,7 @@ async function generateInteractionButtons(category_name) {
   if (userRole === 1 || userRole === 2) {
     htmlContent = htmlContent.concat(
       '<button class="btn btn-warning" href="/"><i class="fa-solid fa-pen-to-square"></i></button>' +
-      '<button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>',
+        '<button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>',
     );
   }
 
@@ -69,7 +69,7 @@ async function loadTableData(currentPage) {
     rowColumns[5].innerText = supply.employee_salary;
     rowColumns[6].innerText = supply.employee_start_date;
     rowColumns[7].innerText = supply.employee_birth_date;
-    rowColumns[8].innerText = supply.employee_city
+    rowColumns[8].innerText = supply.employee_city;
     generateInteractionButtons(supply.employee_id).then((res) => {
       rowColumns[9].innerHTML = `<div class="actions-container">${res}</div>`;
     });
@@ -79,7 +79,6 @@ async function loadTableData(currentPage) {
 }
 
 async function loadPagination(currentPage) {
-
   const totalPages = Math.ceil(totalRowsAmount / itemsPerPage);
 
   const paginationContainer = document.querySelector('.pagination');
@@ -148,3 +147,12 @@ let addEmployeeButton = document.querySelector('#addEmployeeBtn');
 addEmployeeButton.onclick = function () {
   window.open('/employees/add-employee', '_blank');
 };
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function openEmployeeInfo(button) {
+  let id = button.getAttribute('data-id');
+
+  let newTab = window.open('/profile?id=' + id, '_blank');
+
+  newTab.focus();
+}

@@ -21,8 +21,8 @@ async function init() {
   loadPagination(currentPage);
 }
 
-async function generateInteractionButtons(category_name) {
-  let htmlContent = `<button class="btn btn-primary" href="/api/categories/find/${category_name}"><i class="fa-solid fa-info"></i></button>`;
+async function generateInteractionButtons(category_number) {
+  let htmlContent = `<button class="btn btn-primary" data-id="${category_number}" onclick="openCategoryInfo(this)"><i class="fas fa-info"></i></button>`;
 
   if (userRole === 0) {
     htmlContent = htmlContent.concat(
@@ -65,7 +65,7 @@ async function loadTableData(currentPage) {
     rowColumns[1].innerText = supply.category_number;
     rowColumns[2].innerText = supply.category_name;
 
-    generateInteractionButtons(supply.category_name).then((res) => {
+    generateInteractionButtons(supply.category_number).then((res) => {
       rowColumns[3].innerHTML = `<div class="actions-container">${res}</div>`;
     });
 
@@ -137,9 +137,17 @@ async function loadPagination(currentPage) {
   paginationContainer.appendChild(nextPageButton);
 }
 
-let addSupplyButton = document.querySelector('#addCategoryBtn');
+let addCategoryButton = document.querySelector('#addCategoryBtn');
 
-addSupplyButton.onclick = function () {
+addCategoryButton.onclick = function () {
   window.open('/categories/add-category', '_blank');
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function openCategoryInfo(button) {
+  let id = button.getAttribute('data-id');
+
+  let newTab = window.open('/categories/about?id=' + id, '_blank');
+
+  newTab.focus();
+}
