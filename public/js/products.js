@@ -26,14 +26,14 @@ async function generateInteractionButtons(product_id) {
 
   if (userRole === 0) {
     htmlContent = htmlContent.concat(
-      '<button class="btn btn-outline-success"><i class="fa-solid fa-basket-shopping"></i></button>',
+      `<button class="btn btn-outline-success"><i class="fa-solid fa-basket-shopping"></i></button>`,
     );
   }
 
   if (userRole === 1 || userRole === 2) {
     htmlContent = htmlContent.concat(
-      '<button class="btn btn-warning" href="/"><i class="fa-solid fa-pen-to-square"></i></button>' +
-        '<button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>',
+      `<button class="btn btn-warning" data-id="${product_id}" onclick="openEditProduct(this)"><i class="fa-solid fa-pen-to-square"></i></button>` +
+        `<button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>`,
     );
   }
 
@@ -149,6 +149,15 @@ function openProductInfo(button) {
   let id = button.getAttribute('data-id');
 
   let newTab = window.open('/products/about?id=' + id, '_blank');
+
+  newTab.focus();
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function openEditProduct(button) {
+  let id = button.getAttribute('data-id');
+
+  let newTab = window.open('/products/edit-product?id=' + id, '_blank');
 
   newTab.focus();
 }

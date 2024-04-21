@@ -29,14 +29,14 @@ async function generateInteractionButtons(UPC) {
 
   if (userRole === 0) {
     htmlContent = htmlContent.concat(
-      '<button class="btn btn-outline-success"><i class="fa-solid fa-basket-shopping"></i></button>',
+      `<button class="btn btn-outline-success"><i class="fa-solid fa-basket-shopping"></i></button>`,
     );
   }
 
   if (userRole === 1 || userRole === 2) {
     htmlContent = htmlContent.concat(
-      '<button class="btn btn-warning" href="/"><i class="fa-solid fa-pen-to-square"></i></button>' +
-        '<button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>',
+      `<button class="btn btn-warning" data-upc="${UPC}" onclick="openEditSupply(this)"><i class="fa-solid fa-pen-to-square"></i></button>` +
+        `<button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>`,
     );
   }
 
@@ -151,6 +151,15 @@ function openSupplyInfo(button) {
   let upc = button.getAttribute('data-upc');
 
   let newTab = window.open('/supplies/about?upc=' + upc, '_blank');
+
+  newTab.focus();
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function openEditSupply(button) {
+  let upc = button.getAttribute('data-upc');
+
+  let newTab = window.open('/supplies/edit-supply?upc=' + upc, '_blank');
 
   newTab.focus();
 }

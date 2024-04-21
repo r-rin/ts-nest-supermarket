@@ -26,14 +26,14 @@ async function generateInteractionButtons(employee_id) {
 
   if (userRole === 0) {
     htmlContent = htmlContent.concat(
-      '<button class="btn btn-outline-success"><i class="fa-solid fa-basket-shopping"></i></button>',
+      `<button class="btn btn-outline-success"><i class="fa-solid fa-basket-shopping"></i></button>`,
     );
   }
 
   if (userRole === 1 || userRole === 2) {
     htmlContent = htmlContent.concat(
-      '<button class="btn btn-warning" href="/"><i class="fa-solid fa-pen-to-square"></i></button>' +
-        '<button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>',
+      `<button class="btn btn-warning" data-id="${employee_id}" onclick="openEditEmployee(this)"><i class="fa-solid fa-pen-to-square"></i></button>` +
+        `<button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>`,
     );
   }
 
@@ -153,6 +153,15 @@ function openEmployeeInfo(button) {
   let id = button.getAttribute('data-id');
 
   let newTab = window.open('/profile?id=' + id, '_blank');
+
+  newTab.focus();
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function openEditEmployee(button) {
+  let id = button.getAttribute('data-id');
+
+  let newTab = window.open('/employees/edit-employee?id=' + id, '_blank');
 
   newTab.focus();
 }

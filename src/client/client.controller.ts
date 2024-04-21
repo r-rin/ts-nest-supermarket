@@ -135,7 +135,7 @@ export class ClientController {
   @Render('add/product')
   async renderAddProductPage(@Req() req) {
     return {
-      title: 'Додати товар',
+      title: 'Додати предмет',
       currentUser: req.currentEmployee,
       isProducts: true,
     };
@@ -254,11 +254,78 @@ export class ClientController {
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('supplies/about')
   @Render('info/about-supply')
-  async renderAboutESupplyPage(@Req() req) {
+  async renderAboutSupplyPage(@Req() req) {
     return {
       title: 'Інформація про товар',
       currentUser: req.currentEmployee,
       isSupplies: true,
+    };
+  }
+
+  //сторінки для редагування
+  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Get('categories/edit-category')
+  @Render('edit/category')
+  async renderEditCategoryPage(@Req() req) {
+    return {
+      title: 'Редагувати категорію',
+      currentUser: req.currentEmployee,
+      isCategories: true,
+    };
+  }
+
+  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Get('clients/edit-client')
+  @Render('edit/client')
+  async renderEditClientPage(@Req() req) {
+    return {
+      title: 'Редагувати дані клієнта',
+      currentUser: req.currentEmployee,
+      isClients: true,
+    };
+  }
+
+  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Get('products/edit-product')
+  @Render('edit/product')
+  async renderEditProductPage(@Req() req) {
+    return {
+      title: 'Редагувати дані про предмет',
+      currentUser: req.currentEmployee,
+      isProducts: true,
+    };
+  }
+
+  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Get('receipts/edit-receipt')
+  @Render('edit/receipt')
+  async renderEditReceiptPage(@Req() req) {
+    return {
+      title: 'Редагувати чек',
+      currentUser: req.currentEmployee,
+      isReceipts: true,
+    };
+  }
+
+  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Get('supplies/edit-supply')
+  @Render('edit/supply')
+  async renderEditESupplyPage(@Req() req) {
+    return {
+      title: 'Редагувати дані про товар',
+      currentUser: req.currentEmployee,
+      isSupplies: true,
+    };
+  }
+
+  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Get('employees/edit-employee')
+  @Render('edit/employee')
+  async renderEditEmployeePage(@Req() req) {
+    return {
+      title: 'Редагувати дані працівника',
+      currentUser: req.currentEmployee,
+      isEmployees: true,
     };
   }
 }
