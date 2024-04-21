@@ -11,13 +11,14 @@
 
           <div class="row mb-3">
             <div class="col">
-              <label for="UPC" class="form-label text-center">UPC:</label>
+              <label for="UPC" class="form-label text-center">UPC</label>
+              <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Наприклад: 799439112766" id="UPC"
                      name="UPC" required>
             </div>
 
             <div class="col">
-              <label for="UPC_prom" class="form-label text-center">UPC (акційний):</label>
+              <label for="UPC_prom" class="form-label text-center">UPC (акційний)</label>
               <input type="text" class="form-control text-center" placeholder="Наприклад: 835346892595" id="UPC_prom"
                      name="UPC_prom">
             </div>
@@ -25,7 +26,8 @@
 
           <div class="row mb-3">
             <div class="col">
-              <label for="productIdName" class="form-label text-center">ID предмету та назва:</label>
+              <label for="productIdName" class="form-label text-center">ID предмету та назва</label>
+              <span style="color: red">*</span>
               <input list="productOptions" class="form-control text-center" id="productIdName" name="productIdName"
                      placeholder="Наприклад: 1 - Яблуко" required>
               <datalist id="productOptions">
@@ -37,7 +39,8 @@
             </div>
 
             <div class="col">
-              <label for="sellingPrice" class="form-label text-center">Ціна продажу:</label>
+              <label for="sellingPrice" class="form-label text-center">Ціна продажу</label>
+              <span style="color: red">*</span>
               <input type="number" class="form-control text-center" placeholder="Ціна продажу" id="sellingPrice"
                      name="sellingPrice" min="0" step="0.01" required>
             </div>
@@ -45,7 +48,8 @@
 
           <div class="row mb-3">
             <div class="col">
-              <label for="productsAmount" class="form-label text-center">Кількість товарів:</label>
+              <label for="productsAmount" class="form-label text-center">Кількість товарів</label>
+              <span style="color: red">*</span>
               <input type="number" class="form-control text-center" placeholder="Кількість товарів" id="productsAmount"
                      name="productsAmount" min="0" step="1" required>
             </div>
@@ -54,6 +58,7 @@
               <div class="row">
                 <div class="col">
                   <label class="form-label">Чи акційний товар?</label>
+                  <span style="color: red">*</span>
                 </div>
               </div>
 
@@ -80,12 +85,14 @@
 
           <div class="row mb-3">
             <div class="col">
-              <label for="manufacturingDate" class="form-label text-center">Дата виробництва:</label>
+              <label for="manufacturingDate" class="form-label text-center">Дата виробництва</label>
+              <span style="color: red">*</span>
               <input type="date" class="form-control text-center" id="manufacturingDate" name="manufacturingDate" required>
             </div>
 
             <div class="col">
-              <label for="expirationDate" class="form-label text-center">Термін придатності:</label>
+              <label for="expirationDate" class="form-label text-center">Термін придатності</label>
+              <span style="color: red">*</span>
               <input type="date" class="form-control text-center" id="expirationDate" name="expirationDate" required>
             </div>
           </div>
