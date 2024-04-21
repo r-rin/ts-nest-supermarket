@@ -11,6 +11,10 @@ import { EmployeesController } from './modules/employees/employees.controller';
 import { EmployeesService } from './modules/employees/employees.service';
 import { ProductsController } from './modules/products/products.controller';
 import { ProductsService } from './modules/products/products.service';
+import { ClientsService } from './modules/clients/clients.service';
+import { ClientsController } from './modules/clients/clients.controller';
+import { ReceiptsService } from './modules/receipts/receipts.service';
+import { ReceiptsController } from './modules/receipts/receipts.controller';
 
 @Module({
   imports: [DatabaseModule, AuthModule],
@@ -20,6 +24,8 @@ import { ProductsService } from './modules/products/products.service';
     CategoryService,
     EmployeesService,
     ProductsService,
+    ClientsService,
+    ReceiptsService,
   ],
   controllers: [
     ApiController,
@@ -27,6 +33,8 @@ import { ProductsService } from './modules/products/products.service';
     CategoryController,
     EmployeesController,
     ProductsController,
+    ClientsController,
+    ReceiptsController,
   ],
   exports: [],
 })
