@@ -1,0 +1,108 @@
+{{#> layout }}
+  {{#*inline "pageContent"}}
+    <section class="content-section mb-5">
+      <h1 class="text-center">Додавання товару</h1>
+    </section>
+
+    <section class="d-flex justify-content-center flex-column align-items-center h-75">
+      <section class="content-section p-3 my-2" style="width: 500px;">
+
+        <form id="addSupplyForm" action="/submit-supply" method="POST">
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="UPC" class="form-label text-center">UPC:</label>
+              <input type="text" class="form-control text-center" placeholder="Наприклад: 799439112766" id="UPC"
+                     name="UPC" required>
+            </div>
+
+            <div class="col">
+              <label for="UPC_prom" class="form-label text-center">UPC (акційний):</label>
+              <input type="text" class="form-control text-center" placeholder="Наприклад: 835346892595" id="UPC_prom"
+                     name="UPC_prom">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="productIdName" class="form-label text-center">ID предмету та назва:</label>
+              <input list="productOptions" class="form-control text-center" id="productIdName" name="productIdName"
+                     placeholder="Наприклад: 1 - Яблуко" required>
+              <datalist id="productOptions">
+                <option value="1 - Яблуко">
+                <option value="1 - Груша">
+                <option value="2 - Куряча грудка">
+                <option value="3 - Молоко">
+              </datalist>
+            </div>
+
+            <div class="col">
+              <label for="sellingPrice" class="form-label text-center">Ціна продажу:</label>
+              <input type="number" class="form-control text-center" placeholder="Ціна продажу" id="sellingPrice"
+                     name="sellingPrice" min="0" step="0.01" required>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="productsAmount" class="form-label text-center">Кількість товарів:</label>
+              <input type="number" class="form-control text-center" placeholder="Кількість товарів" id="productsAmount"
+                     name="productsAmount" min="0" step="1" required>
+            </div>
+
+            <div class="col">
+              <div class="row">
+                <div class="col">
+                  <label class="form-label">Чи акційний товар?</label>
+                </div>
+              </div>
+
+              <div class="row mt-2">
+                <div class="col">
+
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="isPromotional" id="promotionalYes"
+                           value="true" required>
+                    <label class="form-check-label" for="promotionalYes">Так</label>
+                  </div>
+
+                  <div class="form-check form-check-inline ms-3">
+                    <input class="form-check-input" type="radio" name="isPromotional" id="promotionalNo"
+                           value="false" required>
+                    <label class="form-check-label" for="promotionalNo">Ні</label>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="manufacturingDate" class="form-label text-center">Дата виробництва:</label>
+              <input type="date" class="form-control text-center" id="manufacturingDate" name="manufacturingDate" required>
+            </div>
+
+            <div class="col">
+              <label for="expirationDate" class="form-label text-center">Термін придатності:</label>
+              <input type="date" class="form-control text-center" id="expirationDate" name="expirationDate" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <div class="btn-group w-100" role="group" aria-label="Actions">
+                <button type="submit" class="btn btn-primary w-100">
+                  Додати товар
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </form>
+
+      </section>
+    </section>
+  {{/inline}}
+{{/layout}}

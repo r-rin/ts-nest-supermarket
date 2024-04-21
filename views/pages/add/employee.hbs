@@ -12,31 +12,35 @@
           <div class="row mb-3">
             <div class="col">
               <label for="employeeId" class="form-label text-center">ID працівника:</label>
-              <input type="text" class="form-control text-center" placeholder="Наприклад: EMP002" id="employeeId" name="employeeId">
+              <input type="text" class="form-control text-center" placeholder="Наприклад: EMP002" id="employeeId"
+                     name="employeeId" required>
             </div>
 
             <div class="col">
               <label for="employeeSurname" class="form-label text-center">Прізвище:</label>
-              <input type="text" class="form-control text-center" placeholder="Прізвище" id="employeeSurname" name="employeeSurname">
+              <input type="text" class="form-control text-center" placeholder="Прізвище" id="employeeSurname"
+                     name="employeeSurname" required>
             </div>
           </div>
 
           <div class="row mb-3">
             <div class="col">
               <label for="employeeName" class="form-label text-center">Ім'я:</label>
-              <input type="text" class="form-control text-center" placeholder="Ім'я" id="employeeName" name="employeeName">
+              <input type="text" class="form-control text-center" placeholder="Ім'я" id="employeeName"
+                     name="employeeName" required>
             </div>
 
             <div class="col">
               <label for="employeePatronymic" class="form-label text-center">По батькові:</label>
-              <input type="text" class="form-control text-center" placeholder="По батькові" id="employeePatronymic" name="employeePatronymic">
+              <input type="text" class="form-control text-center" placeholder="По батькові" id="employeePatronymic"
+                     name="employeePatronymic">
             </div>
           </div>
 
           <div class="row mb-3">
             <div class="col">
               <label for="employeeRole" class="form-label text-center">Роль:</label>
-              <select class="form-select text-center" id="employeeRole" name="employeeRole">
+              <select class="form-select text-center" id="employeeRole" name="employeeRole" required>
                 <option value="Cashier">Касир</option>
                 <option value="Manager">Менеджер</option>
                 <option value="Admin">Адміністратор</option>
@@ -45,43 +49,48 @@
 
             <div class="col">
               <label for="employeeSalary" class="form-label text-center">Заробітна плата:</label>
-              <input type="text" class="form-control text-center" placeholder="Заробітна плата" id="employeeSalary" name="employeeSalary">
+              <input type="number" class="form-control text-center" placeholder="Заробітна плата" id="employeeSalary"
+                     name="employeeSalary" min="0" step="0.5" required>
             </div>
           </div>
 
           <div class="row mb-3">
             <div class="col">
               <label for="employeeStartDate" class="form-label text-center">Дата початку роботи:</label>
-              <input type="date" class="form-control text-center" id="employeeStartDate" name="employeeStartDate">
+              <input type="date" class="form-control text-center" id="employeeStartDate" name="employeeStartDate" required>
             </div>
 
             <div class="col">
               <label for="employeeBirthDate" class="form-label text-center">Дата народження:</label>
-              <input type="date" class="form-control text-center" id="employeeBirthDate" name="employeeBirthDate">
+              <input type="date" class="form-control text-center" id="employeeBirthDate" name="employeeBirthDate" required>
             </div>
           </div>
 
           <div class="row mb-3">
             <div class="col">
               <label for="employeePhoneNumber" class="form-label text-center">Номер телефону:</label>
-              <input type="tel" class="form-control text-center" placeholder="+380000000000" id="employeePhoneNumber" name="employeePhoneNumber" maxlength="13" pattern="^\+[0-9]{1,12}$">
+              <input type="tel" class="form-control text-center" placeholder="+380000000000" id="employeePhoneNumber"
+                     name="employeePhoneNumber" maxlength="13" pattern="^\+[0-9]{1,12}$" required>
             </div>
 
             <div class="col">
               <label for="employeeCity" class="form-label text-center">Місто:</label>
-              <input type="text" class="form-control text-center" placeholder="Місто" id="employeeCity" name="employeeCity">
+              <input type="text" class="form-control text-center" placeholder="Місто" id="employeeCity"
+                     name="employeeCity" required>
             </div>
           </div>
 
           <div class="row mb-3">
             <div class="col">
               <label for="employeeStreet" class="form-label text-center">Вулиця:</label>
-              <input type="text" class="form-control text-center" placeholder="Вулиця" id="employeeStreet" name="employeeStreet">
+              <input type="text" class="form-control text-center" placeholder="Вулиця" id="employeeStreet"
+                     name="employeeStreet" required>
             </div>
 
             <div class="col">
               <label for="employeeZipCode" class="form-label text-center">Поштовий індекс:</label>
-              <input type="text" class="form-control text-center" placeholder="Поштовий індекс" id="employeeZipCode" name="employeeZipCode">
+              <input type="text" class="form-control text-center" placeholder="Поштовий індекс" id="employeeZipCode"
+                     name="employeeZipCode" required>
             </div>
           </div>
 
