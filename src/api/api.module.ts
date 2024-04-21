@@ -9,11 +9,25 @@ import { CategoryService } from './modules/category/category.service';
 import { CategoryController } from './modules/category/category.controller';
 import { EmployeesController } from './modules/employees/employees.controller';
 import { EmployeesService } from './modules/employees/employees.service';
+import { ProductsController } from './modules/products/products.controller';
+import { ProductsService } from './modules/products/products.service';
 
 @Module({
   imports: [DatabaseModule, AuthModule],
-  providers: [ApiService, SuppliesService, CategoryService, EmployeesService],
-  controllers: [ApiController, SuppliesController, CategoryController, EmployeesController],
+  providers: [
+    ApiService,
+    SuppliesService,
+    CategoryService,
+    EmployeesService,
+    ProductsService,
+  ],
+  controllers: [
+    ApiController,
+    SuppliesController,
+    CategoryController,
+    EmployeesController,
+    ProductsController,
+  ],
   exports: [],
 })
 export class ApiModule {}

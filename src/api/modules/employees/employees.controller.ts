@@ -5,8 +5,7 @@ import { Role } from '../../auth/roles/role.enum';
 
 @Controller('api/employees')
 export class EmployeesController {
-  constructor(private employeesService: EmployeesService) {
-  }
+  constructor(private employeesService: EmployeesService) {}
 
   @Get('all')
   @Roles(Role.Admin, Role.Cashier, Role.Manager)
@@ -24,6 +23,10 @@ export class EmployeesController {
     @Param('employeeSurname') employeeSurname: string,
     @Param('employeePatronimic') employeePatronimic: string,
   ) {
-    return await this.employeesService.findByPIB(employeeName, employeeSurname, employeePatronimic);
+    return await this.employeesService.findByPIB(
+      employeeName,
+      employeeSurname,
+      employeePatronimic,
+    );
   }
 }
