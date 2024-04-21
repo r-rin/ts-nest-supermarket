@@ -1,0 +1,61 @@
+{{#> layout }}
+  {{#*inline "pageContent"}}
+    <section class="content-section mb-4">
+      <h1 class="text-center">Додавання предметів</h1>
+    </section>
+
+    <section class="d-flex justify-content-center flex-column align-items-center h-75">
+      <section class="content-section p-3 my-2 mt-5" style="width: 500px;">
+
+        <form id="addProductForm" action="/submit-product" method="POST">
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="productId" class="form-label text-center">ID товару:</label>
+              <input type="text" class="form-control text-center" placeholder="Наприклад: 1" id="productId" name="productId">
+            </div>
+
+            <div class="col">
+              <label for="categoryName" class="form-label text-center">Категорія:</label>
+              <select class="form-select text-center" id="categoryName" name="categoryName">
+                <option value="Овочі та фрукти">Овочі та фрукти</option>
+                <option value="М'ясо та птиця">М'ясо та птиця</option>
+                <option value="Молочні продукти">Молочні продукти</option>
+                <option value="Хлібобулочні вироби">Хлібобулочні вироби</option>
+                <option value="Кондитерські вироби">Заморожені продукти</option>
+                <option value="Напої">Напої</option>
+              </select>
+            </div>
+
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="productName" class="form-label text-center">Назва товару:</label>
+              <input type="text" class="form-control text-center" placeholder="Назва товару" id="productName" name="productName">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="characteristics" class="form-label text-center">Характеристики:</label>
+              <textarea class="form-control text-center" placeholder="Характеристики" id="characteristics" name="characteristics" rows="4"></textarea>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <div class="btn-group w-100" role="group" aria-label="Actions">
+                <button type="submit" class="btn btn-primary w-100">
+                  Додати предмет
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </form>
+
+      </section>
+    </section>
+  {{/inline}}
+{{/layout}}
