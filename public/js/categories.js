@@ -74,7 +74,6 @@ async function loadTableData(currentPage) {
 }
 
 async function loadPagination(currentPage) {
-
   const totalPages = Math.ceil(totalRowsAmount / itemsPerPage);
 
   const paginationContainer = document.querySelector('.pagination');

@@ -76,8 +76,68 @@ async function loadTableData(currentPage) {
   });
 }
 
-function loadPagination(currentPage) {
+async function loadPagination(currentPage) {
+  const totalPages = Math.ceil(totalRowsAmount / itemsPerPage);
 
+  const paginationContainer = document.querySelector('.pagination');
+  paginationContainer.innerHTML = '';
+
+  const previousPageButton = document.createElement('li');
+  previousPageButton.classList.add('page-item');
+  if (currentPage === 1) {
+    previousPageButton.classList.add('disabled');
+  }
+  const previousPageLink = document.createElement('a');
+  previousPageLink.classList.add('page-link');
+  previousPageLink.style['user-select'] = 'none';
+  previousPageLink.innerText = 'Минула';
+  previousPageLink.onclick = () => {
+    if (currentPage > 1) {
+      currentPage--;
+      loadTableData(currentPage);
+      loadPagination(currentPage);
+    }
+  };
+  previousPageButton.appendChild(previousPageLink);
+  paginationContainer.appendChild(previousPageButton);
+
+  for (let i = 1; i <= totalPages; i++) {
+    const pageButton = document.createElement('li');
+    pageButton.classList.add('page-item');
+    if (i === currentPage) {
+      pageButton.classList.add('active');
+      pageButton.setAttribute('aria-current', 'page');
+    }
+    const pageLink = document.createElement('a');
+    pageLink.classList.add('page-link');
+    pageLink.innerText = i;
+    pageLink.onclick = () => {
+      currentPage = i;
+      loadTableData(currentPage);
+      loadPagination(currentPage);
+    };
+    pageButton.appendChild(pageLink);
+    paginationContainer.appendChild(pageButton);
+  }
+
+  const nextPageButton = document.createElement('li');
+  nextPageButton.classList.add('page-item');
+  nextPageButton.style['user-select'] = 'none';
+  if (currentPage === totalPages) {
+    nextPageButton.classList.add('disabled');
+  }
+  const nextPageLink = document.createElement('a');
+  nextPageLink.classList.add('page-link');
+  nextPageLink.innerText = 'Наступна';
+  nextPageLink.onclick = () => {
+    if (currentPage < totalPages) {
+      currentPage++;
+      loadTableData(currentPage);
+      loadPagination(currentPage);
+    }
+  };
+  nextPageButton.appendChild(nextPageLink);
+  paginationContainer.appendChild(nextPageButton);
 }
 
 let addSupplyButton = document.querySelector('#addSupplyBtn');
