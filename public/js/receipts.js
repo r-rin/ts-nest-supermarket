@@ -22,7 +22,7 @@ async function init() {
 }
 
 async function generateInteractionButtons(receipt_id) {
-  let htmlContent = `<button class="btn btn-primary" data-id="${receipt_id}" onclick="openCategoryInfo(this)"><i class="fas fa-info"></i></button>`;
+  let htmlContent = `<button class="btn btn-primary" data-id="${receipt_id}" onclick="openReceiptInfo(this)"><i class="fas fa-info"></i></button>`;
 
   if (userRole === 0) {
     htmlContent = htmlContent.concat(
@@ -32,7 +32,7 @@ async function generateInteractionButtons(receipt_id) {
 
   if (userRole === 1 || userRole === 2) {
     htmlContent = htmlContent.concat(
-      `<button class="btn btn-warning" data-id="${receipt_id}" onclick="openEditCategory(this)"><i class="fa-solid fa-pen-to-square"></i></button>` +
+      `<button class="btn btn-warning" data-id="${receipt_id}" onclick="openEditReceipt(this)"><i class="fa-solid fa-pen-to-square"></i></button>` +
         `<button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>`,
     );
   }
@@ -68,7 +68,7 @@ async function loadTableData(currentPage) {
     rowColumns[4].innerText = supply.print_date;
     rowColumns[5].innerText = supply.sum_total;
 
-    generateInteractionButtons(supply.category_number).then((res) => {
+    generateInteractionButtons(supply.receipt_id).then((res) => {
       rowColumns[6].innerHTML = `<div class="actions-container">${res}</div>`;
     });
 
@@ -145,3 +145,21 @@ let addReceiptButton = document.querySelector('#addReceiptBtn');
 addReceiptButton.onclick = function () {
   window.open('/receipts/add-receipt', '_blank');
 };
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function openReceiptInfo(button) {
+  let id = button.getAttribute('data-id');
+
+  let newTab = window.open('/receipts/about?id=' + id, '_blank');
+
+  newTab.focus();
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function openEditReceipt(button) {
+  let id = button.getAttribute('data-id');
+
+  let newTab = window.open('/receipts/edit-receipt?id=' + id, '_blank');
+
+  newTab.focus();
+}

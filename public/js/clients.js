@@ -21,8 +21,8 @@ async function init() {
   loadPagination(currentPage);
 }
 
-async function generateInteractionButtons(client_id) {
-  let htmlContent = `<button class="btn btn-primary" data-id="${client_id}" onclick="openEmployeeInfo(this)"><i class="fa-solid fa-info"></i></button>`;
+async function generateInteractionButtons(card_number) {
+  let htmlContent = `<button class="btn btn-primary" data-id="${card_number}" onclick="openCardInfo(this)"><i class="fa-solid fa-info"></i></button>`;
 
   if (userRole === 0) {
     htmlContent = htmlContent.concat(
@@ -32,7 +32,7 @@ async function generateInteractionButtons(client_id) {
 
   if (userRole === 1 || userRole === 2) {
     htmlContent = htmlContent.concat(
-      `<button class="btn btn-warning" data-id="${client_id}" onclick="openEditEmployee(this)"><i class="fa-solid fa-pen-to-square"></i></button>` +
+      `<button class="btn btn-warning" data-id="${card_number}" onclick="openEditCard(this)"><i class="fa-solid fa-pen-to-square"></i></button>` +
         `<button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>`,
     );
   }
@@ -67,7 +67,8 @@ async function loadTableData(currentPage) {
     rowColumns[4].innerText = supply.customer_phone_number;
     rowColumns[5].innerText = supply.customer_city;
     rowColumns[6].innerText = supply.customer_percent;
-    generateInteractionButtons(supply.employee_id).then((res) => {
+
+    generateInteractionButtons(supply.card_number).then((res) => {
       rowColumns[7].innerHTML = `<div class="actions-container">${res}</div>`;
     });
 
@@ -144,3 +145,21 @@ let addClientButton = document.querySelector('#addClientBtn');
 addClientButton.onclick = function () {
   window.open('/clients/add-client', '_blank');
 };
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function openCardInfo(button) {
+  let id = button.getAttribute('data-id');
+
+  let newTab = window.open('/clients/about?id=' + id, '_blank');
+
+  newTab.focus();
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function openEditCard(button) {
+  let id = button.getAttribute('data-id');
+
+  let newTab = window.open('/clients/edit-client?id=' + id, '_blank');
+
+  newTab.focus();
+}
