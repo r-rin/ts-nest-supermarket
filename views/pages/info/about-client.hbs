@@ -2,10 +2,14 @@
   {{#*inline "pageContent"}}
     <section class="d-flex flex-column justify-content-center align-items-center h-100">
 
-      {{#if isFound}}
+      {{#ifEquals customer_card null}}
+        <section class="content-section" style="width: 700px;">
+          <h1 class="text-center m-3">Такого клієнта не знайдено</h1>
+        </section>
+      {{else}}
         <section class="content-section" style="width: 700px;">
           <div class="row">
-            <div class="col-8 d-flex flex-column justify-content-evenly">
+            <div class="col-8 p-4 ps-5 d-flex flex-column justify-content-evenly">
               <div>
                 <div class="h2 my-0">{{customer_card.customer_surname}} {{customer_card.customer_name}} {{customer_card.customer_patronymic}}</div>
                 <div class="text-secondary">{{customer_card.card_number}}</div>
@@ -17,48 +21,42 @@
         <section class="content-section p-4 my-2" style="width: 700px;">
           <div class="row mb-3">
             <div class="col-6">
-              <div class="h5">Номер картки клієнта</div>
-              <div>{{customer_card.card_number}}</div>
+              <div class="h5">Ім'я</div>
+              <div>{{#replaceIfEmpty customer_card.customer_name "Дані відсутні"}}{{/replaceIfEmpty}}</div>
             </div>
             <div class="col-6">
               <div class="h5">Прізвище</div>
-              <div>{{customer_card.customer_surname}}</div>
+              <div>{{#replaceIfEmpty customer_card.customer_surname "Дані відсутні"}}{{/replaceIfEmpty}}</div>
             </div>
           </div>
           <div class="row mb-3">
             <div class="col-6">
-              <div class="h5">Ім'я</div>
-              <div>{{customer_card.customer_name}}</div>
+              <div class="h5">По батькові</div>
+              <div>{{#replaceIfEmpty customer_card.customer_patronymic "Дані відсутні"}}{{/replaceIfEmpty}}</div>
             </div>
             <div class="col-6">
-              <div class="h5">По батькові</div>
-              <div>{{customer_card.customer_patronymic}}</div>
+              <div class="h5">Відсоток знижки</div>
+              <div>{{customer_card.customer_percent}}%</div>
             </div>
           </div>
           <div class="row mb-3">
             <div class="col-6">
               <div class="h5">Номер телефону</div>
-              <div>{{customer_card.customer_phone_number}}</div>
+              <div>{{#replaceIfEmpty customer_card.customer_phone_number "Дані відсутні"}}{{/replaceIfEmpty}}</div>
             </div>
             <div class="col-6">
               <div class="h5">Місто</div>
-              <div>{{customer_card.customer_city}}</div>
+              <div>{{#replaceIfEmpty customer_card.customer_city "Дані відсутні"}}{{/replaceIfEmpty}}</div>
             </div>
           </div>
           <div class="row mb-3">
             <div class="col-6">
               <div class="h5">Вулиця</div>
-              <div>{{customer_card.customer_street}}</div>
+              <div>{{#replaceIfEmpty customer_card.customer_street "Дані відсутні"}}{{/replaceIfEmpty}}</div>
             </div>
             <div class="col-6">
               <div class="h5">Поштовий індекс</div>
-              <div>{{customer_card.customer_zip_code}}</div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-6">
-              <div class="h5">Відсоток знижки</div>
-              <div>{{customer_card.customer_percent}}%</div>
+              <div>{{#replaceIfEmpty customer_card.customer_zip_code "Дані відсутні"}}{{/replaceIfEmpty}}</div>
             </div>
           </div>
 
@@ -71,11 +69,7 @@
           </div>
 
         </section>
-      {{else}}
-        <section class="content-section" style="width: 700px;">
-          <h1 class="text-center m-3">Такого клієнта не знайдено</h1>
-        </section>
-      {{/if}}
+      {{/ifEquals}}
 
     </section>
   {{/inline}}

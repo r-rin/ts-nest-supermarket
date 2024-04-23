@@ -2,87 +2,79 @@
   {{#*inline "pageContent"}}
     <section class="d-flex flex-column justify-content-center align-items-center h-100">
 
-    {{#if isFound}}
-        <section class="content-section" style="width: 700px;">
-          <div class="row">
-            <div class="col-4">
-              <div class="profile-pic-container my-3">
-                <img src="https://eu.ui-avatars.com/api/?name={{employee.employee_name}}+{{employee.employee_surname}}&size=128" alt="You">
-              </div>
-            </div>
-
-            <div class="col-8 d-flex flex-column justify-content-evenly">
-              <div>
-                <div class="h2 my-0">{{employee.employee_surname}} {{employee.employee_name}} {{employee.employee_patronymic}}</div>
-                <div class="text-secondary">{{employee.employee_id}}</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="content-section p-4 my-2" style="width: 700px;">
-          <div class="row mb-3">
-            <div class="col-6">
-              <div class="h5">Посада</div>
-              {{#ifEquals employee.employee_role 0}}
-                <div>Касир</div>
-              {{/ifEquals}}
-              {{#ifEquals employee.employee_role 1}}
-                <div>Менеджер</div>
-              {{/ifEquals}}
-              {{#ifEquals employee.employee_role 2}}
-                <div>Адміністратор</div>
-              {{/ifEquals}}
-            </div>
-            <div class="col-6">
-              <div class="h5">Заробітня плата</div>
-              <div>{{employee.employee_salary}} грн.</div>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <div class="col-6">
-              <div class="h5">Дата початку роботи</div>
-              <div>{{employee.employee_start_date}}</div>
-            </div>
-            <div class="col-6">
-              <div class="h5">День народження</div>
-              <div>{{employee.employee_birth_date}}</div>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <div class="col-6">
-              <div class="h5">Місто</div>
-              <div>{{employee.employee_city}}</div>
-            </div>
-            <div class="col-6">
-              <div class="h5">Вулиця</div>
-              <div>{{employee.employee_street}}</div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-6">
-              <div class="h5">Поштовий індекс</div>
-              <div>{{employee.employee_zip_code}}</div>
-            </div>
-            <div class="col-6">
-              <div class="h5">Номер телефону</div>
-              <div>{{employee.employee_phone_number}}</div>
-            </div>
-          </div>
-
-          <div class="row mt-3">
-            <div class="col">
-              <button type="button" class="btn btn-outline-success w-100">
-                Надрукувати звіт
-              </button>
-            </div>
-          </div>
-        </section>
+    {{#ifEquals employee null}}
+      <section class="content-section" style="width: 700px;">
+        <h1 class="text-center m-3">Такого працівника не знайдено</h1>
+      </section>
     {{else}}
-        <section class="content-section" style="width: 700px;">
-          <h1 class="text-center m-3">Такого працівника не знайдено</h1>
-        </section>
-    {{/if}}
+      <section class="content-section" style="width: 700px;">
+        <div class="row">
+          <div class="col-4">
+            <div class="profile-pic-container my-3">
+              <img src="https://eu.ui-avatars.com/api/?name={{employee.employee_name}}+{{employee.employee_surname}}&size=128" alt="You">
+            </div>
+          </div>
+
+          <div class="col-8 d-flex flex-column justify-content-evenly">
+            <div>
+              <div class="h2 my-0">{{employee.employee_surname}} {{employee.employee_name}} {{employee.employee_patronymic}}</div>
+              <div class="text-secondary">{{employee.employee_id}}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section p-4 my-2" style="width: 700px;">
+        <div class="row mb-3">
+          <div class="col-6">
+            <div class="h5">Посада</div>
+            {{#ifEquals employee.employee_role 0}}
+              <div>Касир</div>
+            {{/ifEquals}}
+            {{#ifEquals employee.employee_role 1}}
+              <div>Менеджер</div>
+            {{/ifEquals}}
+            {{#ifEquals employee.employee_role 2}}
+              <div>Адміністратор</div>
+            {{/ifEquals}}
+          </div>
+          <div class="col-6">
+            <div class="h5">Заробітня плата</div>
+            <div>{{employee.employee_salary}} грн.</div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-6">
+            <div class="h5">Дата початку роботи</div>
+            <div>{{employee.employee_start_date}}</div>
+          </div>
+          <div class="col-6">
+            <div class="h5">День народження</div>
+            <div>{{employee.employee_birth_date}}</div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-6">
+            <div class="h5">Місто</div>
+            <div>{{employee.employee_city}}</div>
+          </div>
+          <div class="col-6">
+            <div class="h5">Вулиця</div>
+            <div>{{employee.employee_street}}</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <div class="h5">Поштовий індекс</div>
+            <div>{{employee.employee_zip_code}}</div>
+          </div>
+          <div class="col-6">
+            <div class="h5">Номер телефону</div>
+            <div>{{employee.employee_phone_number}}</div>
+          </div>
+        </div>
+      </section>
+    {{/ifEquals}}
 
     </section>
   {{/inline}}

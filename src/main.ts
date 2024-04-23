@@ -16,7 +16,15 @@ async function bootstrap() {
   app.setViewEngine('hbs');
   hbs.registerPartials(join(__dirname, '..', '/views/templates'));
   hbs.registerHelper('ifEquals', function (arg1: any, arg2: any, options: any) {
+    //console.log(`ifEquals: ${arg1} == ${arg2}`);
     return arg1 == arg2 ? options.fn(this) : options.inverse(this);
+  });
+  hbs.registerHelper('replaceIfEmpty', function(value, defaultValue) {
+    if (value == null || value === '') {
+      return new hbs.SafeString(`<span class="text-muted fst-italic">${defaultValue}</span>`);
+    } else {
+      return value;
+    }
   });
 
   app.use(cookieParser());

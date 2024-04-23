@@ -39,4 +39,17 @@ export class ClientsService {
         AND customer_patronymic LIKE '%${customerPatronymic}%';`,
     );
   }
+
+
+  async getClientCard(card_id) {
+    const queryResult = await this.databaseService.query(
+      `SELECT *
+      FROM Customer_Card
+      WHERE card_number = '${card_id}'`
+    )
+
+    if (queryResult.length === 0) return null;
+
+    return queryResult[0];
+  }
 }

@@ -1,13 +1,11 @@
 import { Controller, Get, Query, Render, Req } from '@nestjs/common';
 import { Roles } from '../api/auth/roles/roles.decorator';
 import { Role } from '../api/auth/roles/role.enum';
-import { EmployeesService } from '../api/modules/employees/employees.service';
 import { ClientService } from './client.service';
 
 @Controller()
 export class ClientController {
   constructor(
-    private employeesService: EmployeesService,
     private clientService: ClientService,
   ) {}
 
@@ -178,33 +176,8 @@ export class ClientController {
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('profile')
   @Render('info/profile')
-  async profile(@Req() req, @Query('id') employee_id?) {
-    const toRender = {
-      title: 'Профіль',
-      style: 'profile',
-      currentUser: req.currentEmployee,
-      isEmployees: true,
-      employee: undefined,
-      isFound: true,
-    };
-
-    if (employee_id) {
-      toRender.employee = await this.employeesService.getEmployee(employee_id);
-      if (toRender.employee === null) toRender.isFound = false;
-    } else {
-      toRender.employee = req.currentEmployee;
-    }
-
-    if (toRender.isFound) {
-      toRender.employee.employee_start_date = this.clientService.formatDate(
-        toRender.employee.employee_start_date,
-      );
-      toRender.employee.employee_birth_date = this.clientService.formatDate(
-        toRender.employee.employee_birth_date,
-      );
-    }
-
-    return toRender;
+  async profile(@Req() req, @Query('id') employee_id?: string) {
+    return await this.clientService.getProfileRenderObj(req, employee_id);
   }
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
@@ -221,12 +194,8 @@ export class ClientController {
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('clients/about')
   @Render('info/about-client')
-  async renderAboutClientPage(@Req() req) {
-    return {
-      title: 'Інформація про клієнта',
-      currentUser: req.currentEmployee,
-      isClients: true,
-    };
+  async renderAboutClientPage(@Req() req, @Query('id') card_id: string) {
+    return await this.clientService.getClientAboutRenderObject(req, card_id);
   }
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
@@ -277,12 +246,8 @@ export class ClientController {
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('clients/edit-client')
   @Render('edit/client')
-  async renderEditClientPage(@Req() req) {
-    return {
-      title: 'Редагувати дані клієнта',
-      currentUser: req.currentEmployee,
-      isClients: true,
-    };
+  async renderEditClientPage(@Req() req, @Query('id') card_id: string) {
+    return await this.clientService.getClientEditAboutRender(req, card_id);
   }
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
