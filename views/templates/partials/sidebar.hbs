@@ -65,7 +65,11 @@
       <li><a class="dropdown-item" href="/settings">Налаштування</a></li>
       <li><a class="dropdown-item" href="/profile">Профіль</a></li>
       <li><hr class="dropdown-divider"></li>
-      <li><a class="dropdown-item" href="/logout">Вийти</a></li>
+      <li>
+        <form action="/logout" method="post">
+          <button type="submit" class="dropdown-item">Вийти</button>
+        </form>
+      </li>
     </ul>
   </div>
 </aside>

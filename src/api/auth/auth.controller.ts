@@ -32,4 +32,15 @@ export class AuthController {
     res.cookie('access_token', result.access_token, cookieOptions);
     return res.redirect('/home');
   }
+
+  @Post('logout')
+  async signOut(@Res() res) {
+    const cookieOptions: CookieOptions = {
+      sameSite: 'strict',
+      httpOnly: true,
+    };
+
+    res.clearCookie('access_token', cookieOptions)
+    return res.redirect('/login');
+  }
 }
