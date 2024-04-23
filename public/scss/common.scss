@@ -8,6 +8,7 @@ body {
   background-color: $body-tertiary-bg;
   border-radius: 0.25rem;
   border: $secondary-bg-subtle solid 1px;
+  text-wrap: avoid;
 }
 
 .table-container {
@@ -20,7 +21,11 @@ body {
   justify-content: space-evenly;
 
   > button {
-    width: 38px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 
