@@ -1,0 +1,47 @@
+{{#> layout }}
+  {{#*inline "pageContent"}}
+    <section class="content-section">
+      <h1 class="text-center">Редагування категорії</h1>
+    </section>
+
+    <section class="d-flex justify-content-center flex-column align-items-center h-75" >
+      <section class="content-section p-3 my-2" style="width: 500px;">
+
+        <form id="editCategoryForm" action="/submit-edited-category" method="POST">
+
+          <div class="row mb-3">
+            <div>
+              <label for="categoryNumber" class="form-label text-center">Номер категорії</label>
+              <span style="color: red">*</span>
+              <input type="number" class="form-control text-center" id="categoryNumber"
+                     name="categoryNumber" value="{{category.category_number}}" required>
+            </div>
+          </div>
+
+          <div class="row mb-4 ">
+            <div>
+              <label for="categoryName" class="form-label text-center">Назва</label>
+              <span style="color: red">*</span>
+              <input type="text" class="form-control text-center" id="categoryName"
+                     name="categoryName" value="{{category.category_name}}" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="btn-group w-100" role="group" aria-label="Actions">
+              <button type="reset" class="btn btn-outline-secondary w-50">
+                Скасувати
+              </button>
+
+              <button type="submit" class="btn btn-primary w-50">
+                Зберегти зміни
+              </button>
+            </div>
+          </div>
+
+        </form>
+
+      </section>
+    </section>
+  {{/inline}}
+{{/layout}}

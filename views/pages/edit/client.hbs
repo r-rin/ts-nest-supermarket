@@ -1,0 +1,96 @@
+{{#> layout }}
+  {{#*inline "pageContent"}}
+    <section class="content-section mb-5">
+      <h1 class="text-center">Редагування картки клієнта</h1>
+    </section>
+
+    <section class="d-flex justify-content-center flex-column align-items-center h-75">
+      <section class="content-section p-3 my-2" style="width: 500px;">
+
+        <form id="editCustomerForm" action="/submit-edited-customer" method="POST">
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="cardNumber" class="form-label text-center">Номер картки клієнта</label>
+              <span style="color: red">*</span>
+              <input type="text" class="form-control text-center" id="cardNumber"
+                     name="cardNumber" value="{{customer_card.card_number}}" required>
+            </div>
+            <div class="col">
+              <label for="customerSurname" class="form-label text-center">Прізвище</label>
+              <span style="color: red">*</span>
+              <input type="text" class="form-control text-center" id="customerSurname"
+                     name="customerSurname" value="{{customer_card.customer_surname}}" required>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="customerName" class="form-label text-center">Ім'я</label>
+              <span style="color: red">*</span>
+              <input type="text" class="form-control text-center" id="customerName"
+                     name="customerName" value="{{customer_card.customer_name}}" required>
+            </div>
+            <div class="col">
+              <label for="customerPatronymic" class="form-label text-center">По батькові</label>
+              <input type="text" class="form-control text-center" id="customerPatronymic"
+                     name="customerPatronymic" value="{{customer_card.customer_patronymic}}">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="customerPhoneNumber" class="form-label text-center">Номер телефону</label>
+              <span style="color: red">*</span>
+              <input type="tel" class="form-control text-center" id="customerPhoneNumber"
+                     name="customerPhoneNumber" maxlength="13" pattern="^\+[0-9]{1,12}$"
+                     value="{{customer_card.customer_phone_number}}" required>
+            </div>
+            <div class="col">
+              <label for="customerCity" class="form-label text-center">Місто</label>
+              <input type="text" class="form-control text-center" placeholder="Місто" id="customerCity" name="customerCity"
+                     value="{{customer_card.customer_city}}">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="customerStreet" class="form-label text-center">Вулиця</label>
+              <input type="text" class="form-control text-center"  id="customerStreet" name="customerStreet"
+                     value="{{customer_card.customer_street}}">
+            </div>
+            <div class="col">
+              <label for="customerZipCode" class="form-label text-center">Поштовий індекс</label>
+              <input type="text" class="form-control text-center" id="customerZipCode" name="customerZipCode"
+                     value="{{customer_card.customer_zip_code}}">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="customerPercent" class="form-label text-center">Відсоток знижки</label>
+              <span style="color: red">*</span>
+              <input type="number" class="form-control text-center" id="customerPercent"
+                     name="customerPercent" min="0" max="100" step="0.5"
+                     value="{{customer_card.customer_percent}}" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="btn-group w-100" role="group" aria-label="Actions">
+              <button type="reset" class="btn btn-outline-secondary w-50">
+                Скасувати
+              </button>
+
+              <button type="submit" class="btn btn-primary w-50">
+                Зберегти зміни
+              </button>
+            </div>
+          </div>
+
+        </form>
+
+      </section>
+    </section>
+  {{/inline}}
+{{/layout}}
