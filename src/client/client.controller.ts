@@ -203,6 +203,7 @@ export class ClientController {
   @Render('info/about-product')
   async renderAboutProductPage(@Req() req) {
     return {
+      script: 'about-product',
       title: 'Інформація про предмет',
       currentUser: req.currentEmployee,
       isProducts: true,

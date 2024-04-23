@@ -24,12 +24,6 @@ async function init() {
 async function generateInteractionButtons(card_number) {
   let htmlContent = `<button class="btn btn-primary" data-id="${card_number}" onclick="openCardInfo(this)"><i class="fa-solid fa-info"></i></button>`;
 
-  if (userRole === 0) {
-    htmlContent = htmlContent.concat(
-      `<button class="btn btn-outline-success"><i class="fa-solid fa-basket-shopping"></i></button>`,
-    );
-  }
-
   if (userRole === 1 || userRole === 2) {
     htmlContent = htmlContent.concat(
       `<button class="btn btn-warning" data-id="${card_number}" onclick="openEditCard(this)"><i class="fa-solid fa-pen-to-square"></i></button>` +

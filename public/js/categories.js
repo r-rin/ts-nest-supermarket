@@ -23,13 +23,6 @@ async function init() {
 
 async function generateInteractionButtons(category_number) {
   let htmlContent = `<button class="btn btn-primary" data-id="${category_number}" onclick="openCategoryInfo(this)"><i class="fas fa-info"></i></button>`;
-
-  if (userRole === 0) {
-    htmlContent = htmlContent.concat(
-      `<button class="btn btn-outline-success"><i class="fa-solid fa-basket-shopping"></i></button>`,
-    );
-  }
-
   if (userRole === 1 || userRole === 2) {
     htmlContent = htmlContent.concat(
       `<button class="btn btn-warning" data-id="${category_number}" onclick="openEditCategory(this)"><i class="fa-solid fa-pen-to-square"></i></button>` +
@@ -57,15 +50,15 @@ async function loadTableData(currentPage) {
   totalAmountElement.innerText = data.amount;
 
   let counter = 0;
-  data.rows.forEach((supply) => {
+  data.rows.forEach((category) => {
     let rowClone = rowTemplate.cloneNode(true);
     let rowColumns = rowClone.querySelectorAll('td');
     console.log(data);
     rowColumns[0].innerText = (currentPage - 1) * itemsPerPage + 1 + counter++;
-    rowColumns[1].innerText = supply.category_number;
-    rowColumns[2].innerText = supply.category_name;
+    rowColumns[1].innerText = category.category_number;
+    rowColumns[2].innerText = category.category_name;
 
-    generateInteractionButtons(supply.category_number).then((res) => {
+    generateInteractionButtons(category.category_number).then((res) => {
       rowColumns[3].innerHTML = `<div class="actions-container">${res}</div>`;
     });
 

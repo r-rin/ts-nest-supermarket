@@ -23,13 +23,6 @@ async function init() {
 
 async function generateInteractionButtons(product_id) {
   let htmlContent = `<button class="btn btn-primary" data-id="${product_id}" onclick="openProductInfo(this)"><i class="fa-solid fa-info"></i></button>`;
-
-  if (userRole === 0) {
-    htmlContent = htmlContent.concat(
-      `<button class="btn btn-outline-success"><i class="fa-solid fa-basket-shopping"></i></button>`,
-    );
-  }
-
   if (userRole === 1 || userRole === 2) {
     htmlContent = htmlContent.concat(
       `<button class="btn btn-warning" data-id="${product_id}" onclick="openEditProduct(this)"><i class="fa-solid fa-pen-to-square"></i></button>` +
@@ -57,16 +50,16 @@ async function loadTableData(currentPage) {
   totalAmountElement.innerText = data.amount;
 
   let counter = 0;
-  data.rows.forEach((supply) => {
+  data.rows.forEach((product) => {
     let rowClone = rowTemplate.cloneNode(true);
     let rowColumns = rowClone.querySelectorAll('td');
     console.log(data);
     rowColumns[0].innerText = (currentPage - 1) * itemsPerPage + 1 + counter++;
-    rowColumns[1].innerText = supply.product_id;
-    rowColumns[2].innerText = supply.category_number;
-    rowColumns[3].innerText = supply.product_name;
-    rowColumns[4].innerText = supply.characteristics;
-    generateInteractionButtons(supply.product_id).then((res) => {
+    rowColumns[1].innerText = product.product_id;
+    rowColumns[2].innerText = product.category_name;
+    rowColumns[3].innerText = product.product_name;
+    rowColumns[4].innerText = product.characteristics;
+    generateInteractionButtons(product.product_id).then((res) => {
       rowColumns[5].innerHTML = `<div class="actions-container">${res}</div>`;
     });
 

@@ -14,6 +14,7 @@ export class ProductsService {
     response_data.rows = await this.databaseService.query(
       `SELECT * 
       FROM Product
+      INNER JOIN Category ON product.category_number = Category.category_number
       LIMIT ${limit} OFFSET ${(page - 1) * limit};`,
     );
 
