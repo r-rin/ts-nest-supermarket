@@ -1,0 +1,57 @@
+{{#> layout }}
+  {{#*inline "pageContent"}}
+    <section class="content-section mb-5">
+      <h1 class="text-center">Інформація про предмет</h1>
+    </section>
+
+    <section class="d-flex justify-content-center flex-column align-items-center h-75">
+      <section class="content-section p-3 my-2" style="width: 500px;">
+
+        <div class="row mb-3">
+          <div class="col">
+            <strong>ID предмету:</strong>
+            <span>1</span>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col">
+            <strong>Номер категорії:</strong>
+            <span>1</span>
+          </div>
+        </div>
+
+        <!-- тут треба запитом вивести назву категорії з таблички Category-->
+        <div class="row mb-3">
+          <div class="col">
+            <strong>Назва категорії:</strong>
+            <span>Овочі та фрукти</span>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col">
+            <strong>Назва предмету:</strong>
+            <span>Яблуко</span>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col">
+            <strong>Характеристики:</strong>
+            <span>Сорт: Fuji, Походження: США, Вага: 150 г</span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <button type="button" class="btn btn-outline-success w-100">
+              Надрукувати звіт
+            </button>
+          </div>
+        </div>
+
+      </section>
+    </section>
+  {{/inline}}
+{{/layout}}

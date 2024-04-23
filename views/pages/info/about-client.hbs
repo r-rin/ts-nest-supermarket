@@ -1,84 +1,73 @@
 {{#> layout }}
   {{#*inline "pageContent"}}
-    <section class="content-section mb-5">
-      <h1 class="text-center">Інформація про клієнта</h1>
-    </section>
+    <section class="d-flex flex-column justify-content-center align-items-center h-100">
 
-    <section class="d-flex justify-content-center flex-column align-items-center h-75" >
-      <section class="content-section p-3 my-2" style="width: 500px;">
-        <div class="row mb-3">
-          <div class="col">
-            <strong>Номер картки клієнта:</strong>
-            <span>CARD001</span>
+      {{#if isFound}}
+        <section class="content-section" style="width: 700px;">
+          <div class="row">
+            <div class="col-8 d-flex flex-column justify-content-evenly">
+              <div>
+                <div class="h2 my-0">{{customer_card.customer_surname}} {{customer_card.customer_name}} {{customer_card.customer_patronymic}}</div>
+                <div class="text-secondary">{{customer_card.card_number}}</div>
+              </div>
+            </div>
           </div>
-        </div>
+        </section>
 
-        <div class="row mb-3">
-          <div class="col">
-            <strong>Прізвище:</strong>
-            <span>Johnson</span>
+        <section class="content-section p-4 my-2" style="width: 700px;">
+          <div class="row mb-3">
+            <div class="col-6">
+              <div class="h5">Номер картки клієнта</div>
+              <div>{{customer_card.card_number}}</div>
+            </div>
+            <div class="col-6">
+              <div class="h5">Прізвище</div>
+              <div>{{customer_card.customer_surname}}</div>
+            </div>
           </div>
-        </div>
-
-        <div class="row mb-3">
-          <div class="col">
-            <strong>Ім'я:</strong>
-            <span>Michael</span>
+          <div class="row mb-3">
+            <div class="col-6">
+              <div class="h5">Ім'я</div>
+              <div>{{customer_card.customer_name}}</div>
+            </div>
+            <div class="col-6">
+              <div class="h5">По батькові</div>
+              <div>{{customer_card.customer_patronymic}}</div>
+            </div>
           </div>
-        </div>
-
-        <div class="row mb-3">
-          <div class="col">
-            <strong>По батькові:</strong>
-            <span>Alexander</span>
+          <div class="row mb-3">
+            <div class="col-6">
+              <div class="h5">Номер телефону</div>
+              <div>{{customer_card.customer_phone_number}}</div>
+            </div>
+            <div class="col-6">
+              <div class="h5">Місто</div>
+              <div>{{customer_card.customer_city}}</div>
+            </div>
           </div>
-        </div>
-
-        <div class="row mb-3">
-          <div class="col">
-            <strong>Номер телефону:</strong>
-            <span>+1234567890</span>
+          <div class="row mb-3">
+            <div class="col-6">
+              <div class="h5">Вулиця</div>
+              <div>{{customer_card.customer_street}}</div>
+            </div>
+            <div class="col-6">
+              <div class="h5">Поштовий індекс</div>
+              <div>{{customer_card.customer_zip_code}}</div>
+            </div>
           </div>
-        </div>
-
-        <div class="row mb-3">
-          <div class="col">
-            <strong>Місто:</strong>
-            <span>New York</span>
+          <div class="row">
+            <div class="col-6">
+              <div class="h5">Відсоток знижки</div>
+              <div>{{customer_card.customer_percent}}%</div>
+            </div>
           </div>
-        </div>
+        </section>
+      {{else}}
+        <section class="content-section" style="width: 700px;">
+          <h1 class="text-center m-3">Такого клієнта не знайдено</h1>
+        </section>
+      {{/if}}
 
-        <div class="row mb-3">
-          <div class="col">
-            <strong>Вулиця:</strong>
-            <span>Main St.</span>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <div class="col">
-            <strong>Поштовий індекс:</strong>
-            <span>10001</span>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <div class="col">
-            <strong>Відсоток знижки:</strong>
-            <span>10</span>
-            <span>%</span>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col">
-            <button type="button" class="btn btn-outline-success w-100">
-              Надрукувати звіт
-            </button>
-          </div>
-        </div>
-
-      </section>
     </section>
   {{/inline}}
 {{/layout}}
