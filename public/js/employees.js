@@ -1,4 +1,4 @@
-const itemsPerPage = 8;
+const itemsPerPage = 7;
 let currentPage = 1;
 let userRole = 0;
 let totalRowsAmount = 0;
@@ -26,14 +26,13 @@ let employeeCityValue = employeeCityInput.value;
 let sortByValue = sortBySelect.value;
 let orderByValue = orderBySelect.value;
 
-
-searchButton.onclick = async function() {
+searchButton.onclick = async function () {
   updateInputValues();
   currentPage = 1;
 
   await loadTableData(generateFetchURL(currentPage));
   loadPagination(currentPage);
-}
+};
 
 function generateFetchURL(currentPage) {
   return `/api/employees/search?limit=${itemsPerPage}&page=${currentPage}&employeeId=${employeeIdValue}&text=${textValue}&employeeRole=${employeeRoleValue}&employeeCity=${employeeCityValue}&sortBy=${sortByValue}&order=${orderByValue}`;
@@ -71,6 +70,7 @@ window.onload = init;
 async function init() {
   await loadTableData(generateFetchURL(currentPage));
   loadPagination(currentPage);
+  handlePrintButton();
 }
 
 async function generateInteractionButtons(employee_id) {
@@ -210,4 +210,87 @@ function openEditEmployee(button) {
 function formatDate(inputDate) {
   const date = new Date(inputDate);
   return date.toLocaleDateString('en-GB');
+}
+
+function handlePrintButton() {
+  let printButton = document.getElementById('print-button');
+  printButton.onclick = async function () {
+    const response = await fetch(
+      `/api/employees/search?employeeId=${employeeIdValue}&text=${textValue}&employeeRole=${employeeRoleValue}&employeeCity=${employeeCityValue}&sortBy=${sortByValue}&order=${orderByValue}`,
+    );
+    const data = await response.json();
+    const tableBodyToPrint = document.getElementById('table-to-print');
+
+    const rowTemplate = document.createElement('tr');
+    for (let i = 0; i < 9; i++) {
+      const td = document.createElement('td');
+      rowTemplate.appendChild(td);
+    }
+    tableBodyToPrint.innerHTML = '';
+    totalRowsAmount = data.amount;
+    totalAmountElement.innerText = data.amount;
+
+    let counter = 0;
+    data.rows.forEach((employee) => {
+      let rowClone = rowTemplate.cloneNode(true);
+      let rowColumns = rowClone.querySelectorAll('td');
+      rowColumns[0].innerText =
+        (currentPage - 1) * itemsPerPage + 1 + counter++;
+      rowColumns[1].innerText = employee.employee_id;
+      rowColumns[2].innerText = employee.employee_surname;
+      rowColumns[3].innerText = employee.employee_name;
+      rowColumns[4].innerText = rolesDict[employee.employee_role];
+      rowColumns[5].innerText = employee.employee_salary;
+      rowColumns[6].innerText = formatDate(employee.employee_start_date);
+      rowColumns[7].innerText = formatDate(employee.employee_birth_date);
+      rowColumns[8].innerText = employee.employee_city;
+
+      tableBodyToPrint.appendChild(rowClone);
+    });
+    data.rows.forEach((employee) => {
+      let rowClone = rowTemplate.cloneNode(true);
+      let rowColumns = rowClone.querySelectorAll('td');
+      rowColumns[0].innerText =
+        (currentPage - 1) * itemsPerPage + 1 + counter++;
+      rowColumns[1].innerText = employee.employee_id;
+      rowColumns[2].innerText = employee.employee_surname;
+      rowColumns[3].innerText = employee.employee_name;
+      rowColumns[4].innerText = rolesDict[employee.employee_role];
+      rowColumns[5].innerText = employee.employee_salary;
+      rowColumns[6].innerText = formatDate(employee.employee_start_date);
+      rowColumns[7].innerText = formatDate(employee.employee_birth_date);
+      rowColumns[8].innerText = employee.employee_city;
+
+      tableBodyToPrint.appendChild(rowClone);
+    });
+
+    const table2BodyToPrint = document.getElementById('table-to-print-test');
+
+    const row2Template = document.createElement('tr');
+    for (let i = 0; i < 9; i++) {
+      const td = document.createElement('td');
+      row2Template.appendChild(td);
+    }
+    table2BodyToPrint.innerHTML = '';
+    totalRowsAmount = data.amount;
+    totalAmountElement.innerText = data.amount;
+
+    data.rows.forEach((employee) => {
+      let rowClone = row2Template.cloneNode(true);
+      let rowColumns = rowClone.querySelectorAll('td');
+      rowColumns[0].innerText =
+        (currentPage - 1) * itemsPerPage + 1 + counter++;
+      rowColumns[1].innerText = employee.employee_id;
+      rowColumns[2].innerText = employee.employee_surname;
+      rowColumns[3].innerText = employee.employee_name;
+      rowColumns[4].innerText = rolesDict[employee.employee_role];
+      rowColumns[5].innerText = employee.employee_salary;
+      rowColumns[6].innerText = formatDate(employee.employee_start_date);
+      rowColumns[7].innerText = formatDate(employee.employee_birth_date);
+      rowColumns[8].innerText = employee.employee_city;
+
+      table2BodyToPrint.appendChild(rowClone);
+    });
+    window.print();
+  };
 }

@@ -3,47 +3,11 @@ let currentPage = 1;
 let userRole = 0;
 let totalRowsAmount = 0;
 
-//Selectors
-const totalAmountElement = document.querySelector('#rows-amount');
-const searchButton = document.querySelector('#search');
-
-//Filter Selectors
-const productIdInput = document.querySelector('#productId');
-const textInput = document.querySelector('#searchByText');
-const categorySelector = document.querySelector('#productCategory');
-const sortBySelect = document.querySelector('#sortBy');
-const orderBySelect = document.querySelector('#orderBy');
-
-//Filter values
-let productIdValue = productIdInput.value;
-let textValue = textInput.value;
-let categoryValue = categorySelector.value;
-let sortByValue = sortBySelect.value;
-let orderByValue = orderBySelect.value;
-
-searchButton.onclick = async function() {
-  updateInputValues();
-  currentPage = 1;
-
-  await loadTableData(generateFetchURL(currentPage));
-  await loadPagination(currentPage);
-}
-
-function generateFetchURL(currentPage) {
-  return `/api/products/search?limit=${itemsPerPage}&page=${currentPage}&productId=${productIdValue}&text=${textValue}&categoryNumber=${categoryValue}&sortBy=${sortByValue}&order=${orderByValue}`;
-}
-
-function updateInputValues() {
-  productIdValue = productIdInput.value;
-  textValue = textInput.value;
-  categoryValue = categorySelector.value;
-  sortByValue = sortBySelect.value;
-  orderByValue = orderBySelect.value;
-}
-
 fetchUserRole().then((role) => {
   userRole = role;
 });
+
+const totalAmountElement = document.querySelector('#rows-amount');
 
 async function fetchUserRole() {
   const response = await fetch('/api/user');
@@ -55,6 +19,7 @@ window.onload = init;
 async function init() {
   await loadTableData(generateFetchURL(currentPage));
   await loadPagination(currentPage);
+  handlePrintButton();
 }
 
 async function generateInteractionButtons(product_id) {
@@ -186,4 +151,11 @@ function openEditProduct(button) {
   let newTab = window.open('/products/edit-product?id=' + id, '_blank');
 
   newTab.focus();
+}
+
+function handlePrintButton() {
+  let printButton = document.getElementById('print-button');
+  printButton.onclick = function () {
+    window.print();
+  };
 }

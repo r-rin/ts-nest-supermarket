@@ -157,3 +157,10 @@ function openEditCard(button) {
 
   newTab.focus();
 }
+
+function handlePrintButton() {
+  let printButton = document.getElementById('print-button');
+  printButton.onclick = function () {
+    window.print();
+  };
+}

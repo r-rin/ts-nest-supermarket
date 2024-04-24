@@ -19,6 +19,7 @@ window.onload = init;
 async function init() {
   await loadTableData(currentPage);
   loadPagination(currentPage);
+  handlePrintButton();
 }
 
 async function generateInteractionButtons(category_number) {
@@ -152,4 +153,11 @@ function openEditCategory(button) {
   let newTab = window.open('/categories/edit-category?id=' + id, '_blank');
 
   newTab.focus();
+}
+
+function handlePrintButton() {
+  let printButton = document.getElementById('print-button');
+  printButton.onclick = function () {
+    window.print();
+  };
 }

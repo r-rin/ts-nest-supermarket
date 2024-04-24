@@ -46,7 +46,11 @@ fetchUserRole().then((role) => {
   userRole = role;
 });
 
+// SELECTORS
+const totalAmountSpan = document.querySelector('#rows-amount');
+
 // PAGINATION SELECTORS
+
 async function fetchUserRole() {
   const response = await fetch('/api/user');
   const userData = await response.json();
@@ -57,6 +61,7 @@ window.onload = init;
 async function init() {
   await loadTableData(generateFetchURL(currentPage));
   await loadPagination(currentPage);
+  handlePrintButton();
 }
 
 async function generateInteractionButtons(UPC) {
@@ -195,4 +200,11 @@ function openEditSupply(button) {
   let newTab = window.open('/supplies/edit-supply?upc=' + upc, '_blank');
 
   newTab.focus();
+}
+
+function handlePrintButton() {
+  let printButton = document.getElementById('print-button');
+  printButton.onclick = function () {
+    window.print();
+  };
 }

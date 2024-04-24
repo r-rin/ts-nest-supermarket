@@ -19,6 +19,7 @@ window.onload = init;
 async function init() {
   await loadTableData(currentPage);
   loadPagination(currentPage);
+  handlePrintButton()
 }
 
 async function generateInteractionButtons(receipt_id) {
@@ -156,4 +157,11 @@ function openEditReceipt(button) {
   let newTab = window.open('/receipts/edit-receipt?id=' + id, '_blank');
 
   newTab.focus();
+}
+
+function handlePrintButton() {
+  let printButton = document.getElementById('print-button');
+  printButton.onclick = function () {
+    window.print();
+  };
 }
