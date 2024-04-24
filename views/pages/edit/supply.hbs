@@ -14,28 +14,27 @@
               <label for="upc" class="form-label text-center">UPC</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Наприклад: 799439112766" id="upc"
-                     name="upc" value="{{store_product.UPC}}" required>
+                     name="upc" maxlength="12" value="{{store_product.UPC}}" required>
             </div>
 
             <div class="col">
               <label for="upcProm" class="form-label text-center">UPC (акційний)</label>
               <input type="text" class="form-control text-center" placeholder="Наприклад: 835346892595" id="upcProm"
-                     name="upcProm" value="{{store_product.UPC_prom}}">
+                     name="upcProm" maxlength="12" value="{{store_product.UPC_prom}}">
             </div>
           </div>
 
           <div class="row mb-3">
             <div class="col">
-              <label for="productIdName" class="form-label text-center">ID предмету та назва</label>
+              <label for="productName" class="form-label text-center">Назва предмета</label>
               <span style="color: red">*</span>
-              <input list="productOptions" class="form-control text-center" id="productIdName" name="productIdName"
-                     placeholder="Наприклад: 1 - Яблуко" value="{{store_product.product_id}}" required>
-              <datalist id="productOptions">
-                <option value="1 - Яблуко">
-                <option value="1 - Груша">
-                <option value="2 - Куряча грудка">
-                <option value="3 - Молоко">
-              </datalist>
+              <select class="form-select text-center" id="productName" name="productName" required>
+                <option value="" disabled>Оберіть предмет</option>
+                <option value="Яблуко">Яблуко</option>
+                <option value="Груша">Груша</option>
+                <option value="Куряча грудка">Куряча грудка</option>
+                <option value="Молоко">Молоко</option>
+              </select>
             </div>
 
             <div class="col">

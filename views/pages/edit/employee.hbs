@@ -14,14 +14,14 @@
               <label for="employeeId" class="form-label text-center">ID працівника</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Наприклад: EMP002" id="employeeId"
-                     name="employeeId" value="{{employee.employee_id}}" required>
+                     name="employeeId" maxlength="10" value="{{employee.employee_id}}" required>
             </div>
 
             <div class="col">
               <label for="employeeSurname" class="form-label text-center">Прізвище</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Прізвище" id="employeeSurname"
-                     name="employeeSurname" value="{{employee.employee_surname}}" required>
+                     name="employeeSurname" maxlength="50" value="{{employee.employee_surname}}" required>
             </div>
           </div>
 
@@ -30,13 +30,13 @@
               <label for="employeeName" class="form-label text-center">Ім'я</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Ім'я" id="employeeName"
-                     name="employeeName" value="{{employee.employee_name}}" required>
+                     name="employeeName" maxlength="50" value="{{employee.employee_name}}" required>
             </div>
 
             <div class="col">
               <label for="employeePatronymic" class="form-label text-center">По батькові</label>
               <input type="text" class="form-control text-center" placeholder="По батькові" id="employeePatronymic"
-                     name="employeePatronymic" value="{{employee.employee_patronymic}}">
+                     name="employeePatronymic" maxlength="50" value="{{employee.employee_patronymic}}">
             </div>
           </div>
 
@@ -88,7 +88,7 @@
               <label for="employeeCity" class="form-label text-center">Місто</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Місто" id="employeeCity"
-                     name="employeeCity" value="{{employee.employee_city}}" required>
+                     name="employeeCity" maxlength="50" value="{{employee.employee_city}}" required>
             </div>
           </div>
 
@@ -97,20 +97,20 @@
               <label for="employeeStreet" class="form-label text-center">Вулиця</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Вулиця" id="employeeStreet"
-                     name="employeeStreet" value="{{employee.employee_street}}" required>
+                     name="employeeStreet" maxlength="50" value="{{employee.employee_street}}" required>
             </div>
 
             <div class="col">
               <label for="employeeZipCode" class="form-label text-center">Поштовий індекс</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Поштовий індекс" id="employeeZipCode"
-                     name="employeeZipCode" value="{{employee.employee_zip_code}}" required>
+                     name="employeeZipCode" maxlength="9" value="{{employee.employee_zip_code}}" required>
             </div>
           </div>
 
           <div class="row">
             <div>
-              <button type="submit" class="btn btn-primary w-50">
+              <button type="submit" class="btn btn-primary w-100">
                 Зберегти зміни
               </button>
             </div>
