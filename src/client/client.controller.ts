@@ -57,13 +57,7 @@ export class ClientController {
   @Get('products')
   @Render('products')
   async products(@Req() req) {
-    return {
-      script: 'products',
-      style: 'products',
-      title: 'Злагода: Продукти',
-      currentUser: req.currentEmployee,
-      isProducts: true,
-    };
+    return await this.clientService.getProductsRenderObject(req);
   }
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
@@ -96,13 +90,7 @@ export class ClientController {
   @Get('employees')
   @Render('employees')
   async employees(@Req() req) {
-    return {
-      script: 'employees',
-      style: 'employees',
-      title: 'Злагода: Працівники',
-      currentUser: req.currentEmployee,
-      isEmployees: true,
-    };
+    return await this.clientService.getEmployeesRenderObject(req);
   }
 
   //сторінки для додавання

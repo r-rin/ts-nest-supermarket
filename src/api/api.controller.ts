@@ -12,4 +12,10 @@ export class ApiController {
   async currentEmployee(@Req() req) {
     return req.currentEmployee;
   }
+
+  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Get('allRoles')
+  async getAllRoles() {
+    return this.apiService.getAllRoles();
+  }
 }

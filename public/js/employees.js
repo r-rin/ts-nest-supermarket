@@ -9,6 +9,18 @@ fetchUserRole().then((role) => {
 
 const totalAmountElement = document.querySelector('#rows-amount');
 
+/// Roles Dictionary
+let rolesDict = {};
+
+getRoles().then((dict) => {
+  rolesDict = dict;
+});
+
+async function getRoles() {
+  const response = await fetch('/api/allRoles');
+  return await response.json();
+}
+
 async function fetchUserRole() {
   const response = await fetch('/api/user');
   const userData = await response.json();
@@ -58,10 +70,10 @@ async function loadTableData(currentPage) {
     rowColumns[1].innerText = supply.employee_id;
     rowColumns[2].innerText = supply.employee_surname;
     rowColumns[3].innerText = supply.employee_name;
-    rowColumns[4].innerText = supply.employee_role;
+    rowColumns[4].innerText = rolesDict[supply.employee_role];
     rowColumns[5].innerText = supply.employee_salary;
-    rowColumns[6].innerText = supply.employee_start_date;
-    rowColumns[7].innerText = supply.employee_birth_date;
+    rowColumns[6].innerText = formatDate(supply.employee_start_date);
+    rowColumns[7].innerText = formatDate(supply.employee_birth_date);
     rowColumns[8].innerText = supply.employee_city;
     generateInteractionButtons(supply.employee_id).then((res) => {
       rowColumns[9].innerHTML = `<div class="actions-container">${res}</div>`;
@@ -157,4 +169,9 @@ function openEditEmployee(button) {
   let newTab = window.open('/employees/edit-employee?id=' + id, '_blank');
 
   newTab.focus();
+}
+
+function formatDate(inputDate) {
+  const date = new Date(inputDate);
+  return date.toLocaleDateString('en-GB');
 }

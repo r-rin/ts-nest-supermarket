@@ -22,9 +22,9 @@
             <label for="employeeRole" class="form-label">Роль</label>
             <select name="employeeRole" id="employeeRole" class="form-select">
               <option value="all">Усі</option>
-              <option value="admin">Адміністратор</option>
-              <option value="manager">Менеджер</option>
-              <option value="cashier">Касир</option>
+              {{#each rolesDict}}
+                <option value="{{@index}}">{{this.[1]}}</option>
+              {{/each}}
             </select>
           </div>
 
@@ -32,16 +32,16 @@
             <label for="employeeCity" class="form-label">Місто</label>
             <select name="employeeCity" id="employeeCity" class="form-select">
               <option value="all">Усі</option>
-              <option value="LosAngeles">Los Angeles</option>
-              <option value="Houston">Houston</option>
-              <option value="Seattle">Seattle</option>
-              <option value="Chicago">Chicago</option>
+              {{#each citiesArr}}
+                <option value="{{this.employee_city}}">{{this.employee_city}}</option>
+              {{/each}}
             </select>
           </div>
 
           <div class="col-2">
             <label for="sortBy" class="form-label">Сортувати за</label>
             <select name="sortBy" id="sortBy" class="form-select">
+              <option value="none">Не сортувати</option>
               <option value="employee_surname">Прізвищем</option>
               <option value="employee_name">Ім'ям</option>
               <option value="employee_role">Роллю</option>

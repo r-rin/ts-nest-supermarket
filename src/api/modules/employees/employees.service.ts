@@ -64,5 +64,13 @@ export class EmployeesService {
         AND employee_patronymic LIKE '%${employeePatronimic}%';`,
     );
   };
+
+  async getAllTowns() {
+    const queryResult = await this.databaseService.query(
+      `SELECT DISTINCT employee_city
+      FROM Employee;`
+    )
+    return queryResult;
+  }
 }
 

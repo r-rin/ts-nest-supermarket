@@ -22,16 +22,16 @@
             <label for="productCategory" class="form-label">Категорія</label>
             <select name="productCategory" id="productCategory" class="form-select">
               <option value="all">Усі</option>
-              <option value="vegetables_fruits">Овочі та фрукти</option>
-              <option value="meat_poultry">М'ясо і птиця</option>
-              <option value="dairy_products">Молочні продукти</option>
-              <option value="pastry">Кондитерські вироби</option>
+              {{#each categoriesDict}}
+                <option value="{{@index}}">{{this.[1]}}</option>
+              {{/each}}
             </select>
           </div>
 
           <div class="col-2">
             <label for="sortBy" class="form-label">Сортувати за</label>
             <select name="sortBy" id="sortBy" class="form-select">
+              <option value="none">Не сортувати</option>
               <option value="product_id">ID</option>
               <option value="category_number">Номером категорії</option>
               <option value="product_name">Назвою</option>

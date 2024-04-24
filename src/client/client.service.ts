@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { EmployeesService } from '../api/modules/employees/employees.service';
 import { ClientsService } from '../api/modules/clients/clients.service';
+import { ApiService } from '../api/api.service';
+import { CategoriesService } from '../api/modules/categories/categories.service';
 
 @Injectable()
 export class ClientService {
@@ -8,6 +10,8 @@ export class ClientService {
   constructor(
     private employeesService: EmployeesService,
     private clientsService: ClientsService,
+    private apiService: ApiService,
+    private categoriesService: CategoriesService,
     ) {}
 
   formatDate(inputDate: string) {
@@ -64,5 +68,28 @@ export class ClientService {
 
     toRender.customer_card = await this.clientsService.getClientCard(card_id);
     return toRender;
+  }
+
+  async getEmployeesRenderObject(req: any) {
+    return {
+      script: 'employees',
+      style: 'employees',
+      title: 'Злагода: Працівники',
+      currentUser: req.currentEmployee,
+      rolesDict: Object.entries(await this.apiService.getAllRoles()),
+      citiesArr: await this.employeesService.getAllTowns(),
+      isEmployees: true,
+    };
+  }
+
+  async getProductsRenderObject(req) {
+    return {
+      script: 'products',
+      style: 'products',
+      title: 'Злагода: Предмети',
+      currentUser: req.currentEmployee,
+      categoriesDict: Object.entries(await this.categoriesService.getAllCategories()),
+      isProducts: true,
+    };
   }
 }
