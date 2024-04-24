@@ -1,6 +1,30 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 
+function filterQueryBuilder(id: string, text: string, category: string, sortBy: string, order: string, limit: any, page: any): string {
+
+  if (!id) id = '';
+  if (!text) text = '';
+
+  let queryBase = `
+    SELECT *
+    FROM Product
+    JOIN Category ON Product.category_number = Category.category_number
+    WHERE product_id LIKE '%${id}%'
+    AND ( 
+        product_name LIKE '%${text}%'
+        OR characteristics LIKE '%${text}%'
+        OR category_name LIKE '%${text}%'
+    )`
+
+  if (category && category != 'all') queryBase += ` AND Product.category_number = ${category}`;
+  if (sortBy && sortBy != 'none') queryBase += ` ORDER BY ${sortBy} ${order}`;
+  if (limit) queryBase += ` LIMIT ${limit} OFFSET ${(page - 1) * limit}`
+  queryBase += ';';
+
+  return queryBase;
+}
+
 @Injectable()
 export class ProductsService {
   constructor(private databaseService: DatabaseService) {}
@@ -34,5 +58,17 @@ export class ProductsService {
       FROM Product
       WHERE product.product_name LIKE '%${productNameToFind}%';`,
     );
+  }
+
+  async searchByFilter(id: string, text: string, category: string, sortBy: string, order: string, limit: any, page: any) {
+    const query = filterQueryBuilder(id, text, category, sortBy, order, limit, page);
+    const allQuery = filterQueryBuilder(id, text, category, sortBy, order, null, null);
+    const queryResult = await this.databaseService.query(query);
+    const allQueryResult = await this.databaseService.query(allQuery);
+
+    return {
+      rows: queryResult,
+      amount: allQueryResult.length,
+    };
   }
 }

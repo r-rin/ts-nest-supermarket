@@ -5,7 +5,7 @@ import { Role } from '../../auth/roles/role.enum';
 
 @Controller('api/products')
 export class ProductsController {
-  constructor(private categoryService: ProductsService) {}
+  constructor(private productsService: ProductsService) {}
 
   @Get('all')
   @Roles(Role.Admin, Role.Cashier, Role.Manager)
@@ -13,12 +13,26 @@ export class ProductsController {
     @Query('limit', ParseIntPipe) limit: number,
     @Query('page', ParseIntPipe) page: number,
   ) {
-    return await this.categoryService.getAllProducts(limit, page);
+    return await this.productsService.getAllProducts(limit, page);
   }
 
   @Get('find/:productName')
   @Roles(Role.Admin, Role.Cashier, Role.Manager)
   async findProduct(@Param('productName') productName) {
-    return await this.categoryService.findProductByName(productName);
+    return await this.productsService.findProductByName(productName);
+  }
+
+  @Get('search')
+  @Roles(Role.Admin, Role.Cashier, Role.Manager)
+  async searchByFilter(
+    @Query('productId') id,
+    @Query('text') text,
+    @Query('categoryNumber') category,
+    @Query('sortBy') sortBy,
+    @Query('order') order,
+    @Query('limit') limit,
+    @Query('page') page,
+  ) {
+    return this.productsService.searchByFilter(id, text, category, sortBy, order, limit, page);
   }
 }
