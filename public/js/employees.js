@@ -50,20 +50,20 @@ async function loadTableData(currentPage) {
   totalAmountElement.innerText = data.amount;
 
   let counter = 0;
-  data.rows.forEach((supply) => {
+  data.rows.forEach((employee) => {
     let rowClone = rowTemplate.cloneNode(true);
     let rowColumns = rowClone.querySelectorAll('td');
     console.log(data);
     rowColumns[0].innerText = (currentPage - 1) * itemsPerPage + 1 + counter++;
-    rowColumns[1].innerText = supply.employee_id;
-    rowColumns[2].innerText = supply.employee_surname;
-    rowColumns[3].innerText = supply.employee_name;
-    rowColumns[4].innerText = supply.employee_role;
-    rowColumns[5].innerText = supply.employee_salary;
-    rowColumns[6].innerText = supply.employee_start_date;
-    rowColumns[7].innerText = supply.employee_birth_date;
-    rowColumns[8].innerText = supply.employee_city;
-    generateInteractionButtons(supply.employee_id).then((res) => {
+    rowColumns[1].innerText = employee.employee_id;
+    rowColumns[2].innerText = employee.employee_surname;
+    rowColumns[3].innerText = employee.employee_name;
+    rowColumns[4].innerText = employee.employee_role;
+    rowColumns[5].innerText = employee.employee_salary;
+    rowColumns[6].innerText = employee.employee_start_date;
+    rowColumns[7].innerText = employee.employee_birth_date;
+    rowColumns[8].innerText = employee.employee_city;
+    generateInteractionButtons(employee.employee_id).then((res) => {
       rowColumns[9].innerHTML = `<div class="actions-container">${res}</div>`;
     });
 

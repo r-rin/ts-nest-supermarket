@@ -1,0 +1,114 @@
+{{#> layout }}
+  {{#*inline "pageContent"}}
+    <section class="content-section mb-5">
+      <h1 class="text-center">Редагування інформації про товар</h1>
+    </section>
+
+    <section class="d-flex justify-content-center flex-column align-items-center h-75">
+      <section class="content-section p-3 my-2" style="width: 500px;">
+
+        <form id="editSupplyForm" action="/submit-edited-supply" method="POST">
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="upc" class="form-label text-center">UPC</label>
+              <span style="color: red">*</span>
+              <input type="text" class="form-control text-center" placeholder="Наприклад: 799439112766" id="upc"
+                     name="upc" value="{{store_product.UPC}}" required>
+            </div>
+
+            <div class="col">
+              <label for="upcProm" class="form-label text-center">UPC (акційний)</label>
+              <input type="text" class="form-control text-center" placeholder="Наприклад: 835346892595" id="upcProm"
+                     name="upcProm" value="{{store_product.UPC_prom}}">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="productIdName" class="form-label text-center">ID предмету та назва</label>
+              <span style="color: red">*</span>
+              <input list="productOptions" class="form-control text-center" id="productIdName" name="productIdName"
+                     placeholder="Наприклад: 1 - Яблуко" value="{{store_product.product_id}}" required>
+              <datalist id="productOptions">
+                <option value="1 - Яблуко">
+                <option value="1 - Груша">
+                <option value="2 - Куряча грудка">
+                <option value="3 - Молоко">
+              </datalist>
+            </div>
+
+            <div class="col">
+              <label for="sellingPrice" class="form-label text-center">Ціна продажу</label>
+              <span style="color: red">*</span>
+              <input type="number" class="form-control text-center" placeholder="Ціна продажу" id="sellingPrice"
+                     name="sellingPrice" min="0" step="0.01" value="{{store_product.selling_price}}" required>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="productsAmount" class="form-label text-center">Кількість товарів</label>
+              <span style="color: red">*</span>
+              <input type="number" class="form-control text-center" placeholder="Кількість товарів" id="productsAmount"
+                     name="productsAmount" min="0" step="1" value="{{store_product.products_amount}}" required>
+            </div>
+
+            <div class="col">
+              <div class="row">
+                <div class="col">
+                  <label class="form-label">Чи акційний товар?</label>
+                  <span style="color: red">*</span>
+                </div>
+              </div>
+
+              <div class="row mt-2">
+                <div class="col">
+
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="isPromotional" id="promotionalYes"
+                           value="true" {{#if (store_product.is_promotional "true")}}checked{{/if}} required>
+                    <label class="form-check-label" for="promotionalYes">Так</label>
+                  </div>
+
+                  <div class="form-check form-check-inline ms-3">
+                    <input class="form-check-input" type="radio" name="isPromotional" id="promotionalNo"
+                           value="false" {{#if (store_product.is_promotional "false")}}checked{{/if}} required>
+                    <label class="form-check-label" for="promotionalNo">Ні</label>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="manufacturingDate" class="form-label text-center">Дата виробництва</label>
+              <span style="color: red">*</span>
+              <input type="date" class="form-control text-center" id="manufacturingDate" name="manufacturingDate"
+                     value="{{store_product.manufacturing_date}}" required>
+            </div>
+
+            <div class="col">
+              <label for="expirationDate" class="form-label text-center">Термін придатності</label>
+              <span style="color: red">*</span>
+              <input type="date" class="form-control text-center" id="expirationDate" name="expirationDate"
+                     value="{{store_product.expiration_date}}" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <button type="submit" class="btn btn-primary w-50">
+                Зберегти зміни
+              </button>
+            </div>
+          </div>
+
+        </form>
+
+      </section>
+    </section>
+  {{/inline}}
+{{/layout}}

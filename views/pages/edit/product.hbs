@@ -13,7 +13,7 @@
             <div class="col">
               <label for="productId" class="form-label text-center">ID товару</label>
               <span style="color: red">*</span>
-              <input type="number" class="form-control text-center" id="productId"
+              <input type="number" class="form-control text-center" placeholder="Наприклад: 1" id="productId"
                      name="productId" min="1" step="1" value="{{product.product_id}}" required>
             </div>
 
@@ -36,7 +36,7 @@
             <div class="col">
               <label for="productName" class="form-label text-center">Назва товару</label>
               <span style="color: red">*</span>
-              <input type="text" class="form-control text-center" id="productName"
+              <input type="text" class="form-control text-center" placeholder="Назва товару" id="productName"
                      name="productName" value="{{product.product_name}}" required>
             </div>
           </div>
@@ -45,21 +45,15 @@
             <div class="col">
               <label for="characteristics" class="form-label text-center">Характеристики</label>
               <span style="color: red">*</span>
-              <textarea class="form-control text-center" id="characteristics"
+              <textarea class="form-control text-center" placeholder="Характеристики" id="characteristics"
                         name="characteristics" rows="4" required>{{product.characteristics}}</textarea>
             </div>
           </div>
 
           <div class="row">
-            <div class="btn-group w-100" role="group" aria-label="Actions">
-              <button type="reset" class="btn btn-outline-secondary w-50">
-                Скасувати
-              </button>
-
-              <button type="submit" class="btn btn-primary w-50">
-                Зберегти зміни
-              </button>
-            </div>
+            <button type="submit" class="btn btn-primary w-50">
+              Зберегти зміни
+            </button>
           </div>
 
         </form>

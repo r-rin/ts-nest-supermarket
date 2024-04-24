@@ -13,7 +13,7 @@
             <div>
               <label for="categoryNumber" class="form-label text-center">Номер категорії</label>
               <span style="color: red">*</span>
-              <input type="number" class="form-control text-center" id="categoryNumber"
+              <input type="number" class="form-control text-center" placeholder="Наприклад: 1" id="categoryNumber"
                      name="categoryNumber" value="{{category.category_number}}" required>
             </div>
           </div>
@@ -22,18 +22,14 @@
             <div>
               <label for="categoryName" class="form-label text-center">Назва</label>
               <span style="color: red">*</span>
-              <input type="text" class="form-control text-center" id="categoryName"
-                     name="categoryName" value="{{category.category_name}}" required>
+              <input type="text" class="form-control text-center" placeholder="Наприклад: Овочі та фрукти"
+                     id="categoryName" name="categoryName" value="{{category.category_name}}" required>
             </div>
           </div>
 
           <div class="row">
-            <div class="btn-group w-100" role="group" aria-label="Actions">
-              <button type="reset" class="btn btn-outline-secondary w-50">
-                Скасувати
-              </button>
-
-              <button type="submit" class="btn btn-primary w-50">
+            <div>
+              <button type="submit" class="btn btn-primary w-100">
                 Зберегти зміни
               </button>
             </div>

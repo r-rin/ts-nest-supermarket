@@ -5,9 +5,7 @@ import { ClientService } from './client.service';
 
 @Controller()
 export class ClientController {
-  constructor(
-    private clientService: ClientService,
-  ) {}
+  constructor(private clientService: ClientService) {}
 
   @Get('login')
   @Render('login')
@@ -111,7 +109,7 @@ export class ClientController {
   @Render('add/category')
   async renderAddCategoryPage(@Req() req) {
     return {
-      title: 'Додати категорію',
+      title: 'Злагода: Додати категорію',
       currentUser: req.currentEmployee,
       isCategories: true,
     };
@@ -122,7 +120,7 @@ export class ClientController {
   @Render('add/client')
   async renderAddClientPage(@Req() req) {
     return {
-      title: 'Додати клієнта',
+      title: 'Злагода: Додати клієнта',
       currentUser: req.currentEmployee,
       isClients: true,
     };
@@ -133,7 +131,7 @@ export class ClientController {
   @Render('add/product')
   async renderAddProductPage(@Req() req) {
     return {
-      title: 'Додати предмет',
+      title: 'Злагода: Додати предмет',
       currentUser: req.currentEmployee,
       isProducts: true,
     };
@@ -144,7 +142,7 @@ export class ClientController {
   @Render('add/receipt')
   async renderAddReceiptPage(@Req() req) {
     return {
-      title: 'Додати чек',
+      title: 'Злагода: Додати чек',
       currentUser: req.currentEmployee,
       isReceipts: true,
     };
@@ -155,7 +153,7 @@ export class ClientController {
   @Render('add/supply')
   async renderAddESupplyPage(@Req() req) {
     return {
-      title: 'Додати товар',
+      title: 'Злагода: Додати товар',
       currentUser: req.currentEmployee,
       isSupplies: true,
     };
@@ -166,7 +164,7 @@ export class ClientController {
   @Render('add/employee')
   async renderAddEmployeePage(@Req() req) {
     return {
-      title: 'Додати працівника',
+      title: 'Злагода: Додати працівника',
       currentUser: req.currentEmployee,
       isEmployees: true,
     };
@@ -185,7 +183,7 @@ export class ClientController {
   @Render('info/about-category')
   async renderAboutCategoryPage(@Req() req) {
     return {
-      title: 'Інформація про категорію',
+      title: 'Злагода: Інформація про категорію',
       currentUser: req.currentEmployee,
       isCategories: true,
     };
@@ -204,7 +202,7 @@ export class ClientController {
   async renderAboutProductPage(@Req() req) {
     return {
       script: 'about-product',
-      title: 'Інформація про предмет',
+      title: 'Злагода: Інформація про предмет',
       currentUser: req.currentEmployee,
       isProducts: true,
     };
@@ -215,7 +213,7 @@ export class ClientController {
   @Render('info/about-receipt')
   async renderAboutReceiptPage(@Req() req) {
     return {
-      title: 'Інформація про чек',
+      title: 'Злагода: Інформація про чек',
       currentUser: req.currentEmployee,
       isReceipts: true,
     };
@@ -226,7 +224,7 @@ export class ClientController {
   @Render('info/about-supply')
   async renderAboutSupplyPage(@Req() req) {
     return {
-      title: 'Інформація про товар',
+      title: 'Злагода: Інформація про товар',
       currentUser: req.currentEmployee,
       isSupplies: true,
     };
@@ -238,7 +236,7 @@ export class ClientController {
   @Render('edit/category')
   async renderEditCategoryPage(@Req() req) {
     return {
-      title: 'Редагувати категорію',
+      title: 'Злагода: Редагувати категорію',
       currentUser: req.currentEmployee,
       isCategories: true,
     };
@@ -256,7 +254,7 @@ export class ClientController {
   @Render('edit/product')
   async renderEditProductPage(@Req() req) {
     return {
-      title: 'Редагувати дані про предмет',
+      title: 'Злагода: Редагувати дані про предмет',
       currentUser: req.currentEmployee,
       isProducts: true,
     };
@@ -267,7 +265,7 @@ export class ClientController {
   @Render('edit/receipt')
   async renderEditReceiptPage(@Req() req) {
     return {
-      title: 'Редагувати чек',
+      title: 'Злагода: Редагувати чек',
       currentUser: req.currentEmployee,
       isReceipts: true,
     };
@@ -278,7 +276,7 @@ export class ClientController {
   @Render('edit/supply')
   async renderEditESupplyPage(@Req() req) {
     return {
-      title: 'Редагувати дані про товар',
+      title: 'Злагода: Редагувати дані про товар',
       currentUser: req.currentEmployee,
       isSupplies: true,
     };
@@ -289,7 +287,7 @@ export class ClientController {
   @Render('edit/employee')
   async renderEditEmployeePage(@Req() req) {
     return {
-      title: 'Редагувати дані працівника',
+      title: 'Злагода: Редагувати дані працівника',
       currentUser: req.currentEmployee,
       isEmployees: true,
     };
