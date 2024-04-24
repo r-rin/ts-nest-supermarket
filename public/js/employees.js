@@ -3,17 +3,57 @@ let currentPage = 1;
 let userRole = 0;
 let totalRowsAmount = 0;
 
-fetchUserRole().then((role) => {
-  userRole = role;
-});
-
+//Selectors
 const totalAmountElement = document.querySelector('#rows-amount');
+const searchButton = document.querySelector('#search');
 
 /// Roles Dictionary
 let rolesDict = {};
 
+//Filter Selectors
+const employeeIdInput = document.querySelector('#employeeId');
+const textInput = document.querySelector('#searchByText');
+const employeeRoleInput = document.querySelector('#employeeRole');
+const employeeCityInput = document.querySelector('#employeeCity');
+const sortBySelect = document.querySelector('#sortBy');
+const orderBySelect = document.querySelector('#orderBy');
+
+//Filter values
+let employeeIdValue = employeeIdInput.value;
+let textValue = textInput.value;
+let employeeRoleValue = employeeRoleInput.value;
+let employeeCityValue = employeeCityInput.value;
+let sortByValue = sortBySelect.value;
+let orderByValue = orderBySelect.value;
+
+
+searchButton.onclick = async function() {
+  updateInputValues();
+  currentPage = 1;
+
+  await loadTableData(generateFetchURL(currentPage));
+  loadPagination(currentPage);
+}
+
+function generateFetchURL(currentPage) {
+  return `/api/employees/search?limit=${itemsPerPage}&page=${currentPage}&employeeId=${employeeIdValue}&text=${textValue}&employeeRole=${employeeRoleValue}&employeeCity=${employeeCityValue}&sortBy=${sortByValue}&order=${orderByValue}`;
+}
+
+function updateInputValues() {
+  employeeIdValue = employeeIdInput.value;
+  textValue = textInput.value;
+  employeeRoleValue = employeeRoleInput.value;
+  employeeCityValue = employeeCityInput.value;
+  sortByValue = sortBySelect.value;
+  orderByValue = orderBySelect.value;
+}
+
 getRoles().then((dict) => {
   rolesDict = dict;
+});
+
+fetchUserRole().then((role) => {
+  userRole = role;
 });
 
 async function getRoles() {
@@ -29,7 +69,7 @@ async function fetchUserRole() {
 
 window.onload = init;
 async function init() {
-  await loadTableData(currentPage);
+  await loadTableData(generateFetchURL(currentPage));
   loadPagination(currentPage);
 }
 
@@ -45,14 +85,11 @@ async function generateInteractionButtons(employee_id) {
   return htmlContent;
 }
 
-async function loadTableData(currentPage) {
-  const response = await fetch(
-    `/api/employees/all?limit=${itemsPerPage}&page=${currentPage}`,
-  );
+async function loadTableData(fetchUrl) {
+  const response = await fetch(fetchUrl);
   const data = await response.json();
   const tableBody = document.querySelector('#data-table tbody');
   const rowTemplate = document.createElement('tr');
-  console.log(data.rows.length);
   for (let i = 0; i < 10; i++) {
     const td = document.createElement('td');
     rowTemplate.appendChild(td);
@@ -65,7 +102,6 @@ async function loadTableData(currentPage) {
   data.rows.forEach((supply) => {
     let rowClone = rowTemplate.cloneNode(true);
     let rowColumns = rowClone.querySelectorAll('td');
-    console.log(data);
     rowColumns[0].innerText = (currentPage - 1) * itemsPerPage + 1 + counter++;
     rowColumns[1].innerText = supply.employee_id;
     rowColumns[2].innerText = supply.employee_surname;
@@ -101,7 +137,7 @@ async function loadPagination(currentPage) {
   previousPageLink.onclick = () => {
     if (currentPage > 1) {
       currentPage--;
-      loadTableData(currentPage);
+      loadTableData(generateFetchURL(currentPage));
       loadPagination(currentPage);
     }
   };
@@ -120,7 +156,7 @@ async function loadPagination(currentPage) {
     pageLink.innerText = i;
     pageLink.onclick = () => {
       currentPage = i;
-      loadTableData(currentPage);
+      loadTableData(generateFetchURL(currentPage));
       loadPagination(currentPage);
     };
     pageButton.appendChild(pageLink);
@@ -139,7 +175,7 @@ async function loadPagination(currentPage) {
   nextPageLink.onclick = () => {
     if (currentPage < totalPages) {
       currentPage++;
-      loadTableData(currentPage);
+      loadTableData(generateFetchURL(currentPage));
       loadPagination(currentPage);
     }
   };

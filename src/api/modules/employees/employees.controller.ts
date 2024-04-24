@@ -10,8 +10,8 @@ export class EmployeesController {
   @Get('all')
   @Roles(Role.Admin, Role.Cashier, Role.Manager)
   async allEmployees(
-    @Query('limit', ParseIntPipe) limit: number,
-    @Query('page', ParseIntPipe) page: number,
+    @Query('limit') limit: number,
+    @Query('page') page: number,
   ) {
     return await this.employeesService.getAllEmployees(limit, page);
   }
@@ -28,5 +28,20 @@ export class EmployeesController {
       employeeSurname,
       employeePatronimic,
     );
+  }
+
+  @Get('search')
+  @Roles(Role.Admin, Role.Cashier, Role.Manager)
+  async searchByFilter(
+    @Query('employeeId') id,
+    @Query('text') text,
+    @Query('employeeRole') role,
+    @Query('employeeCity') city,
+    @Query('sortBy') sortBy,
+    @Query('order') order,
+    @Query('limit', ParseIntPipe) limit,
+    @Query('page', ParseIntPipe) page,
+  ) {
+    return this.employeesService.searchByFilter(id, text, role, city, sortBy, order, limit, page);
   }
 }
