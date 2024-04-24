@@ -1,8 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 
-function filterQueryBuilder(upc: string, text: string, type: string, sortBy: string, order: string, limit: any, page: any): string {
-
+function filterQueryBuilder(
+  upc: string,
+  text: string,
+  type: string,
+  sortBy: string,
+  order: string,
+  limit: any,
+  page: any,
+): string {
   if (!upc) upc = '';
   if (!text) text = '';
 
@@ -16,11 +23,12 @@ function filterQueryBuilder(upc: string, text: string, type: string, sortBy: str
     ) 
     AND ( 
         Product.product_name LIKE '%${text}%'
-    )`
+    )`;
 
-  if (type && type != 'all') queryBase += ` AND is_promotional = ${type == 'promotional' ? 'TRUE' : 'FALSE'}`;
+  if (type && type != 'all')
+    queryBase += ` AND is_promotional = ${type == 'promotional' ? 'TRUE' : 'FALSE'}`;
   if (sortBy && sortBy != 'none') queryBase += ` ORDER BY ${sortBy} ${order}`;
-  if (limit) queryBase += ` LIMIT ${limit} OFFSET ${(page - 1) * limit}`
+  if (limit) queryBase += ` LIMIT ${limit} OFFSET ${(page - 1) * limit}`;
   queryBase += ';';
 
   return queryBase;
@@ -60,9 +68,33 @@ export class SuppliesService {
     );
   }
 
-  async searchByFilter(upc: string, text: string, type: string, sortBy: string, order: string, limit: any, page: any) {
-    const query = filterQueryBuilder(upc, text, type, sortBy, order, limit, page);
-    const allQuery = filterQueryBuilder(upc, text, type, sortBy, order, null, null);
+  async searchByFilter(
+    upc: string,
+    text: string,
+    type: string,
+    sortBy: string,
+    order: string,
+    limit: any,
+    page: any,
+  ) {
+    const query = filterQueryBuilder(
+      upc,
+      text,
+      type,
+      sortBy,
+      order,
+      limit,
+      page,
+    );
+    const allQuery = filterQueryBuilder(
+      upc,
+      text,
+      type,
+      sortBy,
+      order,
+      null,
+      null,
+    );
     const queryResult = await this.databaseService.query(query);
     const allQueryResult = await this.databaseService.query(allQuery);
 

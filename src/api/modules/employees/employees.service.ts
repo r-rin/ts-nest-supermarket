@@ -3,7 +3,6 @@ import { DatabaseService } from '../../database/database.service';
 import { IEmployee } from '../../interfaces/IEmployee.interface';
 
 function filterQueryBuilder(id, text, role, city, sortBy, order, limit, page) {
-
   if (!id) id = '';
   if (!text) text = '';
 
@@ -17,12 +16,12 @@ function filterQueryBuilder(id, text, role, city, sortBy, order, limit, page) {
         OR employee_phone_number LIKE '%${text}%'
         OR employee_city LIKE '%${text}%'
         OR employee_street LIKE '%${text}%'
-        OR employee_zip_code LIKE '%${text}%')`
+        OR employee_zip_code LIKE '%${text}%')`;
 
   if (role && role != 'all') queryBase += ` AND employee_role = ${role}`;
   if (city && city != 'all') queryBase += ` AND employee_city = '${city}'`;
   if (sortBy && sortBy != 'none') queryBase += ` ORDER BY ${sortBy} ${order}`;
-  if (limit) queryBase += ` LIMIT ${limit} OFFSET ${(page - 1) * limit}`
+  if (limit) queryBase += ` LIMIT ${limit} OFFSET ${(page - 1) * limit}`;
   queryBase += ';';
 
   return queryBase;
@@ -104,8 +103,26 @@ export class EmployeesService {
   }
 
   async searchByFilter(id, text, role, city, sortBy, order, limit, page) {
-    const query = filterQueryBuilder(id, text, role, city, sortBy, order, limit, page);
-    const allQuery = filterQueryBuilder(id, text, role, city, sortBy, order, null, null);
+    const query = filterQueryBuilder(
+      id,
+      text,
+      role,
+      city,
+      sortBy,
+      order,
+      limit,
+      page,
+    );
+    const allQuery = filterQueryBuilder(
+      id,
+      text,
+      role,
+      city,
+      sortBy,
+      order,
+      null,
+      null,
+    );
     const queryResult = await this.databaseService.query(query);
     const allQueryResult = await this.databaseService.query(allQuery);
 

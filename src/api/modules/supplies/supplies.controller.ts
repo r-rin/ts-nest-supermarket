@@ -33,6 +33,14 @@ export class SuppliesController {
     @Query('limit') limit,
     @Query('page') page,
   ) {
-    return this.suppliesService.searchByFilter(upc, text, type, sortBy, order, limit, page);
+    return this.suppliesService.searchByFilter(
+      upc,
+      text,
+      type,
+      sortBy,
+      order,
+      limit,
+      page,
+    );
   }
 }

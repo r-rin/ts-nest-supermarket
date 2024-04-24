@@ -33,6 +33,14 @@ export class ProductsController {
     @Query('limit') limit,
     @Query('page') page,
   ) {
-    return this.productsService.searchByFilter(id, text, category, sortBy, order, limit, page);
+    return this.productsService.searchByFilter(
+      id,
+      text,
+      category,
+      sortBy,
+      order,
+      limit,
+      page,
+    );
   }
 }

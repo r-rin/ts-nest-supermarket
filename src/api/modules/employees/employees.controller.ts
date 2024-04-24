@@ -1,4 +1,4 @@
-import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { Roles } from '../../auth/roles/roles.decorator';
 import { Role } from '../../auth/roles/role.enum';
@@ -42,6 +42,15 @@ export class EmployeesController {
     @Query('limit') limit,
     @Query('page') page,
   ) {
-    return this.employeesService.searchByFilter(id, text, role, city, sortBy, order, limit, page);
+    return this.employeesService.searchByFilter(
+      id,
+      text,
+      role,
+      city,
+      sortBy,
+      order,
+      limit,
+      page,
+    );
   }
 }
