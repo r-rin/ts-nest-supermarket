@@ -39,8 +39,8 @@ export class EmployeesController {
     @Query('employeeCity') city,
     @Query('sortBy') sortBy,
     @Query('order') order,
-    @Query('limit', ParseIntPipe) limit,
-    @Query('page', ParseIntPipe) page,
+    @Query('limit') limit,
+    @Query('page') page,
   ) {
     return this.employeesService.searchByFilter(id, text, role, city, sortBy, order, limit, page);
   }
