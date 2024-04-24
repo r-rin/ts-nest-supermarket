@@ -19,9 +19,11 @@ async function bootstrap() {
     //console.log(`ifEquals: ${arg1} == ${arg2}`);
     return arg1 == arg2 ? options.fn(this) : options.inverse(this);
   });
-  hbs.registerHelper('replaceIfEmpty', function(value, defaultValue) {
+  hbs.registerHelper('replaceIfEmpty', function (value, defaultValue) {
     if (value == null || value === '') {
-      return new hbs.SafeString(`<span class="text-muted fst-italic">${defaultValue}</span>`);
+      return new hbs.SafeString(
+        `<span class="text-muted fst-italic">${defaultValue}</span>`,
+      );
     } else {
       return value;
     }

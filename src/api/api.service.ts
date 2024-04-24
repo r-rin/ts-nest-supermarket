@@ -8,12 +8,12 @@ export class ApiService {
   async getAllRoles() {
     const queryResult = await this.databaseService.query(
       `SELECT *
-      FROM Role;`
+      FROM Role;`,
     );
 
     const rolesDict = {};
 
-    queryResult.forEach(role => {
+    queryResult.forEach((role) => {
       rolesDict[role.role_id] = role.role_title;
     });
 

@@ -55,7 +55,11 @@ export class EmployeesService {
     return employee;
   }
 
-  findByPIB(employeeName: string, employeeSurname: string, employeePatronimic: string) {
+  findByPIB(
+    employeeName: string,
+    employeeSurname: string,
+    employeePatronimic: string,
+  ) {
     return this.databaseService.query(
       `SELECT * 
       FROM Employee
@@ -63,14 +67,13 @@ export class EmployeesService {
         AND employee_surname  LIKE '%${employeeSurname}%'
         AND employee_patronymic LIKE '%${employeePatronimic}%';`,
     );
-  };
+  }
 
   async getAllTowns() {
     const queryResult = await this.databaseService.query(
       `SELECT DISTINCT employee_city
-      FROM Employee;`
-    )
+      FROM Employee;`,
+    );
     return queryResult;
   }
 }
-

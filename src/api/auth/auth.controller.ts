@@ -40,7 +40,7 @@ export class AuthController {
       httpOnly: true,
     };
 
-    res.clearCookie('access_token', cookieOptions)
+    res.clearCookie('access_token', cookieOptions);
     return res.redirect('/login');
   }
 }

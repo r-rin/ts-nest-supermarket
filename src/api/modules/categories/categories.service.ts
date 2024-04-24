@@ -8,15 +8,14 @@ export class CategoriesService {
   async getAllCategories() {
     const queryResult = await this.databaseService.query(
       `SELECT *
-      FROM Category;`
+      FROM Category;`,
     );
 
     const categoriesDict = {};
-    queryResult.forEach(category => {
+    queryResult.forEach((category) => {
       categoriesDict[category.category_number] = category.category_name;
     });
 
     return categoriesDict;
   }
 }
-

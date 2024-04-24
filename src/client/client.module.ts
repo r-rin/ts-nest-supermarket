@@ -10,8 +10,11 @@ import { CategoriesService } from '../api/modules/categories/categories.service'
 @Module({
   imports: [DatabaseModule],
   providers: [
-    EmployeesService, ClientService, ClientsService,
-    ApiService, CategoriesService,
+    EmployeesService,
+    ClientService,
+    ClientsService,
+    ApiService,
+    CategoriesService,
   ],
   controllers: [ClientController],
   exports: [],

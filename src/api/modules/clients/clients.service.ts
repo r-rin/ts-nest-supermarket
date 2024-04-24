@@ -40,13 +40,12 @@ export class ClientsService {
     );
   }
 
-
   async getClientCard(card_id) {
     const queryResult = await this.databaseService.query(
       `SELECT *
       FROM Customer_Card
-      WHERE card_number = '${card_id}'`
-    )
+      WHERE card_number = '${card_id}'`,
+    );
 
     if (queryResult.length === 0) return null;
 

@@ -6,13 +6,12 @@ import { CategoriesService } from '../api/modules/categories/categories.service'
 
 @Injectable()
 export class ClientService {
-
   constructor(
     private employeesService: EmployeesService,
     private clientsService: ClientsService,
     private apiService: ApiService,
     private categoriesService: CategoriesService,
-    ) {}
+  ) {}
 
   formatDate(inputDate: string) {
     const date: Date = new Date(inputDate);
@@ -47,7 +46,7 @@ export class ClientService {
   }
 
   async getClientAboutRenderObject(req, card_id) {
-    const toRender =  {
+    const toRender = {
       title: 'Інформація про клієнта',
       currentUser: req.currentEmployee,
       isClients: true,
@@ -88,7 +87,9 @@ export class ClientService {
       style: 'products',
       title: 'Злагода: Предмети',
       currentUser: req.currentEmployee,
-      categoriesDict: Object.entries(await this.categoriesService.getAllCategories()),
+      categoriesDict: Object.entries(
+        await this.categoriesService.getAllCategories(),
+      ),
       isProducts: true,
     };
   }
