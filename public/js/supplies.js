@@ -3,15 +3,50 @@ let currentPage = 1;
 let totalRowsAmount = 0;
 
 let userRole = 0;
+
+//Selectors
+const totalAmountElement = document.querySelector('#rows-amount');
+const searchButton = document.querySelector('#search');
+
+//Filter Selectors
+const supplyUPCInput = document.querySelector('#supplyUPC');
+const textInput = document.querySelector('#searchByText');
+const typeSelector = document.querySelector('#supplyType');
+const sortBySelect = document.querySelector('#sortBy');
+const orderBySelect = document.querySelector('#orderBy');
+
+//Filter values
+let supplyUPCValue = supplyUPCInput.value;
+let textValue = textInput.value;
+let typeValue = typeSelector.value;
+let sortByValue = sortBySelect.value;
+let orderByValue = orderBySelect.value;
+
+searchButton.onclick = async function() {
+  updateInputValues();
+  currentPage = 1;
+
+  await loadTableData(generateFetchURL(currentPage));
+  await loadPagination(currentPage);
+}
+
+function generateFetchURL(currentPage) {
+  return `/api/supplies/search?limit=${itemsPerPage}&page=${currentPage}&UPC=${supplyUPCValue}&text=${textValue}&type=${typeValue}&sortBy=${sortByValue}&order=${orderByValue}`;
+}
+
+function updateInputValues() {
+  supplyUPCValue = supplyUPCInput.value;
+  textValue = textInput.value;
+  typeValue = typeSelector.value;
+  sortByValue = sortBySelect.value;
+  orderByValue = orderBySelect.value;
+}
+
 fetchUserRole().then((role) => {
   userRole = role;
 });
 
-// SELECTORS
-const totalAmountSpan = document.querySelector('#rows-amount');
-
 // PAGINATION SELECTORS
-
 async function fetchUserRole() {
   const response = await fetch('/api/user');
   const userData = await response.json();
@@ -20,8 +55,8 @@ async function fetchUserRole() {
 
 window.onload = init;
 async function init() {
-  await loadTableData(currentPage);
-  loadPagination(currentPage);
+  await loadTableData(generateFetchURL(currentPage));
+  await loadPagination(currentPage);
 }
 
 async function generateInteractionButtons(UPC) {
@@ -43,10 +78,8 @@ async function generateInteractionButtons(UPC) {
   return htmlContent;
 }
 
-async function loadTableData(currentPage) {
-  const response = await fetch(
-    `/api/supplies/all?limit=${itemsPerPage}&page=${currentPage}`,
-  );
+async function loadTableData(fetchURL) {
+  const response = await fetch(fetchURL);
   const data = await response.json();
   const tableBody = document.querySelector('#data-table tbody');
   const rowTemplate = document.querySelector('#row-template').content;
@@ -54,7 +87,7 @@ async function loadTableData(currentPage) {
   tableBody.innerHTML = '';
 
   totalRowsAmount = data.amount;
-  totalAmountSpan.innerText = data.amount;
+  totalAmountElement.innerText = data.amount;
 
   let counter = 0;
   data.rows.forEach((supply) => {
@@ -64,7 +97,7 @@ async function loadTableData(currentPage) {
     rowColumns[0].innerText = (currentPage - 1) * itemsPerPage + 1 + counter++;
     rowColumns[1].innerText = supply.UPC;
     rowColumns[2].innerText = supply.UPC_prom ? supply.UPC_prom : 'Відсутній';
-    rowColumns[3].innerText = supply.product_id;
+    rowColumns[3].innerText = supply.product_name;
     rowColumns[4].innerText = supply.selling_price;
     rowColumns[5].innerText = supply.products_amount;
     rowColumns[6].innerText = supply.is_promotional ? 'Так' : 'Ні';
@@ -91,11 +124,11 @@ async function loadPagination(currentPage) {
   previousPageLink.classList.add('page-link');
   previousPageLink.style['user-select'] = 'none';
   previousPageLink.innerText = 'Минула';
-  previousPageLink.onclick = () => {
+  previousPageLink.onclick = async () => {
     if (currentPage > 1) {
       currentPage--;
-      loadTableData(currentPage);
-      loadPagination(currentPage);
+      await loadTableData(generateFetchURL(currentPage));
+      await loadPagination(currentPage);
     }
   };
   previousPageButton.appendChild(previousPageLink);
@@ -111,10 +144,10 @@ async function loadPagination(currentPage) {
     const pageLink = document.createElement('a');
     pageLink.classList.add('page-link');
     pageLink.innerText = i;
-    pageLink.onclick = () => {
+    pageLink.onclick = async () => {
       currentPage = i;
-      loadTableData(currentPage);
-      loadPagination(currentPage);
+      await loadTableData(generateFetchURL(currentPage));
+      await loadPagination(currentPage);
     };
     pageButton.appendChild(pageLink);
     paginationContainer.appendChild(pageButton);
@@ -129,11 +162,11 @@ async function loadPagination(currentPage) {
   const nextPageLink = document.createElement('a');
   nextPageLink.classList.add('page-link');
   nextPageLink.innerText = 'Наступна';
-  nextPageLink.onclick = () => {
+  nextPageLink.onclick = async () => {
     if (currentPage < totalPages) {
       currentPage++;
-      loadTableData(currentPage);
-      loadPagination(currentPage);
+      await loadTableData(generateFetchURL(currentPage));
+      await loadPagination(currentPage);
     }
   };
   nextPageButton.appendChild(nextPageLink);

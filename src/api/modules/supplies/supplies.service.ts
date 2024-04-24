@@ -1,6 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 
+function filterQueryBuilder(upc: string, text: string, type: string, sortBy: string, order: string, limit: any, page: any): string {
+
+  if (!upc) upc = '';
+  if (!text) text = '';
+
+  let queryBase = `
+    SELECT *
+    FROM Store_Product
+    JOIN Product ON Store_Product.product_id = Product.product_id
+    WHERE (
+        UPC LIKE '%${upc}%'
+        OR COALESCE(UPC_prom, '') LIKE '%${upc}%'
+    ) 
+    AND ( 
+        Product.product_name LIKE '%${text}%'
+    )`
+
+  if (type && type != 'all') queryBase += ` AND is_promotional = ${type == 'promotional' ? 'TRUE' : 'FALSE'}`;
+  if (sortBy && sortBy != 'none') queryBase += ` ORDER BY ${sortBy} ${order}`;
+  if (limit) queryBase += ` LIMIT ${limit} OFFSET ${(page - 1) * limit}`
+  queryBase += ';';
+
+  return queryBase;
+}
+
 @Injectable()
 export class SuppliesService {
   constructor(private databaseService: DatabaseService) {}
@@ -33,5 +58,17 @@ export class SuppliesService {
       FROM Store_Product
       WHERE UPC='${upcToFind}';`,
     );
+  }
+
+  async searchByFilter(upc: string, text: string, type: string, sortBy: string, order: string, limit: any, page: any) {
+    const query = filterQueryBuilder(upc, text, type, sortBy, order, limit, page);
+    const allQuery = filterQueryBuilder(upc, text, type, sortBy, order, null, null);
+    const queryResult = await this.databaseService.query(query);
+    const allQueryResult = await this.databaseService.query(allQuery);
+
+    return {
+      rows: queryResult,
+      amount: allQueryResult.length,
+    };
   }
 }

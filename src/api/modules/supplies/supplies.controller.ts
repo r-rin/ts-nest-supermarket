@@ -21,4 +21,18 @@ export class SuppliesController {
   async findSupply(@Param('UPC') upc) {
     return await this.suppliesService.findByUPC(upc);
   }
+
+  @Get('search')
+  @Roles(Role.Admin, Role.Cashier, Role.Manager)
+  async searchByFilter(
+    @Query('UPC') upc,
+    @Query('text') text,
+    @Query('type') type,
+    @Query('sortBy') sortBy,
+    @Query('order') order,
+    @Query('limit') limit,
+    @Query('page') page,
+  ) {
+    return this.suppliesService.searchByFilter(upc, text, type, sortBy, order, limit, page);
+  }
 }

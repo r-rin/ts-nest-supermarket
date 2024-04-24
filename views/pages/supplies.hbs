@@ -31,18 +31,19 @@
             <label for="sortBy" class="form-label">Сортувати за</label>
             <select name="sortBy" id="sortBy" class="form-select">
               <option value="none">Не сортувати</option>
-              <option value="price">Ціною</option>
-              <option value="amount">Кількістю</option>
-              <option value="mfc_date">Датою виготовлення</option>
-              <option value="exp_date">Терміном придатності</option>
+              <option value="selling_price">Ціною</option>
+              <option value="Product.product_name">Назвою продукту</option>
+              <option value="products_amount">Кількістю</option>
+              <option value="manufacturing_date">Датою виготовлення</option>
+              <option value="expiration_date">Терміном придатності</option>
             </select>
           </div>
 
           <div class="col-2">
             <label for="orderBy" class="form-label">Порядок</label>
             <select name="orderBy" id="orderBy" class="form-select">
-              <option value="ascending">За зростанням</option>
-              <option value="descending">За спаданням</option>
+              <option value="ASC">За зростанням</option>
+              <option value="DESC">За спаданням</option>
             </select>
           </div>
         </div>
@@ -51,7 +52,7 @@
 
           <div class="col-12">
             <div class="btn-group w-100" role="group" aria-label="Actions">
-              <button class="btn btn-primary w-75">
+              <button class="btn btn-primary w-75" id="search">
                 Пошук
               </button>
               <button type="button" class="btn btn-outline-primary" id="addSupplyBtn">
@@ -80,7 +81,7 @@
               <th>#</th>
               <th>UPC</th>
               <th>Акційний UPC</th>
-              <th>ID продукту</th>
+              <th>Назва продукту</th>
               <th>Ціна</th>
               <th>Кількість</th>
               <th>Акційний</th>
