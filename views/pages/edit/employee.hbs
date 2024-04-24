@@ -1,0 +1,124 @@
+{{#> layout }}
+  {{#*inline "pageContent"}}
+    <section class="content-section" style="margin-bottom: 100px;">
+      <h1 class="text-center">Редагування інформації про працівника</h1>
+    </section>
+
+    <section class="d-flex justify-content-center flex-column align-items-center h-75" style="margin-bottom: 150px;">
+      <section class="content-section p-3 my-2 mt-5" style="width: 500px;">
+
+        <form id="editEmployeeForm" action="/submit-edited-employee" method="POST">
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="employeeId" class="form-label text-center">ID працівника</label>
+              <span style="color: red">*</span>
+              <input type="text" class="form-control text-center" placeholder="Наприклад: EMP002" id="employeeId"
+                     name="employeeId" value="{{employee.employee_id}}" required>
+            </div>
+
+            <div class="col">
+              <label for="employeeSurname" class="form-label text-center">Прізвище</label>
+              <span style="color: red">*</span>
+              <input type="text" class="form-control text-center" placeholder="Прізвище" id="employeeSurname"
+                     name="employeeSurname" value="{{employee.employee_surname}}" required>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="employeeName" class="form-label text-center">Ім'я</label>
+              <span style="color: red">*</span>
+              <input type="text" class="form-control text-center" placeholder="Ім'я" id="employeeName"
+                     name="employeeName" value="{{employee.employee_name}}" required>
+            </div>
+
+            <div class="col">
+              <label for="employeePatronymic" class="form-label text-center">По батькові</label>
+              <input type="text" class="form-control text-center" placeholder="По батькові" id="employeePatronymic"
+                     name="employeePatronymic" value="{{employee.employee_patronymic}}">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="employeeRole" class="form-label text-center">Роль</label>
+              <span style="color: red">*</span>
+              <select class="form-select text-center" id="employeeRole" name="employeeRole" required>
+                <option value="Cashier" {{#if (employee.employee_role "Cashier")}}selected{{/if}}>Касир</option>
+                <option value="Manager" {{#if (employee.employee_role "Manager")}}selected{{/if}}>Менеджер</option>
+                <option value="Admin" {{#if (employee.employee_role "Admin")}}selected{{/if}}>Адміністратор</option>
+              </select>
+            </div>
+
+            <div class="col">
+              <label for="employeeSalary" class="form-label text-center">Заробітна плата</label>
+              <span style="color: red">*</span>
+              <input type="number" class="form-control text-center" placeholder="Заробітна плата" id="employeeSalary"
+                     name="employeeSalary" min="0" step="0.5" value="{{employee.employee_salary}}" required>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="employeeStartDate" class="form-label text-center">Дата початку роботи</label>
+              <span style="color: red">*</span>
+              <input type="date" class="form-control text-center" id="employeeStartDate" name="employeeStartDate"
+                     value="{{employee.employee_start_date}}" required>
+            </div>
+
+            <div class="col">
+              <label for="employeeBirthDate" class="form-label text-center">Дата народження</label>
+              <span style="color: red">*</span>
+              <input type="date" class="form-control text-center" id="employeeBirthDate" name="employeeBirthDate"
+                     value="{{employee.employee_birth_date}}" required>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="employeePhoneNumber" class="form-label text-center">Номер телефону</label>
+              <span style="color: red">*</span>
+              <input type="tel" class="form-control text-center" placeholder="+380000000000" id="employeePhoneNumber"
+                     name="employeePhoneNumber" maxlength="13" pattern="^\+[0-9]{1,12}$"
+                     value="{{employee.employee_phone_number}}" required>
+            </div>
+
+            <div class="col">
+              <label for="employeeCity" class="form-label text-center">Місто</label>
+              <span style="color: red">*</span>
+              <input type="text" class="form-control text-center" placeholder="Місто" id="employeeCity"
+                     name="employeeCity" value="{{employee.employee_city}}" required>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="employeeStreet" class="form-label text-center">Вулиця</label>
+              <span style="color: red">*</span>
+              <input type="text" class="form-control text-center" placeholder="Вулиця" id="employeeStreet"
+                     name="employeeStreet" value="{{employee.employee_street}}" required>
+            </div>
+
+            <div class="col">
+              <label for="employeeZipCode" class="form-label text-center">Поштовий індекс</label>
+              <span style="color: red">*</span>
+              <input type="text" class="form-control text-center" placeholder="Поштовий індекс" id="employeeZipCode"
+                     name="employeeZipCode" value="{{employee.employee_zip_code}}" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <button type="submit" class="btn btn-primary w-50">
+                Зберегти зміни
+              </button>
+            </div>
+          </div>
+
+        </form>
+
+      </section>
+    </section>
+  {{/inline}}
+{{/layout}}

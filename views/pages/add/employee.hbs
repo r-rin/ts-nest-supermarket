@@ -1,10 +1,10 @@
 {{#> layout }}
   {{#*inline "pageContent"}}
-    <section class="content-section mb-5">
+    <section class="content-section" style="margin-bottom: 100px;">
       <h1 class="text-center">Додавання працівника</h1>
     </section>
 
-    <section class="d-flex justify-content-center flex-column align-items-center h-75">
+    <section class="d-flex justify-content-center flex-column align-items-center h-75" style="margin-bottom: 150px;">
       <section class="content-section p-3 my-2 mt-5" style="width: 500px;">
 
         <form id="addEmployeeForm" action="/submit-employee" method="POST">
@@ -102,6 +102,15 @@
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Поштовий індекс" id="employeeZipCode"
                      name="employeeZipCode" required>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="employeePassword" class="form-label text-center">Пароль</label>
+              <span style="color: red">*</span>
+              <input type="password" class="form-control text-center" placeholder="Пароль" id="employeePassword"
+                     name="employeePassword" required>
             </div>
           </div>
 
