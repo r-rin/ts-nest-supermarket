@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS Employee
     employee_name         VARCHAR(50)             NOT NULL,
     employee_patronymic   VARCHAR(50)             NULL,
     employee_role         INT                     NOT NULL,
-    employee_salary       DECIMAL(13, 4)          NOT NULL,
+    employee_salary       DECIMAL(13, 2)          NOT NULL,
     employee_start_date   DATE                    NOT NULL,
     employee_birth_date   DATE                    NOT NULL,
     employee_phone_number VARCHAR(13)             NOT NULL,
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS Receipt
     employee_id VARCHAR(10)             NOT NULL,
     card_number VARCHAR(13)             NOT NULL,
     print_date  DATETIME                NOT NULL,
-    sum_total   DECIMAL(13, 4)          NOT NULL,
+    sum_total   DECIMAL(13, 2)          NOT NULL,
     FOREIGN KEY (employee_id) REFERENCES Employee (employee_id)
         ON UPDATE CASCADE ON DELETE NO ACTION,
     FOREIGN KEY (card_number) REFERENCES Customer_Card (card_number)
@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS Store_Product
     UPC                VARCHAR(12) PRIMARY KEY NOT NULL,
     UPC_prom           VARCHAR(12)             NULL,
     product_id         INT                     NOT NULL,
-    selling_price      DECIMAL(13, 4)          NOT NULL,
+    selling_price      DECIMAL(13, 2)          NOT NULL,
     -- selling_price is already with VAT, user inputs price without VAT, website calculates it with VAT and shows it.
     products_amount    INT                     NOT NULL,
     is_promotional     BOOL                    NOT NULL,
@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS Sale
     UPC             VARCHAR(12)    NOT NULL,
     receipt_id      VARCHAR(10)    NOT NULL,
     products_amount INT            NOT NULL,
-    selling_price   DECIMAL(13, 4) NOT NULL,
+    selling_price   DECIMAL(13, 2) NOT NULL,
     PRIMARY KEY (UPC, receipt_id),
     FOREIGN KEY (UPC) REFERENCES Store_Product (UPC)
         ON UPDATE CASCADE ON DELETE NO ACTION,
