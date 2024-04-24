@@ -37,7 +37,7 @@
               <label for="productName" class="form-label text-center">Назва товару</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Назва товару" id="productName"
-                     name="productName" value="{{product.product_name}}" required>
+                     name="productName" maxlength="50" value="{{product.product_name}}" required>
             </div>
           </div>
 
@@ -46,12 +46,12 @@
               <label for="characteristics" class="form-label text-center">Характеристики</label>
               <span style="color: red">*</span>
               <textarea class="form-control text-center" placeholder="Характеристики" id="characteristics"
-                        name="characteristics" rows="4" required>{{product.characteristics}}</textarea>
+                        name="characteristics" rows="4" maxlength="100" required>{{product.characteristics}}</textarea>
             </div>
           </div>
 
           <div class="row">
-            <button type="submit" class="btn btn-primary w-50">
+            <button type="submit" class="btn btn-primary w-100">
               Зберегти зміни
             </button>
           </div>
