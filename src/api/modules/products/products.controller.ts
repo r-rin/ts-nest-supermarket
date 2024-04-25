@@ -1,7 +1,9 @@
-import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Query, Req } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { Roles } from '../../auth/roles/roles.decorator';
 import { Role } from '../../auth/roles/role.enum';
+import { IResponseInterface } from '../../interfaces/IResponse.interface';
+import { AddProductDTO } from '../../dto/add-product.dto';
 
 @Controller('api/products')
 export class ProductsController {
@@ -42,5 +44,13 @@ export class ProductsController {
       limit,
       page,
     );
+  }
+
+  @Post('add')
+  @Roles(Role.Admin, Role.Cashier, Role.Manager)
+  async addNewProduct(
+    @Body() addProductDTO: AddProductDTO,
+  ): Promise<IResponseInterface> {
+    return await this.productsService.addNewProduct(addProductDTO);
   }
 }

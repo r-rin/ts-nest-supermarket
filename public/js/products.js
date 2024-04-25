@@ -6,6 +6,15 @@ let totalRowsAmount = 0;
 //Selectors
 const totalAmountElement = document.querySelector('#rows-amount');
 const searchButton = document.querySelector('#search');
+const modalSelector = document.querySelector('#deleteProduct');
+const resultModal = new bootstrap.Modal(modalSelector);
+
+const infoModalSelector = document.querySelector('#infoModal');
+const infoModal = new bootstrap.Modal(infoModalSelector);
+const infoTitleSelector = document.querySelector('#infoModalTitle');
+const infoBodySelector = document.querySelector('#infoModalBody');
+
+const deleteProductBtnSelector = document.querySelector('#deleteProductBtn');
 
 //Filter Selectors
 const productIdInput = document.querySelector('#productId');
@@ -63,7 +72,7 @@ async function generateInteractionButtons(product_id) {
   if (userRole === 1 || userRole === 2) {
     htmlContent = htmlContent.concat(
       `<button class="btn btn-warning" data-id="${product_id}" onclick="openEditProduct(this)"><i class="fa-solid fa-pen-to-square"></i></button>` +
-        `<button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>`,
+        `<button class="btn btn-danger" data-id="${product_id}" onclick="openDeleteProduct(this)"><i class="fa-solid fa-trash"></i></button>`,
     );
   }
 
@@ -187,6 +196,30 @@ function openEditProduct(button) {
   let newTab = window.open('/products/edit-product?id=' + id, '_blank');
 
   newTab.focus();
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function openDeleteProduct(button) {
+  let id = button.getAttribute('data-id');
+  resultModal.hide();
+  resultModal.show();
+
+  deleteProductBtnSelector.onclick = async () => {
+    let response = await fetch(`api/products/delete?id=${id}`, {
+      method: 'DELETE',
+    });
+    resultModal.hide();
+
+    let jsonResponse = await response.json();
+    console.log(jsonResponse);
+
+    infoTitleSelector.textContent = jsonResponse.title;
+    infoBodySelector.textContent = jsonResponse.description;
+    infoModal.show();
+
+    loadTableData(generateFetchURL(1), 1);
+    loadPagination(1);
+  };
 }
 
 function handlePrintButton() {
