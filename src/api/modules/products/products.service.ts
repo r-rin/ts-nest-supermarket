@@ -177,4 +177,33 @@ export class ProductsService {
       description: `Предмет ${addProductDTO.product_name} з ID ${addProductDTO.product_id} було створено`,
     };
   }
+
+  async deleteProduct(req, id): Promise<IResponseInterface> {
+    const doExist = await this.getProduct(id);
+    if (!doExist)
+      return {
+        success: false,
+        title: 'Помилка видалення',
+        description: 'Такого предмета не існує',
+      };
+
+    try {
+      await this.databaseService.query(`
+        DELETE FROM Product
+        WHERE product_id = '${id}';
+      `);
+    } catch (error) {
+      return {
+        success: false,
+        title: 'Помилка видалення',
+        description: 'Видалення порушує цілісність бази даних',
+      };
+    }
+
+    return {
+      success: true,
+      title: 'Видалення успішне',
+      description: `Предмет ${id} був видалений`,
+    };
+  }
 }

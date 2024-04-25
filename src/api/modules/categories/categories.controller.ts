@@ -1,4 +1,4 @@
-import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
+import { Controller, Delete, Get, Param, ParseIntPipe, Query, Req } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { Roles } from '../../auth/roles/roles.decorator';
 import { Role } from '../../auth/roles/role.enum';
@@ -40,5 +40,11 @@ export class CategoriesController {
       limit,
       page,
     );
+  }
+
+  @Delete('delete')
+  @Roles(Role.Admin, Role.Manager)
+  async deleteCategory(@Req() req, @Query('id') id) {
+    return await this.categoryService.deleteCategory(req, id);
   }
 }

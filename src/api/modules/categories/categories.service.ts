@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
+import { IResponseInterface } from '../../interfaces/IResponse.interface';
+import { ICategory } from '../../interfaces/ICategory.interface';
 
 function filterQueryBuilder(
   id: string,
@@ -59,6 +61,24 @@ export class CategoriesService {
     return response_data;
   }
 
+  async getCategory(category_number: number): Promise<ICategory> {
+    const queryResult = await this.databaseService.query(
+      `SELECT * 
+      FROM Category
+      WHERE category_number = '${category_number}';`,
+    );
+
+    if (queryResult.length == 0) return null;
+
+    const categoryData = queryResult[0];
+    const category: ICategory = {
+      category_number: categoryData.category_number,
+      category_name: categoryData.category_name,
+    };
+
+    return category;
+  }
+
   findByName(categoryNameToFind: string) {
     return this.databaseService.query(
       `SELECT * 
@@ -97,6 +117,35 @@ export class CategoriesService {
     return {
       rows: queryResult,
       amount: allQueryResult.length,
+    };
+  }
+
+  async deleteCategory(req, id): Promise<IResponseInterface> {
+    const doExist = await this.getCategory(id);
+    if (!doExist)
+      return {
+        success: false,
+        title: 'Помилка видалення',
+        description: 'Такої категорії не існує',
+      };
+
+    try {
+      await this.databaseService.query(`
+        DELETE FROM Category
+        WHERE category_number = '${id}';
+      `);
+    } catch (error) {
+      return {
+        success: false,
+        title: 'Помилка видалення',
+        description: 'Видалення порушує цілісність бази даних',
+      };
+    }
+
+    return {
+      success: true,
+      title: 'Видалення успішне',
+      description: `Категорія ${id} була видалена`,
     };
   }
 }
