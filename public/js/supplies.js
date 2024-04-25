@@ -81,6 +81,7 @@ async function generateInteractionButtons(UPC) {
   if (userRole === 1 || userRole === 2) {
     htmlContent = htmlContent.concat(
       `<button class="btn btn-warning" data-upc="${UPC}" onclick="openEditSupply(this)"><i class="fa-solid fa-pen-to-square"></i></button>` +
+        `<button class="btn btn-success" ><i class="fa-solid fa-percent"></i></button>` +
         `<button class="btn btn-danger" data-upc="${UPC}" onclick="openDeleteSupply(this)"><i class="fa-solid fa-trash"></i></button>`,
     );
   }
