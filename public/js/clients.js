@@ -28,6 +28,7 @@ searchButton.onclick = async function () {
 
   await loadTableData(generateFetchURL(currentPage), currentPage);
   await loadPagination(currentPage);
+
 };
 
 function generateFetchURL(currentPage) {
@@ -55,6 +56,7 @@ window.onload = init;
 async function init() {
   await loadTableData(generateFetchURL(currentPage), currentPage);
   await loadPagination(currentPage);
+  handlePrintButton();
 }
 
 async function generateInteractionButtons(card_number) {
@@ -221,7 +223,57 @@ function openDeleteCard(button) {
 
 function handlePrintButton() {
   let printButton = document.getElementById('print-button');
-  printButton.onclick = function () {
-    window.print();
+  printButton.onclick = async function () {
+    const response = await fetch(
+      `/api/clients/search?id=${cardNumberValue}&text=${textValue}&&sortBy=${sortByValue}&order=${orderByValue}`,
+    );
+
+    const data = await response.json();
+    const tableBodyToPrint = document.getElementById('table-body-to-print');
+    tableBodyToPrint.setAttribute('data-table-theme', 'default');
+    const rowTemplate = document.createElement('tr');
+    for (let i = 0; i < 10; i++) {
+      const td = document.createElement('td');
+      rowTemplate.appendChild(td);
+    }
+    tableBodyToPrint.innerHTML = '';
+    totalRowsAmount = data.amount;
+    totalAmountElement.innerText = data.amount;
+
+    let counter = 0;
+    data.rows.forEach((client) => {
+      let rowClone = rowTemplate.cloneNode(true);
+      let rowColumns = rowClone.querySelectorAll('td');
+      rowColumns[0].innerText =
+        (currentPage - 1) * itemsPerPage + 1 + counter++;
+      rowColumns[1].innerText = client.card_number;
+      rowColumns[2].innerText = client.customer_surname;
+      rowColumns[3].innerText = client.customer_name;
+      rowColumns[4].innerText = client.customer_patronymic;
+      rowColumns[5].innerText = client.customer_phone_number;
+      rowColumns[6].innerText = client.customer_city;
+      rowColumns[7].innerText = client.customer_street;
+      rowColumns[8].innerText = client.customer_zip_code;
+      rowColumns[9].innerText = client.customer_percent;
+      tableBodyToPrint.appendChild(rowClone);
+    });
+
+    let content = document.getElementById('content-to-print').innerHTML;
+    let printWindow = window.open('', '_blank');
+    printWindow.document.open();
+    printWindow.document.write(
+      '<html><head>' +
+        '<style>table {  color: black;  background: white;  border: 1px solid #0e0d0d;' +
+        'font-size: 10pt;  border-collapse: collapse;}' +
+        'table thead th,table tfoot th {  color: black;  background: rgba(0,0,0,.1);}' +
+        'table caption {  padding:.5em;}' +
+        'table th,table td {  padding: .5em;  border: 1px solid lightgrey;}' +
+        '</style>' +
+        '<title>Print</title></head><body>' +
+        content +
+        '</body></html>',
+    );
+    printWindow.document.close();
+    printWindow.print();
   };
 }
