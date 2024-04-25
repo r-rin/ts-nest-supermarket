@@ -27,7 +27,7 @@ export class DatabaseService {
       );
       return rows;
     } catch (error) {
-      console.error('MySQL Query Error:', error);
+      console.log('[ MySQL Query Error ] ', error.sqlMessage);
       throw error;
     }
   }

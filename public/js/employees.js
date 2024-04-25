@@ -6,8 +6,17 @@ let totalRowsAmount = 0;
 //Selectors
 const totalAmountElement = document.querySelector('#rows-amount');
 const searchButton = document.querySelector('#search');
+const modalSelector = document.querySelector('#deleteEmployee');
+const resultModal = new bootstrap.Modal(modalSelector);
 
-/// Roles Dictionary
+const infoModalSelector = document.querySelector('#infoModal');
+const infoModal = new bootstrap.Modal(infoModalSelector);
+const infoTitleSelector = document.querySelector('#infoModalTitle');
+const infoBodySelector = document.querySelector('#infoModalBody');
+
+const deleteEmployeeBtnSelector = document.querySelector('#deleteEmployeeBtn');
+
+// Roles Dictionary
 let rolesDict = {};
 
 //Filter Selectors
@@ -78,7 +87,7 @@ async function generateInteractionButtons(employee_id) {
   if (userRole === 1 || userRole === 2) {
     htmlContent = htmlContent.concat(
       `<button class="btn btn-warning" data-id="${employee_id}" onclick="openEditEmployee(this)"><i class="fa-solid fa-pen-to-square"></i></button>` +
-        `<button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>`,
+        `<button class="btn btn-danger" data-id="${employee_id}" onclick="openDeleteEmployee(this)"><i class="fa-solid fa-trash"></i></button>`,
     );
   }
 
@@ -99,19 +108,19 @@ async function loadTableData(fetchUrl, currentPage) {
   totalAmountElement.innerText = data.amount;
 
   let counter = 0;
-  data.rows.forEach((supply) => {
+  data.rows.forEach((employee) => {
     let rowClone = rowTemplate.cloneNode(true);
     let rowColumns = rowClone.querySelectorAll('td');
     rowColumns[0].innerText = (currentPage - 1) * itemsPerPage + 1 + counter++;
-    rowColumns[1].innerText = supply.employee_id;
-    rowColumns[2].innerText = supply.employee_surname;
-    rowColumns[3].innerText = supply.employee_name;
-    rowColumns[4].innerText = rolesDict[supply.employee_role];
-    rowColumns[5].innerText = supply.employee_salary;
-    rowColumns[6].innerText = formatDate(supply.employee_start_date);
-    rowColumns[7].innerText = formatDate(supply.employee_birth_date);
-    rowColumns[8].innerText = supply.employee_city;
-    generateInteractionButtons(supply.employee_id).then((res) => {
+    rowColumns[1].innerText = employee.employee_id;
+    rowColumns[2].innerText = employee.employee_surname;
+    rowColumns[3].innerText = employee.employee_name;
+    rowColumns[4].innerText = rolesDict[employee.employee_role];
+    rowColumns[5].innerText = employee.employee_salary;
+    rowColumns[6].innerText = formatDate(employee.employee_start_date);
+    rowColumns[7].innerText = formatDate(employee.employee_birth_date);
+    rowColumns[8].innerText = employee.employee_city;
+    generateInteractionButtons(employee.employee_id).then((res) => {
       rowColumns[9].innerHTML = `<div class="actions-container">${res}</div>`;
     });
 
@@ -205,6 +214,31 @@ function openEditEmployee(button) {
   let newTab = window.open('/employees/edit-employee?id=' + id, '_blank');
 
   newTab.focus();
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function openDeleteEmployee(button) {
+  let id = button.getAttribute('data-id');
+  resultModal.hide();
+  resultModal.show();
+
+  // Видалення категорії при підтвердженні
+  deleteEmployeeBtnSelector.onclick = async () => {
+    let response = await fetch(`api/employees/delete?id=${id}`, {
+      method: 'DELETE',
+    });
+    resultModal.hide();
+
+    let jsonResponse = await response.json();
+    console.log(jsonResponse);
+
+    infoTitleSelector.textContent = jsonResponse.title;
+    infoBodySelector.textContent = jsonResponse.description;
+    infoModal.show();
+
+    loadTableData(generateFetchURL(1), 1);
+    loadPagination(1);
+  };
 }
 
 function formatDate(inputDate) {

@@ -208,4 +208,25 @@ export class EmployeesService {
       description: `Працівник з ID ${addEmployeeDTO.employee_id} був доданий!`,
     };
   }
+
+  async deleteEmployee(req, id): Promise<IResponseInterface> {
+    if (req.currentEmployee.employee_id == id) return {success: false, title: "Помилка видалення", description: "Ви не можете видалити самого себе"};
+
+    let doExist = await this.getEmployee(id);
+    if (!doExist) return {success: false, title: "Помилка видалення", description: "Такого працівника не існує"};
+    if (req.currentEmployee.employee_role === 1 &&
+      (doExist.employee_role === 1 || doExist.employee_role === 2))
+      return {success: false, title: "Помилка видалення", description: "Недостатньо прав для видлення працівника"};
+
+    try {
+      await this.databaseService.query(`
+        DELETE FROM Employee
+        WHERE employee_id = '${id}';
+      `)
+    } catch (error) {
+      return {success: false, title: "Помилка видалення", description: "Видалення порушує цілісність бази даних"};
+    }
+
+    return {success: true, title: "Видалення успішне", description: `Працівник ${id} був видалений`};
+  }
 }

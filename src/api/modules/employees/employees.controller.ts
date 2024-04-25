@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Query, Req } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { Roles } from '../../auth/roles/roles.decorator';
 import { Role } from '../../auth/roles/role.enum';
@@ -63,5 +63,11 @@ export class EmployeesController {
     @Body() addEmployeeDTO: AddEmployeeDTO,
   ): Promise<IResponseInterface> {
     return await this.employeesService.addNewEmployee(req, addEmployeeDTO);
+  }
+
+  @Delete('delete')
+  @Roles(Role.Admin, Role.Manager)
+  async deleteEmployee(@Req() req, @Query('id') id) {
+    return await this.employeesService.deleteEmployee(req, id);
   }
 }
