@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Query, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Query, Req } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { Roles } from '../../auth/roles/roles.decorator';
 import { Role } from '../../auth/roles/role.enum';
@@ -52,5 +52,11 @@ export class ProductsController {
     @Body() addProductDTO: AddProductDTO,
   ): Promise<IResponseInterface> {
     return await this.productsService.addNewProduct(addProductDTO);
+  }
+
+  @Delete('delete')
+  @Roles(Role.Admin, Role.Manager)
+  async deleteProduct(@Req() req, @Query('id') id) {
+    return await this.productsService.deleteProduct(req, id);
   }
 }
