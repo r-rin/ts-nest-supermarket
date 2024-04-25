@@ -7,6 +7,15 @@ let userRole = 0;
 //Selectors
 const totalAmountElement = document.querySelector('#rows-amount');
 const searchButton = document.querySelector('#search');
+const modalSelector = document.querySelector('#deleteSupply');
+const resultModal = new bootstrap.Modal(modalSelector);
+
+const infoModalSelector = document.querySelector('#infoModal');
+const infoModal = new bootstrap.Modal(infoModalSelector);
+const infoTitleSelector = document.querySelector('#infoModalTitle');
+const infoBodySelector = document.querySelector('#infoModalBody');
+
+const deleteSupplyBtnSelector = document.querySelector('#deleteSupplyBtn');
 
 //Filter Selectors
 const supplyUPCInput = document.querySelector('#supplyUPC');
@@ -72,7 +81,7 @@ async function generateInteractionButtons(UPC) {
   if (userRole === 1 || userRole === 2) {
     htmlContent = htmlContent.concat(
       `<button class="btn btn-warning" data-upc="${UPC}" onclick="openEditSupply(this)"><i class="fa-solid fa-pen-to-square"></i></button>` +
-        `<button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>`,
+        `<button class="btn btn-danger" data-upc="${UPC}" onclick="openDeleteSupply(this)"><i class="fa-solid fa-trash"></i></button>`,
     );
   }
 
@@ -196,6 +205,30 @@ function openEditSupply(button) {
   let newTab = window.open('/supplies/edit-supply?upc=' + upc, '_blank');
 
   newTab.focus();
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function openDeleteSupply(button) {
+  let upc = button.getAttribute('data-upc');
+  resultModal.hide();
+  resultModal.show();
+
+  deleteSupplyBtnSelector.onclick = async () => {
+    let response = await fetch(`api/supplies/delete?upc=${upc}`, {
+      method: 'DELETE',
+    });
+    resultModal.hide();
+
+    let jsonResponse = await response.json();
+    console.log(jsonResponse);
+
+    infoTitleSelector.textContent = jsonResponse.title;
+    infoBodySelector.textContent = jsonResponse.description;
+    infoModal.show();
+
+    loadTableData(generateFetchURL(1), 1);
+    loadPagination(1);
+  };
 }
 
 function handlePrintButton() {

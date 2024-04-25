@@ -222,7 +222,6 @@ function openDeleteEmployee(button) {
   resultModal.hide();
   resultModal.show();
 
-  // Видалення категорії при підтвердженні
   deleteEmployeeBtnSelector.onclick = async () => {
     let response = await fetch(`api/employees/delete?id=${id}`, {
       method: 'DELETE',
