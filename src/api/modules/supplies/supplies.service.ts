@@ -76,6 +76,11 @@ export class SuppliesService {
 
     if (queryResult.length === 0) return null;
 
+    queryResult[0].manufacturing_date = new Date(queryResult[0].manufacturing_date)
+      .toLocaleDateString('en-GB');
+    queryResult[0].expiration_date = new Date(queryResult[0].expiration_date)
+      .toLocaleDateString('en-GB');
+
     return queryResult[0];
   }
 

@@ -62,3 +62,9 @@ aside {
 #page-content {
   overflow: scroll;
 }
+
+@media print {
+  aside{
+    display: none;
+  }
+}
