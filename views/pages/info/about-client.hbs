@@ -7,6 +7,7 @@
           <h1 class="text-center m-3">Такого клієнта не знайдено</h1>
         </section>
       {{else}}
+
         <section class="content-section" style="width: 700px;">
           <div class="row">
             <div class="col-8 p-4 ps-5 d-flex flex-column justify-content-evenly">
@@ -19,6 +20,7 @@
         </section>
 
         <section class="content-section p-4 my-2" style="width: 700px;">
+          <section id="content-to-print">
           <div class="row mb-3">
             <div class="col-6">
               <div class="h5">Ім'я</div>
@@ -59,7 +61,7 @@
               <div>{{#replaceIfEmpty customer_card.customer_zip_code "Дані відсутні"}}{{/replaceIfEmpty}}</div>
             </div>
           </div>
-
+          </section>
           <div class="row mt-3">
             <div class="col">
               <button id="print-button" type="button" class="btn btn-outline-success w-100">
@@ -67,7 +69,6 @@
               </button>
             </div>
           </div>
-
         </section>
       {{/ifEquals}}
 

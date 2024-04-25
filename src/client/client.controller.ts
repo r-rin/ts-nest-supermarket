@@ -152,9 +152,11 @@ export class ClientController {
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('categories/about')
-  @Render('info/about-categories')
+  @Render('info/about-category')
   async renderAboutCategoryPage(@Req() req) {
     return {
+      script: 'about-category',
+      style: 'about-category',
       title: 'Злагода: Інформація про категорію',
       currentUser: req.currentEmployee,
       isCategories: true,
@@ -197,6 +199,8 @@ export class ClientController {
   @Render('info/about-supply')
   async renderAboutSupplyPage(@Req() req) {
     return {
+      style: 'about-supply',
+      script: 'about-supply',
       title: 'Злагода: Інформація про товар',
       currentUser: req.currentEmployee,
       isSupplies: true,

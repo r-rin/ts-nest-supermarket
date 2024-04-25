@@ -50,6 +50,8 @@ export class ClientService {
 
   async getClientAboutRenderObject(req, card_id) {
     const toRender = {
+      script: 'about-client',
+      style: 'about-clients',
       title: 'Інформація про клієнта',
       currentUser: req.currentEmployee,
       isClients: true,
