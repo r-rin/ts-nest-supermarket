@@ -153,14 +153,8 @@ export class ClientController {
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('categories/about')
   @Render('info/about-category')
-  async renderAboutCategoryPage(@Req() req) {
-    return {
-      script: 'about-category',
-      style: 'about-category',
-      title: 'Злагода: Інформація про категорію',
-      currentUser: req.currentEmployee,
-      isCategories: true,
-    };
+  async renderAboutCategoryPage(@Req() req, @Query('id') id: number) {
+    return await this.clientService.getAboutCategoryRenderObject(req, id);
   }
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
