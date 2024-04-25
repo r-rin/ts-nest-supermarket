@@ -93,8 +93,8 @@ export class ClientController {
 
   //сторінки для додавання
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
-  @Get('categories/add-category')
-  @Render('add/category')
+  @Get('categories/add-categories')
+  @Render('add/categories')
   async renderAddCategoryPage(@Req() req) {
     return {
       title: 'Злагода: Додати категорію',
@@ -168,7 +168,7 @@ export class ClientController {
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('categories/about')
-  @Render('info/about-category')
+  @Render('info/about-categories')
   async renderAboutCategoryPage(@Req() req) {
     return {
       title: 'Злагода: Інформація про категорію',
@@ -221,8 +221,8 @@ export class ClientController {
 
   //сторінки для редагування
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
-  @Get('categories/edit-category')
-  @Render('edit/category')
+  @Get('categories/edit-categories')
+  @Render('edit/categories')
   async renderEditCategoryPage(@Req() req) {
     return {
       title: 'Злагода: Редагувати категорію',

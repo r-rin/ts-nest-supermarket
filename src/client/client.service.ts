@@ -88,7 +88,7 @@ export class ClientService {
       title: 'Злагода: Предмети',
       currentUser: req.currentEmployee,
       categoriesDict: Object.entries(
-        await this.categoriesService.getAllCategories(),
+        await this.categoriesService.getAllCategoriesDict(),
       ),
       isProducts: true,
     };
