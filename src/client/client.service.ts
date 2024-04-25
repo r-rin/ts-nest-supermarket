@@ -163,4 +163,15 @@ export class ClientService {
       supply: await this.suppliesService.findByUPC(upc),
     };
   }
+
+  async getAboutCategoryRenderObject(req, id: number) {
+    return {
+      script: 'about-category',
+      style: 'about-category',
+      title: 'Злагода: Інформація про категорію',
+      currentUser: req.currentEmployee,
+      isCategories: true,
+      category: await this.categoriesService.getCategory(id),
+    };
+  }
 }
