@@ -3,6 +3,17 @@ let currentPage = 1;
 let userRole = 0;
 let totalRowsAmount = 0;
 
+//Selectors
+const modalSelector = document.querySelector('#deleteReceipt');
+const resultModal = new bootstrap.Modal(modalSelector);
+
+const infoModalSelector = document.querySelector('#infoModal');
+const infoModal = new bootstrap.Modal(infoModalSelector);
+const infoTitleSelector = document.querySelector('#infoModalTitle');
+const infoBodySelector = document.querySelector('#infoModalBody');
+
+const deleteReceiptBtnSelector = document.querySelector('#deleteReceiptBtn');
+
 fetchUserRole().then((role) => {
   userRole = role;
 });
@@ -19,7 +30,7 @@ window.onload = init;
 async function init() {
   await loadTableData(currentPage);
   loadPagination(currentPage);
-  handlePrintButton()
+  handlePrintButton();
 }
 
 async function generateInteractionButtons(receipt_id) {
@@ -28,7 +39,7 @@ async function generateInteractionButtons(receipt_id) {
   if (userRole === 1 || userRole === 2) {
     htmlContent = htmlContent.concat(
       `<button class="btn btn-warning" data-id="${receipt_id}" onclick="openEditReceipt(this)"><i class="fa-solid fa-pen-to-square"></i></button>` +
-        `<button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>`,
+        `<button class="btn btn-danger" data-id="${receipt_id}" onclick="openDeleteReceipt(this)"><i class="fa-solid fa-trash"></i></button>`,
     );
   }
 
@@ -52,18 +63,18 @@ async function loadTableData(currentPage) {
   totalAmountElement.innerText = data.amount;
 
   let counter = 0;
-  data.rows.forEach((supply) => {
+  data.rows.forEach((receipt) => {
     let rowClone = rowTemplate.cloneNode(true);
     let rowColumns = rowClone.querySelectorAll('td');
     console.log(data);
     rowColumns[0].innerText = (currentPage - 1) * itemsPerPage + 1 + counter++;
-    rowColumns[1].innerText = supply.receipt_id;
-    rowColumns[2].innerText = supply.employee_id;
-    rowColumns[3].innerText = supply.card_number;
-    rowColumns[4].innerText = supply.print_date;
-    rowColumns[5].innerText = supply.sum_total;
+    rowColumns[1].innerText = receipt.receipt_id;
+    rowColumns[2].innerText = receipt.employee_id;
+    rowColumns[3].innerText = receipt.card_number;
+    rowColumns[4].innerText = receipt.print_date;
+    rowColumns[5].innerText = receipt.sum_total;
 
-    generateInteractionButtons(supply.receipt_id).then((res) => {
+    generateInteractionButtons(receipt.receipt_id).then((res) => {
       rowColumns[6].innerHTML = `<div class="actions-container">${res}</div>`;
     });
 
@@ -157,6 +168,30 @@ function openEditReceipt(button) {
   let newTab = window.open('/receipts/edit-receipt?id=' + id, '_blank');
 
   newTab.focus();
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function openDeleteReceipt(button) {
+  let id = button.getAttribute('data-id');
+  resultModal.hide();
+  resultModal.show();
+
+  deleteReceiptBtnSelector.onclick = async () => {
+    let response = await fetch(`api/receipts/delete?id=${id}`, {
+      method: 'DELETE',
+    });
+    resultModal.hide();
+
+    let jsonResponse = await response.json();
+    console.log(jsonResponse);
+
+    infoTitleSelector.textContent = jsonResponse.title;
+    infoBodySelector.textContent = jsonResponse.description;
+    infoModal.show();
+
+    loadTableData(generateFetchURL(1), 1);
+    loadPagination(1);
+  };
 }
 
 function handlePrintButton() {

@@ -8,6 +8,12 @@ const totalAmountElement = document.querySelector('#rows-amount');
 const searchButton = document.querySelector('#search');
 const modalSelector = document.querySelector('#deleteCategory');
 const resultModal = new bootstrap.Modal(modalSelector);
+
+const infoModalSelector = document.querySelector('#infoModal');
+const infoModal = new bootstrap.Modal(infoModalSelector);
+const infoTitleSelector = document.querySelector('#infoModalTitle');
+const infoBodySelector = document.querySelector('#infoModalBody');
+
 const deleteCategoryBtnSelector = document.querySelector('#deleteCategoryBtn');
 
 //Filter Selectors
@@ -196,23 +202,21 @@ function openDeleteCategory(button) {
   resultModal.show();
 
   // Видалення категорії при підтвердженні
-  deleteCategoryBtnSelector.onclick = () => {
-    fetch(`/delete-category/${id}`, {
+  deleteCategoryBtnSelector.onclick = async () => {
+    let response = await fetch(`api/categories/delete?id=${id}`, {
       method: 'DELETE',
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log(`Категорію з ID ${id} успішно видалено`);
-        } else {
-          console.error(`Помилка при видаленні категорії з ID ${id}`);
-        }
-      })
-      .catch((error) => {
-        console.error('Помилка при виконанні запиту:', error);
-      })
-      .finally(() => {
-        resultModal.hide();
-      });
+    });
+    resultModal.hide();
+
+    let jsonResponse = await response.json();
+    console.log(jsonResponse);
+
+    infoTitleSelector.textContent = jsonResponse.title;
+    infoBodySelector.textContent = jsonResponse.description;
+    infoModal.show();
+
+    loadTableData(generateFetchURL(1), 1);
+    loadPagination(1);
   };
 }
 

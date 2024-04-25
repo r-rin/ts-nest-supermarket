@@ -6,6 +6,15 @@ let totalRowsAmount = 0;
 //Selectors
 const totalAmountElement = document.querySelector('#rows-amount');
 const searchButton = document.querySelector('#search');
+const modalSelector = document.querySelector('#deleteProduct');
+const resultModal = new bootstrap.Modal(modalSelector);
+
+const infoModalSelector = document.querySelector('#infoModal');
+const infoModal = new bootstrap.Modal(infoModalSelector);
+const infoTitleSelector = document.querySelector('#infoModalTitle');
+const infoBodySelector = document.querySelector('#infoModalBody');
+
+const deleteProductBtnSelector = document.querySelector('#deleteProductBtn');
 
 //Filter Selectors
 const productIdInput = document.querySelector('#productId');
@@ -21,13 +30,13 @@ let categoryValue = categorySelector.value;
 let sortByValue = sortBySelect.value;
 let orderByValue = orderBySelect.value;
 
-searchButton.onclick = async function() {
+searchButton.onclick = async function () {
   updateInputValues();
   currentPage = 1;
 
   await loadTableData(generateFetchURL(currentPage), currentPage);
   await loadPagination(currentPage);
-}
+};
 
 function generateFetchURL(currentPage) {
   return `/api/products/search?limit=${itemsPerPage}&page=${currentPage}&productId=${productIdValue}&text=${textValue}&categoryNumber=${categoryValue}&sortBy=${sortByValue}&order=${orderByValue}`;
@@ -63,7 +72,7 @@ async function generateInteractionButtons(product_id) {
   if (userRole === 1 || userRole === 2) {
     htmlContent = htmlContent.concat(
       `<button class="btn btn-warning" data-id="${product_id}" onclick="openEditProduct(this)"><i class="fa-solid fa-pen-to-square"></i></button>` +
-        `<button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>`,
+        `<button class="btn btn-danger" data-id="${product_id}" onclick="openDeleteProduct(this)"><i class="fa-solid fa-trash"></i></button>`,
     );
   }
 
@@ -189,9 +198,78 @@ function openEditProduct(button) {
   newTab.focus();
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function openDeleteProduct(button) {
+  let id = button.getAttribute('data-id');
+  resultModal.hide();
+  resultModal.show();
+
+  deleteProductBtnSelector.onclick = async () => {
+    let response = await fetch(`api/products/delete?id=${id}`, {
+      method: 'DELETE',
+    });
+    resultModal.hide();
+
+    let jsonResponse = await response.json();
+    console.log(jsonResponse);
+
+    infoTitleSelector.textContent = jsonResponse.title;
+    infoBodySelector.textContent = jsonResponse.description;
+    infoModal.show();
+
+    loadTableData(generateFetchURL(1), 1);
+    loadPagination(1);
+  };
+}
+
 function handlePrintButton() {
   let printButton = document.getElementById('print-button');
-  printButton.onclick = function () {
-    window.print();
+  printButton.onclick = async function () {
+    const response = await fetch(
+      `/api/products/search?productId=${productIdValue}&text=${textValue}&categoryNumber=${categoryValue}&sortBy=${sortByValue}&order=${orderByValue}`,
+    );
+    const data = await response.json();
+    const tableBodyToPrint = document.getElementById('table-body-to-print');
+    tableBodyToPrint.setAttribute('data-table-theme', 'default');
+    const rowTemplate = document.createElement('tr');
+    for (let i = 0; i < 5; i++) {
+      const td = document.createElement('td');
+      rowTemplate.appendChild(td);
+    }
+    tableBodyToPrint.innerHTML = '';
+    totalRowsAmount = data.amount;
+    totalAmountElement.innerText = data.amount;
+
+    let counter = 0;
+    data.rows.forEach((product) => {
+      let rowClone = rowTemplate.cloneNode(true);
+      let rowColumns = rowClone.querySelectorAll('td');
+      rowColumns[0].innerText =
+        (currentPage - 1) * itemsPerPage + 1 + counter++;
+      rowColumns[1].innerText = product.product_id;
+      rowColumns[2].innerText = product.category_name;
+      rowColumns[3].innerText = product.product_name;
+      rowColumns[4].innerText = product.characteristics;
+
+      tableBodyToPrint.appendChild(rowClone);
+    });
+
+    let content = document.getElementById('content-to-print').innerHTML;
+    let printWindow = window.open('', '_blank');
+    printWindow.document.open();
+    printWindow.document.write(
+      '<html><head>' +
+        '<style>table {  color: black;  background: white;  border: 1px solid #0e0d0d;' +
+        'font-size: 10pt;  border-collapse: collapse;}' +
+        'table thead th,table tfoot th {  color: black;  background: rgba(0,0,0,.1);}' +
+        'table caption {  padding:.5em;}' +
+        'table th,table td {  padding: .5em;  border: 1px solid lightgrey;}' +
+        '</style>' +
+        '<title>Print</title></head><body>' +
+        content +
+        '</body></html>',
+    );
+    printWindow.document.close();
+    printWindow.print();
   };
 }
