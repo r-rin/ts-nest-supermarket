@@ -6,6 +6,9 @@ let totalRowsAmount = 0;
 //Selectors
 const totalAmountElement = document.querySelector('#rows-amount');
 const searchButton = document.querySelector('#search');
+const modalSelector = document.querySelector('#deleteCategory');
+const resultModal = new bootstrap.Modal(modalSelector);
+const deleteCategoryBtnSelector = document.querySelector('#deleteCategoryBtn');
 
 //Filter Selectors
 const categoryIdInput = document.querySelector('#categoryId');
@@ -19,13 +22,13 @@ let textValue = encodeURIComponent(textInput.value);
 let sortByValue = sortBySelect.value;
 let orderByValue = orderBySelect.value;
 
-searchButton.onclick = async function() {
+searchButton.onclick = async function () {
   updateInputValues();
   currentPage = 1;
 
   await loadTableData(generateFetchURL(currentPage), currentPage);
   await loadPagination(currentPage);
-}
+};
 
 function generateFetchURL(currentPage) {
   return `/api/categories/search?limit=${itemsPerPage}&page=${currentPage}&id=${categoryIdValue}&text=${textValue}&&sortBy=${sortByValue}&order=${orderByValue}`;
@@ -60,7 +63,7 @@ async function generateInteractionButtons(category_number) {
   if (userRole === 1 || userRole === 2) {
     htmlContent = htmlContent.concat(
       `<button class="btn btn-warning" data-id="${category_number}" onclick="openEditCategory(this)"><i class="fa-solid fa-pen-to-square"></i></button>` +
-        `<button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>`,
+        `<button class="btn btn-danger" data-id="${category_number}" onclick="openDeleteCategory(this)"><i class="fa-solid fa-trash"></i></button>`,
     );
   }
 
@@ -184,6 +187,33 @@ function openEditCategory(button) {
   let newTab = window.open('/categories/edit-category?id=' + id, '_blank');
 
   newTab.focus();
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function openDeleteCategory(button) {
+  let id = button.getAttribute('data-id');
+  resultModal.hide();
+  resultModal.show();
+
+  // Видалення категорії при підтвердженні
+  deleteCategoryBtnSelector.onclick = () => {
+    fetch(`/delete-category/${id}`, {
+      method: 'DELETE',
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log(`Категорію з ID ${id} успішно видалено`);
+        } else {
+          console.error(`Помилка при видаленні категорії з ID ${id}`);
+        }
+      })
+      .catch((error) => {
+        console.error('Помилка при виконанні запиту:', error);
+      })
+      .finally(() => {
+        resultModal.hide();
+      });
+  };
 }
 
 function handlePrintButton() {
