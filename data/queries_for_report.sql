@@ -95,3 +95,38 @@ WHERE NOT EXISTS (
                 )
 );
 
+-- знайти клієнтів, які не здійснили жодних покупок певного продукту
+SELECT Customer_Card.card_number
+FROM Customer_Card
+WHERE NOT EXISTS (
+                SELECT *
+                FROM Product
+                WHERE Product.product_name = 'Яблуко'
+                AND NOT EXISTS (
+                            SELECT Sale.receipt_id
+                            FROM ((Sale
+                            INNER JOIN Store_Product ON Sale.UPC = Store_Product.UPC)
+                            INNER JOIN Receipt ON Sale.receipt_id = Receipt.receipt_id)
+                            WHERE Store_Product.product_id = Product.product_id
+                                AND Receipt.card_number = Customer_Card.card_number
+                )
+);
+
+-- знайти продукти, які не були продані протягом певного періоду часу
+SELECT Product.product_name, Product.category_number
+FROM Product
+WHERE NOT EXISTS (
+                SELECT Store_Product.product_id
+                FROM Store_Product
+                WHERE Store_Product.product_id = Product.product_id
+                AND NOT EXISTS (
+                            SELECT Sale.receipt_id
+                            FROM (Sale
+                            INNER JOIN Receipt ON Sale.receipt_id = Receipt.receipt_id)
+                            WHERE Sale.UPC = Store_Product.UPC
+                                AND Receipt.print_date >= '2023-01-01'
+                                AND Receipt.print_date <= '2023-12-31'
+                )
+);
+
+
