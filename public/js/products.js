@@ -271,5 +271,6 @@ function handlePrintButton() {
     );
     printWindow.document.close();
     printWindow.print();
+    tableBodyToPrint.innerHTML = '';
   };
 }

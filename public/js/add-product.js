@@ -1,9 +1,8 @@
-const formSelector = document.querySelector("#addProductForm");
-const modalSelector = document.querySelector("#infoModal");
-const resultModal = new bootstrap.Modal(modalSelector)
-const modalTitleSelector = document.querySelector("#infoModalTitle");
-const modalBodySelector = document.querySelector("#infoModalBody");
-
+const formSelector = document.querySelector('#addProductForm');
+const modalSelector = document.querySelector('#infoModal');
+const resultModal = new bootstrap.Modal(modalSelector);
+const modalTitleSelector = document.querySelector('#infoModalTitle');
+const modalBodySelector = document.querySelector('#infoModalBody');
 
 function sendForm() {
   resultModal.hide();
@@ -16,19 +15,23 @@ function sendForm() {
   });
 
   fetch('/api/products/add', {
-    method: "POST",
+    method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(formDataObj)
+    body: JSON.stringify(formDataObj),
   })
     .then((res) => {
       if (!res.ok) {
         return res.json().then((errorData) => {
           errorData.message.forEach((string) => {
             return string.toLowerCase();
-          })
-          return { success: false, title: "Виникла помилка", description: errorData.message.toString() };
+          });
+          return {
+            success: false,
+            title: 'Виникла помилка',
+            description: errorData.message.toString(),
+          };
         });
       }
       return res.json();
@@ -42,5 +45,4 @@ function sendForm() {
 formSelector.addEventListener('submit', (event) => {
   event.preventDefault();
   sendForm();
-})
-
+});
