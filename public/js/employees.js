@@ -226,7 +226,7 @@ function openDeleteEmployee(button) {
   deleteEmployeeBtnSelector.onclick = async () => {
     let response = await fetch(`api/employees/delete?id=${id}`, {
       method: 'DELETE',
-    })
+    });
     resultModal.hide();
 
     let jsonResponse = await response.json();
