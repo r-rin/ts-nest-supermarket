@@ -112,6 +112,9 @@ VALUES (4, 'Grains and Bakery Products');
 INSERT INTO Category (category_number, category_name)
 VALUES (5, 'Confectionery Products');
 
+INSERT INTO Category (category_number, category_name)
+VALUES (6, 'Vegetables and Fruits');
+
 
 -- PRODUCT
 INSERT INTO Product (product_id, category_number, product_name, characteristics)
