@@ -1,3 +1,5 @@
 export interface IResponseInterface {
-  result: string;
+  success: boolean;
+  title: string;
+  description: string;
 }

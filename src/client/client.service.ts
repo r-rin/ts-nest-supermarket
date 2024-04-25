@@ -93,4 +93,14 @@ export class ClientService {
       isProducts: true,
     };
   }
+
+  async getAddEmployeeRenderObject(req) {
+    return {
+      title: 'Злагода: Додати працівника',
+      script: 'add-employee',
+      currentUser: req.currentEmployee,
+      rolesDict: Object.entries(await this.apiService.getAllRoles()),
+      isEmployees: true,
+    };
+  }
 }

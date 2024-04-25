@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { IEmployee } from '../../interfaces/IEmployee.interface';
+import { IResponseInterface } from '../../interfaces/IResponse.interface';
+import { AddEmployeeDTO } from '../../dto/add-employee.dto';
+import * as bcrypt from 'bcrypt';
 
 function filterQueryBuilder(id, text, role, city, sortBy, order, limit, page) {
   if (!id) id = '';
@@ -135,6 +138,74 @@ export class EmployeesService {
     return {
       rows: queryResult,
       amount: allQueryResult.length,
+    };
+  }
+
+  async addNewEmployee(
+    req,
+    addEmployeeDTO: AddEmployeeDTO,
+  ): Promise<IResponseInterface> {
+    const doExists: IEmployee = await this.getEmployee(
+      addEmployeeDTO.employee_id,
+    );
+
+    if (req.currentEmployee.employee_role === 0)
+      return {
+        success: false,
+        title: 'Виникла помилка!',
+        description: `Недостатньо прав для додавання працівників!`,
+      };
+
+    if (
+      (addEmployeeDTO.employee_role == 3 ||
+        addEmployeeDTO.employee_role == 2) &&
+      req.currentEmployee.employee_role == 1
+    )
+      return {
+        success: false,
+        title: 'Виникла помилка!',
+        description: `Недостатньо прав для додавання працівників заданої ролі!`,
+      };
+
+    if (doExists)
+      return {
+        success: false,
+        title: 'Виникла помилка!',
+        description: `Працівник з ID ${addEmployeeDTO.employee_id} вже існує!`,
+      };
+
+    await this.databaseService.query(`
+    INSERT INTO Employee (employee_id, employee_surname, employee_name, employee_patronymic, employee_role,
+                      employee_salary, employee_start_date, employee_birth_date, employee_phone_number,
+                      employee_city, employee_street, employee_zip_code)
+    VALUES ('${addEmployeeDTO.employee_id}',
+            '${addEmployeeDTO.employee_surname}',
+            '${addEmployeeDTO.employee_name}',
+            '${addEmployeeDTO.employee_patronymic ? addEmployeeDTO.employee_patronymic : 'NULL'}',
+            ${addEmployeeDTO.employee_role},
+            ${addEmployeeDTO.employee_salary},
+            '${addEmployeeDTO.employee_start_date.toISOString().slice(0, 19).replace('T', ' ')}',
+            '${addEmployeeDTO.employee_birth_date.toISOString().slice(0, 19).replace('T', ' ')}',
+            '${addEmployeeDTO.employee_phone_number}',
+            '${addEmployeeDTO.employee_city}',
+            '${addEmployeeDTO.employee_street}',
+            '${addEmployeeDTO.employee_zip_code}');
+    `);
+
+    const hashed_password = bcrypt.hash(addEmployeeDTO.password_raw, 10);
+
+    await this.databaseService.query(`
+    INSERT INTO Auth_data (employee_id, password_hash)
+    VALUES (
+            '${addEmployeeDTO.employee_id}',
+            '${hashed_password}'
+           )
+    `);
+
+    return {
+      success: true,
+      title: 'Працівника успішно додано!',
+      description: `Працівник з ID ${addEmployeeDTO.employee_id} був доданий!`,
     };
   }
 }

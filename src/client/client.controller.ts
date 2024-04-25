@@ -151,11 +151,7 @@ export class ClientController {
   @Get('employees/add-employee')
   @Render('add/employee')
   async renderAddEmployeePage(@Req() req) {
-    return {
-      title: 'Злагода: Додати працівника',
-      currentUser: req.currentEmployee,
-      isEmployees: true,
-    };
+    return await this.clientService.getAddEmployeeRenderObject(req);
   }
 
   //сторінки для перегляду детальної інформації про..

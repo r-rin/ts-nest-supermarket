@@ -7,21 +7,21 @@
     <section class="d-flex justify-content-center flex-column align-items-center h-75" style="margin-bottom: 150px;">
       <section class="content-section p-3 my-2 mt-5" style="width: 500px;">
 
-        <form id="addEmployeeForm" action="/submit-employee" method="POST">
+        <form id="addEmployeeForm">
 
           <div class="row mb-3">
             <div class="col">
               <label for="employeeId" class="form-label text-center">ID працівника</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Наприклад: EMP002" id="employeeId"
-                     name="employeeId" maxlength="10" required>
+                     name="employee_id" minlength="1" maxlength="10" autocapitalize="characters" required>
             </div>
 
             <div class="col">
               <label for="employeeSurname" class="form-label text-center">Прізвище</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Прізвище" id="employeeSurname"
-                     name="employeeSurname" maxlength="50" required>
+                     name="employee_surname" minlength="3" maxlength="50" autocapitalize="words" required>
             </div>
           </div>
 
@@ -30,13 +30,13 @@
               <label for="employeeName" class="form-label text-center">Ім'я</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Ім'я" id="employeeName"
-                     name="employeeName" maxlength="50" required>
+                     name="employee_name" minlength="3" maxlength="50" autocapitalize="words" required>
             </div>
 
             <div class="col">
               <label for="employeePatronymic" class="form-label text-center">По батькові</label>
               <input type="text" class="form-control text-center" placeholder="По батькові" id="employeePatronymic"
-                     name="employeePatronymic" maxlength="50">
+                     name="employee_patronymic" minlength="3" maxlength="50" autocapitalize="words">
             </div>
           </div>
 
@@ -44,10 +44,10 @@
             <div class="col">
               <label for="employeeRole" class="form-label text-center">Роль</label>
               <span style="color: red">*</span>
-              <select class="form-select text-center" id="employeeRole" name="employeeRole" required>
-                <option value="Cashier">Касир</option>
-                <option value="Manager">Менеджер</option>
-                <option value="Admin">Адміністратор</option>
+              <select class="form-select text-center" id="employeeRole" name="employee_role" required>
+                {{#each rolesDict}}
+                  <option value="{{@index}}">{{this.[1]}}</option>
+                {{/each}}
               </select>
             </div>
 
@@ -55,7 +55,7 @@
               <label for="employeeSalary" class="form-label text-center">Заробітна плата</label>
               <span style="color: red">*</span>
               <input type="number" class="form-control text-center" placeholder="Заробітна плата" id="employeeSalary"
-                     name="employeeSalary" min="0" step="0.5" required>
+                     name="employee_salary" min="7000" step="0.01" required>
             </div>
           </div>
 
@@ -63,13 +63,13 @@
             <div class="col">
               <label for="employeeStartDate" class="form-label text-center">Дата початку роботи</label>
               <span style="color: red">*</span>
-              <input type="date" class="form-control text-center" id="employeeStartDate" name="employeeStartDate" required>
+              <input type="date" class="form-control text-center" id="employeeStartDate" name="employee_start_date" required>
             </div>
 
             <div class="col">
               <label for="employeeBirthDate" class="form-label text-center">Дата народження</label>
               <span style="color: red">*</span>
-              <input type="date" class="form-control text-center" id="employeeBirthDate" name="employeeBirthDate" required>
+              <input type="date" class="form-control text-center" id="employeeBirthDate" name="employee_birth_date" required>
             </div>
           </div>
 
@@ -78,14 +78,14 @@
               <label for="employeePhoneNumber" class="form-label text-center">Номер телефону</label>
               <span style="color: red">*</span>
               <input type="tel" class="form-control text-center" placeholder="+380000000000" id="employeePhoneNumber"
-                     name="employeePhoneNumber" maxlength="13" pattern="^\+[0-9]{1,12}$" required>
+                     name="employee_phone_number" minlength="13" maxlength="13" pattern="^\+[0-9]{1,12}$" required>
             </div>
 
             <div class="col">
               <label for="employeeCity" class="form-label text-center">Місто</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Місто" id="employeeCity"
-                     name="employeeCity" maxlength="50" required>
+                     name="employee_city" minlength="3" maxlength="50" autocapitalize="words" required>
             </div>
           </div>
 
@@ -94,14 +94,14 @@
               <label for="employeeStreet" class="form-label text-center">Вулиця</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Вулиця" id="employeeStreet"
-                     name="employeeStreet" maxlength="50" required>
+                     name="employee_street" minlength="3" maxlength="50" autocapitalize="words" required>
             </div>
 
             <div class="col">
               <label for="employeeZipCode" class="form-label text-center">Поштовий індекс</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Поштовий індекс" id="employeeZipCode"
-                     name="employeeZipCode" maxlength="9" required>
+                     name="employee_zip_code" minlength="9" maxlength="9" pattern="^[0-9]{9}$" required>
             </div>
           </div>
 
@@ -110,7 +110,7 @@
               <label for="employeePassword" class="form-label text-center">Пароль</label>
               <span style="color: red">*</span>
               <input type="password" class="form-control text-center" placeholder="Пароль" id="employeePassword"
-                     name="employeePassword" required>
+                     minlength="8" name="password_raw" required>
             </div>
           </div>
 
@@ -130,5 +130,18 @@
 
       </section>
     </section>
+
+    <div class="modal fade" id="form-result" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="form-result-title" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="form-result-title"></h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="form-result-body">
+          </div>
+        </div>
+      </div>
+    </div>
   {{/inline}}
 {{/layout}}

@@ -89,22 +89,8 @@ export class CategoriesService {
     limit: any,
     page: any,
   ) {
-    const query = filterQueryBuilder(
-      id,
-      text,
-      sortBy,
-      order,
-      limit,
-      page,
-    );
-    const allQuery = filterQueryBuilder(
-      id,
-      text,
-      sortBy,
-      order,
-      null,
-      null,
-    );
+    const query = filterQueryBuilder(id, text, sortBy, order, limit, page);
+    const allQuery = filterQueryBuilder(id, text, sortBy, order, null, null);
     const queryResult = await this.databaseService.query(query);
     const allQueryResult = await this.databaseService.query(allQuery);
 

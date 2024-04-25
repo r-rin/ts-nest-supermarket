@@ -1,7 +1,9 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, Req } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { Roles } from '../../auth/roles/roles.decorator';
 import { Role } from '../../auth/roles/role.enum';
+import { AddEmployeeDTO } from '../../dto/add-employee.dto';
+import { IResponseInterface } from '../../interfaces/IResponse.interface';
 
 @Controller('api/employees')
 export class EmployeesController {
@@ -52,5 +54,14 @@ export class EmployeesController {
       limit,
       page,
     );
+  }
+
+  @Post('add')
+  @Roles(Role.Admin, Role.Cashier, Role.Manager)
+  async addNewEmployee(
+    @Req() req,
+    @Body() addEmployeeDTO: AddEmployeeDTO,
+  ): Promise<IResponseInterface> {
+    return await this.employeesService.addNewEmployee(req, addEmployeeDTO);
   }
 }
