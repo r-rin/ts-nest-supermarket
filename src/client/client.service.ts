@@ -156,6 +156,8 @@ export class ClientService {
   async getAboutSupplyRenderObject(req, upc: string) {
     return {
       title: 'Злагода: Інформація про товар',
+      style: 'about-supply',
+      script: 'about-supply',
       currentUser: req.currentEmployee,
       isSupplies: true,
       supply: await this.suppliesService.findByUPC(upc),
