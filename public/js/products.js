@@ -191,7 +191,50 @@ function openEditProduct(button) {
 
 function handlePrintButton() {
   let printButton = document.getElementById('print-button');
-  printButton.onclick = function () {
-    window.print();
+  printButton.onclick = async function () {
+    const response = await fetch(
+      `/api/employees/search?employeeId=${employeeIdValue}&text=${textValue}&employeeRole=${employeeRoleValue}&employeeCity=${employeeCityValue}&sortBy=${sortByValue}&order=${orderByValue}`,
+    );
+    const data = await response.json();
+    const tableBodyToPrint = document.getElementById('table-to-print');
+    tableBodyToPrint.setAttribute('data-table-theme', 'default');
+    const rowTemplate = document.createElement('tr');
+    for (let i = 0; i < 13; i++) {
+      const td = document.createElement('td');
+      rowTemplate.appendChild(td);
+    }
+    tableBodyToPrint.innerHTML = '';
+    totalRowsAmount = data.amount;
+    totalAmountElement.innerText = data.amount;
+
+    let counter = 0;
+    data.rows.forEach((employee) => {
+      let rowClone = rowTemplate.cloneNode(true);
+      let rowColumns = rowClone.querySelectorAll('td');
+      rowColumns[0].innerText =
+        (currentPage - 1) * itemsPerPage + 1 + counter++;
+      rowColumns[1].innerText = employee.employee_id;
+      rowColumns[2].innerText = employee.employee_surname;
+      rowColumns[3].innerText = employee.employee_name;
+      rowColumns[4].innerText = employee.employee_patronymic;
+      rowColumns[5].innerText = rolesDict[employee.employee_role];
+      rowColumns[6].innerText = employee.employee_salary;
+      rowColumns[7].innerText = formatDate(employee.employee_start_date);
+      rowColumns[8].innerText = formatDate(employee.employee_birth_date);
+      rowColumns[9].innerText = employee.employee_phone_number;
+      rowColumns[10].innerText = employee.employee_city;
+      rowColumns[11].innerText = employee.employee_street;
+      rowColumns[12].innerText = employee.employee_zip_code;
+
+      tableBodyToPrint.appendChild(rowClone);
+    });
+
+
+    let content = document.getElementById("content-to-print").innerHTML;
+    let printWindow = window.open('', '_blank');
+    printWindow.document.open();
+    printWindow.document.write('<html><head><style>table {  color: black;  background: white;  border: 1px solid #0e0d0d;  font-size: 10pt;  border-collapse: collapse;}table thead th,table tfoot th {  color: black;  background: rgba(0,0,0,.1);}table caption {  padding:.5em;}table th,table td {  padding: .5em;  border: 1px solid lightgrey;}</style><title>Print</title></head><body>' + content + '</body></html>');
+    printWindow.document.close();
+    printWindow.print();
   };
 }
