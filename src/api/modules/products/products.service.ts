@@ -127,6 +127,20 @@ export class ProductsService {
     };
   }
 
+  async getProductsDict() {
+    const queryResult = await this.databaseService.query(
+      `SELECT product_id, product_name
+      FROM Product;`,
+    );
+
+    const productsDict = {};
+    queryResult.forEach((product) => {
+      productsDict[product.product_id] = product.product_name;
+    });
+
+    return productsDict;
+  }
+
   async addNewProduct(
     addProductDTO: AddProductDTO,
   ): Promise<IResponseInterface> {

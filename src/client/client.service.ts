@@ -3,6 +3,8 @@ import { EmployeesService } from '../api/modules/employees/employees.service';
 import { ClientsService } from '../api/modules/clients/clients.service';
 import { ApiService } from '../api/api.service';
 import { CategoriesService } from '../api/modules/categories/categories.service';
+import { SuppliesService } from '../api/modules/supplies/supplies.service';
+import { ProductsService } from '../api/modules/products/products.service';
 
 @Injectable()
 export class ClientService {
@@ -11,6 +13,7 @@ export class ClientService {
     private clientsService: ClientsService,
     private apiService: ApiService,
     private categoriesService: CategoriesService,
+    private productsService: ProductsService,
   ) {}
 
   formatDate(inputDate: string) {
@@ -113,6 +116,26 @@ export class ClientService {
       categoriesDict: Object.entries(
         await this.categoriesService.getAllCategoriesDict(),
       ),
+    };
+  }
+
+  async getAddSupplyRenderObject(req) {
+    return {
+      title: 'Злагода: Додати товар',
+      currentUser: req.currentEmployee,
+      isSupplies: true,
+      productsDict: Object.entries(
+        await this.productsService.getProductsDict(),
+      ),
+    };
+  }
+
+  async getAddClientRenderObject(req) {
+    return {
+      title: 'Злагода: Додати клієнта',
+      script: 'add-client',
+      currentUser: req.currentEmployee,
+      isClients: true,
     };
   }
 }

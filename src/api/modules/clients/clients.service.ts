@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
+import { AddClientDTO } from '../../dto/add-client.dto';
 
 function filterQueryBuilder(
   id: string,
@@ -106,6 +107,45 @@ export class ClientsService {
     return {
       rows: queryResult,
       amount: allQueryResult.length,
+    };
+  }
+
+  async addNewClient(addClientDTO: AddClientDTO) {
+    let doExist = await this.getClientCard(addClientDTO.card_number);
+
+    if (doExist) return {
+      success: false,
+      title: 'Виникла помилка',
+      description: `Клієнт ${addClientDTO.customer_surname} ${addClientDTO.customer_name} з ID ${addClientDTO.card_number} вже існує`,
+    };
+
+    try {
+      await this.databaseService.query(`
+        INSERT INTO Customer_Card (card_number, customer_surname, customer_name, customer_patronymic, customer_phone_number,
+                                customer_city, customer_street, customer_zip_code, customer_percent)
+        VALUES (
+                '${addClientDTO.card_number}', 
+                '${addClientDTO.customer_surname}', 
+                '${addClientDTO.customer_name}', 
+                ${addClientDTO.customer_patronymic ? "'" + addClientDTO.customer_patronymic + "'" : 'NULL' }, 
+                '${addClientDTO.customer_phone_number}',
+                ${addClientDTO.customer_city ? "'" + addClientDTO.customer_city + "'" : 'NULL' },
+                ${addClientDTO.customer_street ? "'" + addClientDTO.customer_street + "'" : 'NULL' },
+                ${addClientDTO.customer_zip_code ? "'" + addClientDTO.customer_zip_code + "'" : 'NULL' }, 
+                ${addClientDTO.customer_percent});
+      `)
+    } catch (error) {
+      return {
+        success: false,
+        title: 'Виникла помилка',
+        description: `При виконанні запиту виникла помилка`,
+      };
+    }
+
+    return {
+      success: true,
+      title: 'Клієнта створено',
+      description: `Клієнт ${addClientDTO.customer_surname} ${addClientDTO.customer_name} з ID ${addClientDTO.card_number} був створений`,
     };
   }
 }

@@ -181,7 +181,7 @@ export class EmployeesService {
     VALUES ('${addEmployeeDTO.employee_id}',
             '${addEmployeeDTO.employee_surname}',
             '${addEmployeeDTO.employee_name}',
-            '${addEmployeeDTO.employee_patronymic ? addEmployeeDTO.employee_patronymic : 'NULL'}',
+            ${addEmployeeDTO.employee_patronymic ? "'" + addEmployeeDTO.employee_patronymic + "'" : 'NULL'},
             ${addEmployeeDTO.employee_role},
             ${addEmployeeDTO.employee_salary},
             '${addEmployeeDTO.employee_start_date.toISOString().slice(0, 19).replace('T', ' ')}',

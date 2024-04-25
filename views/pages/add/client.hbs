@@ -7,20 +7,20 @@
     <section class="d-flex justify-content-center flex-column align-items-center h-75" >
       <section class="content-section p-3 my-2 " style="width: 500px;">
 
-        <form id="addCustomerForm" action="/submit-customer" method="POST">
+        <form id="addCustomerForm">
 
           <div class="row mb-3">
             <div class="col">
               <label for="cardNumber" class="form-label text-center">Номер картки клієнта</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Наприклад: CARD001" id="cardNumber"
-                     name="cardNumber" maxlength="13" required>
+                     name="card_number" minlength="3" maxlength="13" pattern="\S+" required>
             </div>
             <div class="col">
               <label for="customerSurname" class="form-label text-center">Прізвище</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Прізвище" id="customerSurname"
-                     name="customerSurname" maxlength="50" required>
+                     name="customer_surname" minlength="3" maxlength="50" required>
             </div>
           </div>
 
@@ -29,12 +29,12 @@
               <label for="customerName" class="form-label text-center">Ім'я</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Ім'я" id="customerName"
-                     name="customerName" maxlength="50" required>
+                     name="customer_name" minlength="3" maxlength="50" required>
             </div>
             <div class="col">
               <label for="customerPatronymic" class="form-label text-center">По батькові</label>
               <input type="text" class="form-control text-center" placeholder="По батькові" id="customerPatronymic"
-                     name="customerPatronymic" maxlength="50">
+                     name="customer_patronymic" minlength="3" maxlength="50">
             </div>
           </div>
 
@@ -43,12 +43,12 @@
               <label for="customerPhoneNumber" class="form-label text-center">Номер телефону</label>
               <span style="color: red">*</span>
               <input type="tel" class="form-control text-center" placeholder="+380000000000" id="customerPhoneNumber"
-                     name="customerPhoneNumber" maxlength="13" pattern="^\+[0-9]{1,12}$" required>
+                     name="customer_phone_number" minlength="13" maxlength="13" pattern="^\+[0-9]{1,12}$" required>
             </div>
             <div class="col">
               <label for="customerCity" class="form-label text-center">Місто</label>
               <input type="text" class="form-control text-center" placeholder="Місто" id="customerCity"
-                     name="customerCity" maxlength="50">
+                     name="customer_city" minlength="3" maxlength="50">
             </div>
           </div>
 
@@ -56,12 +56,12 @@
             <div class="col">
               <label for="customerStreet" class="form-label text-center">Вулиця</label>
               <input type="text" class="form-control text-center" placeholder="Вулиця" id="customerStreet"
-                     name="customerStreet" maxlength="50">
+                     name="customer_street" minlength="3" maxlength="50">
             </div>
             <div class="col">
               <label for="customerZipCode" class="form-label text-center">Поштовий індекс</label>
               <input type="text" class="form-control text-center" placeholder="Поштовий індекс" id="customerZipCode"
-                     name="customerZipCode" maxlength="9">
+                     name="customer_zip_code" pattern="\S+" minlength="9" maxlength="9">
             </div>
           </div>
 
@@ -70,14 +70,7 @@
               <label for="customerPercent" class="form-label text-center">Відсоток знижки</label>
               <span style="color: red">*</span>
               <input type="number" class="form-control text-center" placeholder="Відсоток знижки" id="customerPercent"
-                     name="customerPercent" min="0" max="100" step="0.5" required>
-            </div>
-
-            <div class="col">
-              <label for="customerPassword" class="form-label text-center">Пароль</label>
-              <span style="color: red">*</span>
-              <input type="password" class="form-control text-center" placeholder="Пароль" id="customerPassword"
-                     name="customerPassword" required>
+                     name="customer_percent" min="0" max="100" step="0.01" required>
             </div>
           </div>
 
@@ -97,5 +90,20 @@
 
       </section>
     </section>
+
+    <div class="modal fade" id="infoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="infoModalTitle">...</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="infoModalBody">
+            ...
+          </div>
+        </div>
+      </div>
+    </div>
   {{/inline}}
 {{/layout}}

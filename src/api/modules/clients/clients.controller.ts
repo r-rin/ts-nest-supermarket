@@ -1,7 +1,9 @@
-import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Query, Req } from '@nestjs/common';
 import { ClientsService } from './clients.service';
 import { Roles } from '../../auth/roles/roles.decorator';
 import { Role } from '../../auth/roles/role.enum';
+import { IResponseInterface } from '../../interfaces/IResponse.interface';
+import { AddClientDTO } from '../../dto/add-client.dto';
 
 @Controller('api/clients')
 export class ClientsController {
@@ -48,5 +50,13 @@ export class ClientsController {
       limit,
       page,
     );
+  }
+
+  @Post('add')
+  @Roles(Role.Admin, Role.Cashier, Role.Manager)
+  async addNewClient(
+    @Body() addClientDTO: AddClientDTO,
+  ): Promise<IResponseInterface> {
+    return await this.clientsService.addNewClient(addClientDTO);
   }
 }

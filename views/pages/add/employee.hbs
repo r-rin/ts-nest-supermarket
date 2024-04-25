@@ -14,7 +14,7 @@
               <label for="employeeId" class="form-label text-center">ID працівника</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Наприклад: EMP002" id="employeeId"
-                     name="employee_id" minlength="1" maxlength="10" autocapitalize="characters" required>
+                     name="employee_id" minlength="1" maxlength="10" pattern="\S+" autocapitalize="characters" required>
             </div>
 
             <div class="col">
@@ -101,7 +101,7 @@
               <label for="employeeZipCode" class="form-label text-center">Поштовий індекс</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Поштовий індекс" id="employeeZipCode"
-                     name="employee_zip_code" minlength="9" maxlength="9" pattern="^[0-9]{9}$" required>
+                     name="employee_zip_code" minlength="9" maxlength="9" pattern="\S+" required>
             </div>
           </div>
 
@@ -110,7 +110,7 @@
               <label for="employeePassword" class="form-label text-center">Пароль</label>
               <span style="color: red">*</span>
               <input type="password" class="form-control text-center" placeholder="Пароль" id="employeePassword"
-                     minlength="8" name="password_raw" required>
+                     minlength="8" name="password_raw" pattern="\S+" required>
             </div>
           </div>
 

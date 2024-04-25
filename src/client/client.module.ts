@@ -6,6 +6,7 @@ import { ClientService } from './client.service';
 import { ClientsService } from '../api/modules/clients/clients.service';
 import { ApiService } from '../api/api.service';
 import { CategoriesService } from '../api/modules/categories/categories.service';
+import { ProductsService } from '../api/modules/products/products.service';
 
 @Module({
   imports: [DatabaseModule],
@@ -15,6 +16,7 @@ import { CategoriesService } from '../api/modules/categories/categories.service'
     ClientsService,
     ApiService,
     CategoriesService,
+    ProductsService
   ],
   controllers: [ClientController],
   exports: [],

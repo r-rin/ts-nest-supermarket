@@ -1,23 +1,26 @@
-const formSelector = document.querySelector("#addEmployeeForm");
-const modalSelector = document.querySelector("#form-result");
+const formSelector = document.querySelector("#addCustomerForm");
+const modalSelector = document.querySelector("#infoModal");
 const resultModal = new bootstrap.Modal(modalSelector)
-const modalTitleSelector = document.querySelector("#form-result-title");
-const modalBodySelector = document.querySelector("#form-result-body");
+const modalTitleSelector = document.querySelector("#infoModalTitle");
+const modalBodySelector = document.querySelector("#infoModalBody");
 
 
 function sendForm() {
   resultModal.hide();
+
   const formData = new FormData(formSelector);
   const formDataObj = {};
+
   formData.forEach((value, key) => {
     if (typeof(value) == 'string') value = value.trim();
     formDataObj[key] = value;
   });
 
-  formDataObj.employee_id = formDataObj.employee_id.toUpperCase().padEnd(10, '0');
-  document.querySelector("#employeeId").value = formDataObj.employee_id;
 
-  fetch('/api/employees/add', {
+  formDataObj.card_number = formDataObj.card_number.toUpperCase().padEnd(13, '0');
+  document.querySelector("#cardNumber").value = formDataObj.card_number;
+
+  fetch('/api/clients/add', {
     method: "POST",
     headers: {
       'Content-Type': 'application/json'
@@ -30,7 +33,7 @@ function sendForm() {
           errorData.message.forEach((string) => {
             return string.toLowerCase();
           })
-          return { success: false, title: "Виникла помилка!", description: errorData.message.toString() };
+          return { success: false, title: "Виникла помилка", description: errorData.message.toString() };
         });
       }
       return res.json();

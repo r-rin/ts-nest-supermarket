@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS Customer_Card
     customer_city               VARCHAR(50)             NULL,
     customer_street             VARCHAR(50)             NULL,
     customer_zip_code           VARCHAR(9)              NULL,
-    customer_percent            INT                     NOT NULL
+    customer_percent            DECIMAL(3, 2)           NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Receipt

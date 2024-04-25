@@ -107,11 +107,7 @@ export class ClientController {
   @Get('clients/add-client')
   @Render('add/client')
   async renderAddClientPage(@Req() req) {
-    return {
-      title: 'Злагода: Додати клієнта',
-      currentUser: req.currentEmployee,
-      isClients: true,
-    };
+    return await this.clientService.getAddClientRenderObject(req);
   }
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
@@ -135,12 +131,8 @@ export class ClientController {
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('supplies/add-supply')
   @Render('add/supply')
-  async renderAddESupplyPage(@Req() req) {
-    return {
-      title: 'Злагода: Додати товар',
-      currentUser: req.currentEmployee,
-      isSupplies: true,
-    };
+  async renderAddSupplyPage(@Req() req) {
+    return await this.clientService.getAddSupplyRenderObject(req);
   }
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
