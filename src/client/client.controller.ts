@@ -93,8 +93,8 @@ export class ClientController {
 
   //сторінки для додавання
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
-  @Get('categories/add-categories')
-  @Render('add/categories')
+  @Get('categories/add-category')
+  @Render('add/category')
   async renderAddCategoryPage(@Req() req) {
     return {
       title: 'Злагода: Додати категорію',
