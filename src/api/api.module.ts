@@ -5,8 +5,8 @@ import { DatabaseModule } from './database/database.module';
 import { AuthModule } from './auth/auth.module';
 import { SuppliesService } from './modules/supplies/supplies.service';
 import { SuppliesController } from './modules/supplies/supplies.controller';
-import { CategoryService } from './modules/category/category.service';
-import { CategoryController } from './modules/category/category.controller';
+import { CategoriesService } from './modules/categories/categories.service';
+import { CategoriesController } from './modules/categories/categories.controller';
 import { EmployeesController } from './modules/employees/employees.controller';
 import { EmployeesService } from './modules/employees/employees.service';
 import { ProductsController } from './modules/products/products.controller';
@@ -21,7 +21,7 @@ import { ReceiptsController } from './modules/receipts/receipts.controller';
   providers: [
     ApiService,
     SuppliesService,
-    CategoryService,
+    CategoriesService,
     EmployeesService,
     ProductsService,
     ClientsService,
@@ -30,7 +30,7 @@ import { ReceiptsController } from './modules/receipts/receipts.controller';
   controllers: [
     ApiController,
     SuppliesController,
-    CategoryController,
+    CategoriesController,
     EmployeesController,
     ProductsController,
     ClientsController,
