@@ -5,62 +5,62 @@ USE supermarket;
 INSERT INTO employee (employee_id, employee_surname, employee_name, employee_patronymic, employee_role,
                       employee_salary, employee_start_date, employee_birth_date, employee_phone_number,
                       employee_city, employee_street, employee_zip_code)
-VALUES ('EMP002', 'Johnson', 'Emily', 'Pauline', 1, 3500.00, '2022-11-20', '1985-09-12', '+1987654321',
+VALUES ('EMP002', 'Johnson', 'Emily', 'Pauline', 1, 3500.00, '2022-11-20', '1985-09-12', '+198765432166',
         'Los Angeles', 'Broadway', '90001');
 
 INSERT INTO employee (employee_id, employee_surname, employee_name, employee_patronymic, employee_role,
                       employee_salary, employee_start_date, employee_birth_date, employee_phone_number,
                       employee_city, employee_street, employee_zip_code)
-VALUES ('EMP005', 'Brown', 'Michael', 'Christopher', 1, 3200.00, '2023-02-05', '1988-03-25', '+1321567890',
+VALUES ('EMP005', 'Brown', 'Michael', 'Christopher', 1, 3200.00, '2023-02-05', '1988-03-25', '+132156789067',
         'Houston', 'Elm St.', '77001');
 
 INSERT INTO employee (employee_id, employee_surname, employee_name, employee_role, employee_salary,
                       employee_start_date, employee_birth_date, employee_phone_number, employee_city,
                       employee_street, employee_zip_code)
-VALUES ('EMP007', 'Garcia', 'Sophia', 1, 3400.00, '2023-03-15', '1991-07-18', '+1654321890',
+VALUES ('EMP007', 'Garcia', 'Sophia', 1, 3400.00, '2023-03-15', '1991-07-18', '+165432189063',
         'Miami', 'Palm St.', '33101');
 
 INSERT INTO employee (employee_id, employee_surname, employee_name, employee_role, employee_salary,
                       employee_start_date, employee_birth_date, employee_phone_number, employee_city,
                       employee_street, employee_zip_code)
-VALUES ('EMP009', 'Martinez', 'Daniel', 1, 3300.00, '2023-04-10', '1993-11-30', '+1789056432',
+VALUES ('EMP009', 'Martinez', 'Daniel', 1, 3300.00, '2023-04-10', '1993-11-30', '+178905643264',
         'Atlanta', 'Maple St.', '30301');
 
 INSERT INTO employee (employee_id, employee_surname, employee_name, employee_role, employee_salary,
                       employee_start_date, employee_birth_date, employee_phone_number, employee_city,
                       employee_street, employee_zip_code)
-VALUES ('EMP010', 'Lee', 'Jennifer', 1, 3100.00, '2023-05-20', '1987-08-05', '+1908765432',
+VALUES ('EMP010', 'Lee', 'Jennifer', 1, 3100.00, '2023-05-20', '1987-08-05', '+190876543225',
         'Seattle', 'Oak St.', '98101');
 
 -- cashiers
 INSERT INTO employee (employee_id, employee_surname, employee_name, employee_patronymic, employee_role,
                       employee_salary, employee_start_date, employee_birth_date, employee_phone_number,
                       employee_city, employee_street, employee_zip_code)
-VALUES ('EMP001', 'Smith', 'John', 'Andrew', 0, 2500.00, '2023-01-15', '1990-05-20', '+1234567890',
+VALUES ('EMP001', 'Smith', 'John', 'Andrew', 0, 2500.00, '2023-01-15', '1990-05-20', '+123456776890',
         'New York', 'Main St.', '10001');
 
 INSERT INTO employee (employee_id, employee_surname, employee_name, employee_patronymic, employee_role,
                       employee_salary, employee_start_date, employee_birth_date, employee_phone_number,
                       employee_city, employee_street, employee_zip_code)
-VALUES ('EMP003', 'Williams', 'David', 'Edward', 0, 2300.00, '2023-03-10', '1995-02-28', '+1324354657',
+VALUES ('EMP003', 'Williams', 'David', 'Edward', 0, 2300.00, '2023-03-10', '1995-02-28', '+166324354657',
         'Chicago', 'Oak St.', '60601');
 
 INSERT INTO employee (employee_id, employee_surname, employee_name, employee_role, employee_salary,
                       employee_start_date, employee_birth_date, employee_phone_number, employee_city,
                       employee_street, employee_zip_code)
-VALUES ('EMP004', 'Jones', 'Jessica', 0, 2400.00, '2023-01-25', '1992-09-15', '+1432576890',
+VALUES ('EMP004', 'Jones', 'Jessica', 0, 2400.00, '2023-01-25', '1992-09-15', '+143256676890',
         'San Francisco', 'Pine St.', '94101');
 
 INSERT INTO employee (employee_id, employee_surname, employee_name, employee_role, employee_salary,
                       employee_start_date, employee_birth_date, employee_phone_number, employee_city,
                       employee_street, employee_zip_code)
-VALUES ('EMP006', 'Davis', 'Robert', 0, 2600.00, '2023-04-05', '1994-06-10', '+1567890234',
+VALUES ('EMP006', 'Davis', 'Robert', 0, 2600.00, '2023-04-05', '1994-06-10', '+156786690234',
         'Dallas', 'Cedar St.', '75201');
 
 INSERT INTO employee (employee_id, employee_surname, employee_name, employee_role, employee_salary,
                       employee_start_date, employee_birth_date, employee_phone_number, employee_city,
                       employee_street, employee_zip_code)
-VALUES ('EMP008', 'Rodriguez', 'Amanda', 0, 2700.00, '2023-02-28', '1993-12-20', '+1678904321',
+VALUES ('EMP008', 'Rodriguez', 'Amanda', 0, 2700.00, '2023-02-28', '1993-12-20', '+167890664321',
         'Phoenix', 'Willow St.', '85001');
 
 
@@ -111,9 +111,6 @@ VALUES (4, 'Grains and Bakery Products');
 
 INSERT INTO Category (category_number, category_name)
 VALUES (5, 'Confectionery Products');
-
-INSERT INTO Category (category_number, category_name)
-VALUES (6, 'Vegetables and Fruits');
 
 
 -- PRODUCT
@@ -166,36 +163,39 @@ VALUES (15, 5, 'Gummy Bears', 'Assorted Gummy Bears, Jelly Candy, 150g');
 -- CUSTOMER_CARD
 INSERT INTO Customer_Card (card_number, customer_surname, customer_name, customer_patronymic, customer_phone_number,
                            customer_city, customer_street, customer_zip_code, customer_percent)
-VALUES ('CARD001', 'Johnson', 'Michael', 'Alexander', '+1234567890', 'New York', 'Main St.', '10001', 10);
+VALUES ('CARD001', 'Johnson', 'Michael', 'Alexander', '+123488567890', 'New York', 'Main St.', '10001', 10);
 
 INSERT INTO Customer_Card (card_number, customer_surname, customer_name, customer_phone_number, customer_percent)
-VALUES ('CARD002', 'Williams', 'Emily', '+1987654321', 15);
+VALUES ('CARD002', 'Williams', 'Emily', '+198765884321', 15);
 
 INSERT INTO Customer_Card (card_number, customer_surname, customer_name, customer_phone_number, customer_city,
                            customer_street, customer_zip_code, customer_percent)
-VALUES ('CARD003', 'Brown', 'Jennifer', '+1654321890', 'Los Angeles', 'Oak St.', '90001', 20);
+VALUES ('CARD003', 'Brown', 'Jennifer', '+165438821890', 'Los Angeles', 'Oak St.', '90001', 20);
 
 INSERT INTO Customer_Card (card_number, customer_surname, customer_name, customer_phone_number, customer_percent)
-VALUES ('CARD004', 'Jones', 'Christopher', '+1765432981', 10);
+VALUES ('CARD004', 'Jones', 'Christopher', '+176885432981', 10);
 
 INSERT INTO Customer_Card (card_number, customer_surname, customer_name, customer_phone_number, customer_percent)
-VALUES ('CARD005', 'Miller', 'Jessica', '+1321987654', 5);
+VALUES ('CARD005', 'Miller', 'Jessica', '+132881987654', 5);
 
 INSERT INTO Customer_Card (card_number, customer_surname, customer_name, customer_phone_number, customer_percent)
-VALUES ('CARD006', 'Taylor', 'David', '+1908765432', 15);
+VALUES ('CARD006', 'Taylor', 'David', '+190876885432', 15);
 
 INSERT INTO Customer_Card (card_number, customer_surname, customer_name, customer_phone_number, customer_percent)
-VALUES ('CARD007', 'Wilson', 'Sarah', '+1987654321', 20);
+VALUES ('CARD007', 'Wilson', 'Sarah', '+198765884321', 20);
 
 INSERT INTO Customer_Card (card_number, customer_surname, customer_name, customer_phone_number, customer_percent)
-VALUES ('CARD008', 'Martinez', 'Andrew', '+1765432890', 10);
+VALUES ('CARD008', 'Martinez', 'Andrew', '+176885432890', 10);
 
 INSERT INTO Customer_Card (card_number, customer_surname, customer_name, customer_phone_number, customer_city,
                            customer_street, customer_zip_code, customer_percent)
-VALUES ('CARD009', 'Anderson', 'Amanda', '+1654321987', 'Chicago', 'Elm St.', '60601', 10);
+VALUES ('CARD009', 'Anderson', 'Amanda', '+165884321987', 'Chicago', 'Elm St.', '60601', 10);
 
 INSERT INTO Customer_Card (card_number, customer_surname, customer_name, customer_phone_number, customer_percent)
-VALUES ('CARD010', 'Thomas', 'Ashley', '+1321890765', 5);
+VALUES ('CARD010', 'Thomas', 'Ashley', '+132189078865', 5);
+
+INSERT INTO Customer_Card (card_number, customer_surname, customer_name, customer_phone_number, customer_percent)
+VALUES ('CARD011', 'Thomas', 'Ashley', '+132189088765', 5);
 
 
 -- RECEIPT

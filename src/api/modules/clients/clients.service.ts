@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { AddClientDTO } from '../../dto/add-client.dto';
+import { IResponseInterface } from '../../interfaces/IResponse.interface';
 
 function filterQueryBuilder(
   id: string,
@@ -146,6 +147,35 @@ export class ClientsService {
       success: true,
       title: 'Клієнта створено',
       description: `Клієнт ${addClientDTO.customer_surname} ${addClientDTO.customer_name} з ID ${addClientDTO.card_number} був створений`,
+    };
+  }
+
+  async deleteClient(req, id): Promise<IResponseInterface> {
+    const doExist = await this.getClientCard(id);
+    if (!doExist)
+      return {
+        success: false,
+        title: 'Помилка видалення',
+        description: 'Такого клієнта не існує',
+      };
+
+    try {
+      await this.databaseService.query(`
+        DELETE FROM Customer_Card
+        WHERE card_number = '${id}';
+      `);
+    } catch (error) {
+      return {
+        success: false,
+        title: 'Помилка видалення',
+        description: 'Видалення порушує цілісність бази даних',
+      };
+    }
+
+    return {
+      success: true,
+      title: 'Видалення успішне',
+      description: `Клієнт ${id} був видалений`,
     };
   }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Query, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Query, Req } from '@nestjs/common';
 import { ClientsService } from './clients.service';
 import { Roles } from '../../auth/roles/roles.decorator';
 import { Role } from '../../auth/roles/role.enum';
@@ -58,5 +58,11 @@ export class ClientsController {
     @Body() addClientDTO: AddClientDTO,
   ): Promise<IResponseInterface> {
     return await this.clientsService.addNewClient(addClientDTO);
+  }
+
+  @Delete('delete')
+  @Roles(Role.Admin, Role.Manager)
+  async deleteClients(@Req() req, @Query('id') id) {
+    return await this.clientsService.deleteClient(req, id);
   }
 }
