@@ -14,6 +14,7 @@ export class ClientService {
     private apiService: ApiService,
     private categoriesService: CategoriesService,
     private productsService: ProductsService,
+    private suppliesService: SuppliesService,
   ) {}
 
   formatDate(inputDate: string) {
@@ -136,6 +137,26 @@ export class ClientService {
       script: 'add-client',
       currentUser: req.currentEmployee,
       isClients: true,
+    };
+  }
+
+  async getAboutProductRenderObject(req, product_id: number) {
+    return {
+      style: 'about-product',
+      script: 'about-product',
+      title: 'Злагода: Інформація про предмет',
+      currentUser: req.currentEmployee,
+      product: await this.productsService.getProductJoin(product_id),
+      isProducts: true,
+    };
+  }
+
+  async getAboutSupplyRenderObject(req, upc: string) {
+    return {
+      title: 'Злагода: Інформація про товар',
+      currentUser: req.currentEmployee,
+      isSupplies: true,
+      supply: await this.suppliesService.findByUPC(upc),
     };
   }
 }

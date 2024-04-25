@@ -66,12 +66,17 @@ export class SuppliesService {
     return response_data;
   }
 
-  findByUPC(upcToFind: string) {
-    return this.databaseService.query(
+  async findByUPC(upcToFind: string) {
+    let queryResult =  await this.databaseService.query(
       `SELECT * 
       FROM Store_Product
+      INNER JOIN Product P ON Store_Product.product_id = P.product_id
       WHERE UPC='${upcToFind}';`,
     );
+
+    if (queryResult.length === 0) return null;
+
+    return queryResult[0];
   }
 
   async searchByFilter(

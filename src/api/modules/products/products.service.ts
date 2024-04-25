@@ -48,6 +48,19 @@ function filterQueryBuilder(
 export class ProductsService {
   constructor(private databaseService: DatabaseService) {}
 
+  async getProductJoin(product_id: number) {
+    let queryResult =  await this.databaseService.query(`
+      SELECT *
+      FROM Product
+      INNER JOIN Category ON product.category_number = Category.category_number
+      WHERE product_id = ${product_id};
+    `);
+
+    if (queryResult.length === 0) return null;
+
+    return queryResult[0];
+  }
+
   async getProduct(product_id: number) {
     let queryResult =  await this.databaseService.query(`
       SELECT *

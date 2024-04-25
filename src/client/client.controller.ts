@@ -171,14 +171,8 @@ export class ClientController {
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('products/about')
   @Render('info/about-product')
-  async renderAboutProductPage(@Req() req) {
-    return {
-      style: 'about-product',
-      script: 'about-product',
-      title: 'Злагода: Інформація про предмет',
-      currentUser: req.currentEmployee,
-      isProducts: true,
-    };
+  async renderAboutProductPage(@Req() req, @Query('id') product_id: number) {
+    return await this.clientService.getAboutProductRenderObject(req, product_id);
   }
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
@@ -195,12 +189,8 @@ export class ClientController {
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('supplies/about')
   @Render('info/about-supply')
-  async renderAboutSupplyPage(@Req() req) {
-    return {
-      title: 'Злагода: Інформація про товар',
-      currentUser: req.currentEmployee,
-      isSupplies: true,
-    };
+  async renderAboutSupplyPage(@Req() req, @Query('upc') upc: string) {
+    return this.clientService.getAboutSupplyRenderObject(req, upc);
   }
 
   //сторінки для редагування
