@@ -117,7 +117,6 @@ export class ClientsService {
     const queryResult = await this.databaseService.query(query);
     const allQueryResult = await this.databaseService.query(allQuery);
 
-    console.log(query);
     return {
       rows: queryResult,
       amount: allQueryResult.length,
