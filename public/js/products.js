@@ -21,13 +21,13 @@ let categoryValue = categorySelector.value;
 let sortByValue = sortBySelect.value;
 let orderByValue = orderBySelect.value;
 
-searchButton.onclick = async function() {
+searchButton.onclick = async function () {
   updateInputValues();
   currentPage = 1;
 
   await loadTableData(generateFetchURL(currentPage), currentPage);
   await loadPagination(currentPage);
-}
+};
 
 function generateFetchURL(currentPage) {
   return `/api/products/search?limit=${itemsPerPage}&page=${currentPage}&productId=${productIdValue}&text=${textValue}&categoryNumber=${categoryValue}&sortBy=${sortByValue}&order=${orderByValue}`;
@@ -193,7 +193,8 @@ function handlePrintButton() {
   let printButton = document.getElementById('print-button');
   printButton.onclick = async function () {
     const response = await fetch(
-      `/api/products/search?productId=${productIdValue}&text=${textValue}&categoryNumber=${categoryValue}&sortBy=${sortByValue}&order=${orderByValue}` );
+      `/api/products/search?productId=${productIdValue}&text=${textValue}&categoryNumber=${categoryValue}&sortBy=${sortByValue}&order=${orderByValue}`,
+    );
     const data = await response.json();
     const tableBodyToPrint = document.getElementById('table-body-to-print');
     tableBodyToPrint.setAttribute('data-table-theme', 'default');
@@ -210,7 +211,8 @@ function handlePrintButton() {
     data.rows.forEach((product) => {
       let rowClone = rowTemplate.cloneNode(true);
       let rowColumns = rowClone.querySelectorAll('td');
-      rowColumns[0].innerText = (currentPage - 1) * itemsPerPage + 1 + counter++;
+      rowColumns[0].innerText =
+        (currentPage - 1) * itemsPerPage + 1 + counter++;
       rowColumns[1].innerText = product.product_id;
       rowColumns[2].innerText = product.category_name;
       rowColumns[3].innerText = product.product_name;
@@ -219,18 +221,21 @@ function handlePrintButton() {
       tableBodyToPrint.appendChild(rowClone);
     });
 
-
-    let content = document.getElementById("content-to-print").innerHTML;
+    let content = document.getElementById('content-to-print').innerHTML;
     let printWindow = window.open('', '_blank');
     printWindow.document.open();
-    printWindow.document.write('<html><head>' +
-      '<style>table {  color: black;  background: white;  border: 1px solid #0e0d0d;' +
-      'font-size: 10pt;  border-collapse: collapse;}' +
-      'table thead th,table tfoot th {  color: black;  background: rgba(0,0,0,.1);}' +
-      'table caption {  padding:.5em;}' +
-      'table th,table td {  padding: .5em;  border: 1px solid lightgrey;}' +
-      '</style>' +
-      '<title>Print</title></head><body>' + content + '</body></html>');
+    printWindow.document.write(
+      '<html><head>' +
+        '<style>table {  color: black;  background: white;  border: 1px solid #0e0d0d;' +
+        'font-size: 10pt;  border-collapse: collapse;}' +
+        'table thead th,table tfoot th {  color: black;  background: rgba(0,0,0,.1);}' +
+        'table caption {  padding:.5em;}' +
+        'table th,table td {  padding: .5em;  border: 1px solid lightgrey;}' +
+        '</style>' +
+        '<title>Print</title></head><body>' +
+        content +
+        '</body></html>',
+    );
     printWindow.document.close();
     printWindow.print();
   };

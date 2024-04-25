@@ -286,17 +286,21 @@ function handlePrintButton() {
       tableBodyToPrint.appendChild(rowClone);
     });
 
-    let content = document.getElementById("content-to-print").innerHTML;
+    let content = document.getElementById('content-to-print').innerHTML;
     let printWindow = window.open('', '_blank');
     printWindow.document.open();
-    printWindow.document.write('<html><head>' +
-      '<style>table {  color: black;  background: white;  border: 1px solid #0e0d0d;' +
-      'font-size: 10pt;  border-collapse: collapse;}' +
-      'table thead th,table tfoot th {  color: black;  background: rgba(0,0,0,.1);}' +
-      'table caption {  padding:.5em;}' +
-      'table th,table td {  padding: .5em;  border: 1px solid lightgrey;}' +
-      '</style>' +
-      '<title>Print</title></head><body>' + content + '</body></html>');
+    printWindow.document.write(
+      '<html><head>' +
+        '<style>table {  color: black;  background: white;  border: 1px solid #0e0d0d;' +
+        'font-size: 10pt;  border-collapse: collapse;}' +
+        'table thead th,table tfoot th {  color: black;  background: rgba(0,0,0,.1);}' +
+        'table caption {  padding:.5em;}' +
+        'table th,table td {  padding: .5em;  border: 1px solid lightgrey;}' +
+        '</style>' +
+        '<title>Print</title></head><body>' +
+        content +
+        '</body></html>',
+    );
     printWindow.document.close();
     printWindow.print();
   };

@@ -22,13 +22,13 @@ let typeValue = typeSelector.value;
 let sortByValue = sortBySelect.value;
 let orderByValue = orderBySelect.value;
 
-searchButton.onclick = async function() {
+searchButton.onclick = async function () {
   updateInputValues();
   currentPage = 1;
 
   await loadTableData(generateFetchURL(currentPage), currentPage);
   await loadPagination(currentPage);
-}
+};
 
 function generateFetchURL(currentPage) {
   return `/api/supplies/search?limit=${itemsPerPage}&page=${currentPage}&UPC=${supplyUPCValue}&text=${textValue}&type=${typeValue}&sortBy=${sortByValue}&order=${orderByValue}`;
@@ -200,7 +200,61 @@ function openEditSupply(button) {
 
 function handlePrintButton() {
   let printButton = document.getElementById('print-button');
-  printButton.onclick = function () {
-    window.print();
+  printButton.onclick = async function () {
+    const response = await fetch(
+      `/api/supplies/search?UPC=${supplyUPCValue}&text=${textValue}&type=${typeValue}&sortBy=${sortByValue}&order=${orderByValue}`,
+    );
+
+    const data = await response.json();
+    const tableBodyToPrint = document.getElementById('table-body-to-print');
+    tableBodyToPrint.setAttribute('data-table-theme', 'default');
+    const rowTemplate = document.createElement('tr');
+    for (let i = 0; i < 10; i++) {
+      const td = document.createElement('td');
+      rowTemplate.appendChild(td);
+    }
+    tableBodyToPrint.innerHTML = '';
+    totalRowsAmount = data.amount;
+    totalAmountElement.innerText = data.amount;
+
+    let counter = 0;
+    data.rows.forEach((supply) => {
+      let rowClone = rowTemplate.cloneNode(true);
+      let rowColumns = rowClone.querySelectorAll('td');
+      rowColumns[0].innerText =
+        (currentPage - 1) * itemsPerPage + 1 + counter++;
+      rowColumns[1].innerText = supply.UPC;
+      rowColumns[2].innerText = supply.UPC_prom ? supply.UPC_prom : 'Відсутній';
+      rowColumns[3].innerText = supply.product_id;
+      rowColumns[4].innerText = supply.product_name;
+      rowColumns[5].innerText = supply.selling_price;
+      rowColumns[6].innerText = supply.products_amount;
+      rowColumns[7].innerText = supply.is_promotional ? 'Так' : 'Ні';
+      rowColumns[8].innerText = formatDate(supply.manufacturing_date);
+      rowColumns[9].innerText = formatDate(supply.expiration_date);
+      tableBodyToPrint.appendChild(rowClone);
+    });
+
+    let content = document.getElementById('content-to-print').innerHTML;
+    let printWindow = window.open('', '_blank');
+    printWindow.document.open();
+    printWindow.document.write(
+      '<html><head>' +
+        '<style>table {  color: black;  background: white;  border: 1px solid #0e0d0d;' +
+        'font-size: 10pt;  border-collapse: collapse;}' +
+        'table thead th,table tfoot th {  color: black;  background: rgba(0,0,0,.1);}' +
+        'table caption {  padding:.5em;}' +
+        'table th,table td {  padding: .5em;  border: 1px solid lightgrey;}' +
+        '</style>' +
+        '<title>Print</title></head><body>' +
+        content +
+        '</body></html>',
+    );
+    printWindow.document.close();
+    printWindow.print();
   };
+}
+function formatDate(inputDate) {
+  const date = new Date(inputDate);
+  return date.toLocaleDateString('en-GB');
 }
