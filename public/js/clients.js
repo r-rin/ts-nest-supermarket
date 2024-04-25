@@ -6,6 +6,9 @@ let totalRowsAmount = 0;
 //Selectors
 const totalAmountElement = document.querySelector('#rows-amount');
 const searchButton = document.querySelector('#search');
+const modalSelector = document.querySelector('#deleteClient');
+const resultModal = new bootstrap.Modal(modalSelector);
+const deleteClientBtnSelector = document.querySelector('#deleteClientBtn');
 
 //Filter Selectors
 const cardNumberInput = document.querySelector('#cardNumber');
@@ -19,13 +22,13 @@ let textValue = encodeURIComponent(textInput.value);
 let sortByValue = sortBySelect.value;
 let orderByValue = orderBySelect.value;
 
-searchButton.onclick = async function() {
+searchButton.onclick = async function () {
   updateInputValues();
   currentPage = 1;
 
   await loadTableData(generateFetchURL(currentPage), currentPage);
   await loadPagination(currentPage);
-}
+};
 
 function generateFetchURL(currentPage) {
   return `/api/clients/search?limit=${itemsPerPage}&page=${currentPage}&id=${cardNumberValue}&text=${textValue}&&sortBy=${sortByValue}&order=${orderByValue}`;
@@ -60,7 +63,7 @@ async function generateInteractionButtons(card_number) {
   if (userRole === 1 || userRole === 2) {
     htmlContent = htmlContent.concat(
       `<button class="btn btn-warning" data-id="${card_number}" onclick="openEditCard(this)"><i class="fa-solid fa-pen-to-square"></i></button>` +
-        `<button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>`,
+        `<button class="btn btn-danger" data-id="${card_number}" onclick="openDeleteCard(this)"><i class="fa-solid fa-trash"></i></button>`,
     );
   }
 
@@ -81,19 +84,19 @@ async function loadTableData(fetchURL, currentPage) {
   totalAmountElement.innerText = data.amount;
 
   let counter = 0;
-  data.rows.forEach((supply) => {
+  data.rows.forEach((client) => {
     let rowClone = rowTemplate.cloneNode(true);
     let rowColumns = rowClone.querySelectorAll('td');
     console.log(data);
     rowColumns[0].innerText = (currentPage - 1) * itemsPerPage + 1 + counter++;
-    rowColumns[1].innerText = supply.card_number;
-    rowColumns[2].innerText = supply.customer_surname;
-    rowColumns[3].innerText = supply.customer_name;
-    rowColumns[4].innerText = supply.customer_phone_number;
-    rowColumns[5].innerText = supply.customer_city;
-    rowColumns[6].innerText = supply.customer_percent;
+    rowColumns[1].innerText = client.card_number;
+    rowColumns[2].innerText = client.customer_surname;
+    rowColumns[3].innerText = client.customer_name;
+    rowColumns[4].innerText = client.customer_phone_number;
+    rowColumns[5].innerText = client.customer_city;
+    rowColumns[6].innerText = client.customer_percent;
 
-    generateInteractionButtons(supply.card_number).then((res) => {
+    generateInteractionButtons(client.card_number).then((res) => {
       rowColumns[7].innerHTML = `<div class="actions-container">${res}</div>`;
     });
 
@@ -187,6 +190,33 @@ function openEditCard(button) {
   let newTab = window.open('/clients/edit-client?id=' + id, '_blank');
 
   newTab.focus();
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function openDeleteCard(button) {
+  let id = button.getAttribute('data-id');
+  resultModal.hide();
+  resultModal.show();
+
+  // Видалення категорії при підтвердженні
+  deleteClientBtnSelector.onclick = () => {
+    fetch(`/delete-client/${id}`, {
+      method: 'DELETE',
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log(`Клієнта з ID ${id} успішно видалено`);
+        } else {
+          console.error(`Помилка при видаленні клієнта з ID ${id}`);
+        }
+      })
+      .catch((error) => {
+        console.error('Помилка при виконанні запиту:', error);
+      })
+      .finally(() => {
+        resultModal.hide();
+      });
+  };
 }
 
 function handlePrintButton() {
