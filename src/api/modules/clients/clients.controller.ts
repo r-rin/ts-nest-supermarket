@@ -29,4 +29,24 @@ export class ClientsController {
       clientPatronimic,
     );
   }
+
+  @Get('search')
+  @Roles(Role.Admin, Role.Cashier, Role.Manager)
+  async searchByFilter(
+    @Query('id') id,
+    @Query('text') text,
+    @Query('sortBy') sortBy,
+    @Query('order') order,
+    @Query('limit') limit,
+    @Query('page') page,
+  ) {
+    return await this.clientsService.searchByFilter(
+      id,
+      text,
+      sortBy,
+      order,
+      limit,
+      page,
+    );
+  }
 }

@@ -10,7 +10,13 @@ function filterQueryBuilder(
   page: any,
 ): string {
   if (!id) id = '';
-  if (!text) text = '';
+  if (!text) {
+    text = '';
+  } else {
+    // I'm not sure if this is safe...
+    // Hope no one will pass SQL injections into text...
+    text = decodeURIComponent(text);
+  }
 
   let queryBase = `
     SELECT *

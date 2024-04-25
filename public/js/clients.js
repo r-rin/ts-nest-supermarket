@@ -3,11 +3,44 @@ let currentPage = 1;
 let userRole = 0;
 let totalRowsAmount = 0;
 
+//Selectors
+const totalAmountElement = document.querySelector('#rows-amount');
+const searchButton = document.querySelector('#search');
+
+//Filter Selectors
+const cardNumberInput = document.querySelector('#cardNumber');
+const textInput = document.querySelector('#searchByText');
+const sortBySelect = document.querySelector('#sortBy');
+const orderBySelect = document.querySelector('#orderBy');
+
+//Filter values
+let cardNumberValue = cardNumberInput.value;
+let textValue = encodeURIComponent(textInput.value);
+let sortByValue = sortBySelect.value;
+let orderByValue = orderBySelect.value;
+
+searchButton.onclick = async function() {
+  updateInputValues();
+  currentPage = 1;
+
+  await loadTableData(generateFetchURL(currentPage), currentPage);
+  await loadPagination(currentPage);
+}
+
+function generateFetchURL(currentPage) {
+  return `/api/clients/search?limit=${itemsPerPage}&page=${currentPage}&id=${cardNumberValue}&text=${textValue}&&sortBy=${sortByValue}&order=${orderByValue}`;
+}
+
+function updateInputValues() {
+  cardNumberValue = cardNumberInput.value;
+  textValue = encodeURIComponent(textInput.value);
+  sortByValue = sortBySelect.value;
+  orderByValue = orderBySelect.value;
+}
+
 fetchUserRole().then((role) => {
   userRole = role;
 });
-
-const totalAmountElement = document.querySelector('#rows-amount');
 
 async function fetchUserRole() {
   const response = await fetch('/api/user');
@@ -17,8 +50,8 @@ async function fetchUserRole() {
 
 window.onload = init;
 async function init() {
-  await loadTableData(currentPage);
-  loadPagination(currentPage);
+  await loadTableData(generateFetchURL(currentPage), currentPage);
+  await loadPagination(currentPage);
 }
 
 async function generateInteractionButtons(card_number) {
@@ -34,10 +67,8 @@ async function generateInteractionButtons(card_number) {
   return htmlContent;
 }
 
-async function loadTableData(currentPage) {
-  const response = await fetch(
-    `/api/clients/all?limit=${itemsPerPage}&page=${currentPage}`,
-  );
+async function loadTableData(fetchURL, currentPage) {
+  const response = await fetch(fetchURL);
   const data = await response.json();
   const tableBody = document.querySelector('#data-table tbody');
   const rowTemplate = document.createElement('tr');
@@ -85,11 +116,11 @@ async function loadPagination(currentPage) {
   previousPageLink.classList.add('page-link');
   previousPageLink.style['user-select'] = 'none';
   previousPageLink.innerText = 'Минула';
-  previousPageLink.onclick = () => {
+  previousPageLink.onclick = async () => {
     if (currentPage > 1) {
       currentPage--;
-      loadTableData(currentPage);
-      loadPagination(currentPage);
+      await loadTableData(generateFetchURL(currentPage), currentPage);
+      await loadPagination(currentPage);
     }
   };
   previousPageButton.appendChild(previousPageLink);
@@ -105,10 +136,10 @@ async function loadPagination(currentPage) {
     const pageLink = document.createElement('a');
     pageLink.classList.add('page-link');
     pageLink.innerText = i;
-    pageLink.onclick = () => {
+    pageLink.onclick = async () => {
       currentPage = i;
-      loadTableData(currentPage);
-      loadPagination(currentPage);
+      await loadTableData(generateFetchURL(currentPage), currentPage);
+      await loadPagination(currentPage);
     };
     pageButton.appendChild(pageLink);
     paginationContainer.appendChild(pageButton);
@@ -123,11 +154,11 @@ async function loadPagination(currentPage) {
   const nextPageLink = document.createElement('a');
   nextPageLink.classList.add('page-link');
   nextPageLink.innerText = 'Наступна';
-  nextPageLink.onclick = () => {
+  nextPageLink.onclick = async () => {
     if (currentPage < totalPages) {
       currentPage++;
-      loadTableData(currentPage);
-      loadPagination(currentPage);
+      await loadTableData(generateFetchURL(currentPage), currentPage);
+      await loadPagination(currentPage);
     }
   };
   nextPageButton.appendChild(nextPageLink);

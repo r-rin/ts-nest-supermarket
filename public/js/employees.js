@@ -20,7 +20,7 @@ const orderBySelect = document.querySelector('#orderBy');
 
 //Filter values
 let employeeIdValue = employeeIdInput.value;
-let textValue = textInput.value;
+let textValue = encodeURIComponent(textInput.value);
 let employeeRoleValue = employeeRoleInput.value;
 let employeeCityValue = employeeCityInput.value;
 let sortByValue = sortBySelect.value;
@@ -30,8 +30,8 @@ searchButton.onclick = async function () {
   updateInputValues();
   currentPage = 1;
 
-  await loadTableData(generateFetchURL(currentPage));
-  loadPagination(currentPage);
+  await loadTableData(generateFetchURL(currentPage), currentPage);
+  await loadPagination(currentPage);
 };
 
 function generateFetchURL(currentPage) {
@@ -40,7 +40,7 @@ function generateFetchURL(currentPage) {
 
 function updateInputValues() {
   employeeIdValue = employeeIdInput.value;
-  textValue = textInput.value;
+  textValue = encodeURIComponent(textInput.value);
   employeeRoleValue = employeeRoleInput.value;
   employeeCityValue = employeeCityInput.value;
   sortByValue = sortBySelect.value;
@@ -68,8 +68,8 @@ async function fetchUserRole() {
 
 window.onload = init;
 async function init() {
-  await loadTableData(generateFetchURL(currentPage));
-  loadPagination(currentPage);
+  await loadTableData(generateFetchURL(currentPage), currentPage);
+  await loadPagination(currentPage);
   handlePrintButton();
 }
 
@@ -85,7 +85,7 @@ async function generateInteractionButtons(employee_id) {
   return htmlContent;
 }
 
-async function loadTableData(fetchUrl) {
+async function loadTableData(fetchUrl, currentPage) {
   const response = await fetch(fetchUrl);
   const data = await response.json();
   const tableBody = document.querySelector('#data-table tbody');
@@ -137,7 +137,7 @@ async function loadPagination(currentPage) {
   previousPageLink.onclick = () => {
     if (currentPage > 1) {
       currentPage--;
-      loadTableData(generateFetchURL(currentPage));
+      loadTableData(generateFetchURL(currentPage), currentPage);
       loadPagination(currentPage);
     }
   };
@@ -156,7 +156,7 @@ async function loadPagination(currentPage) {
     pageLink.innerText = i;
     pageLink.onclick = () => {
       currentPage = i;
-      loadTableData(generateFetchURL(currentPage));
+      loadTableData(generateFetchURL(currentPage), currentPage);
       loadPagination(currentPage);
     };
     pageButton.appendChild(pageLink);
@@ -175,7 +175,7 @@ async function loadPagination(currentPage) {
   nextPageLink.onclick = () => {
     if (currentPage < totalPages) {
       currentPage++;
-      loadTableData(generateFetchURL(currentPage));
+      loadTableData(generateFetchURL(currentPage), currentPage);
       loadPagination(currentPage);
     }
   };

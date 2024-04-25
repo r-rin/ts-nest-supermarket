@@ -17,7 +17,7 @@ const orderBySelect = document.querySelector('#orderBy');
 
 //Filter values
 let supplyUPCValue = supplyUPCInput.value;
-let textValue = textInput.value;
+let textValue = encodeURIComponent(textInput.value);
 let typeValue = typeSelector.value;
 let sortByValue = sortBySelect.value;
 let orderByValue = orderBySelect.value;
@@ -26,7 +26,7 @@ searchButton.onclick = async function() {
   updateInputValues();
   currentPage = 1;
 
-  await loadTableData(generateFetchURL(currentPage));
+  await loadTableData(generateFetchURL(currentPage), currentPage);
   await loadPagination(currentPage);
 }
 
@@ -36,7 +36,7 @@ function generateFetchURL(currentPage) {
 
 function updateInputValues() {
   supplyUPCValue = supplyUPCInput.value;
-  textValue = textInput.value;
+  textValue = encodeURIComponent(textInput.value);
   typeValue = typeSelector.value;
   sortByValue = sortBySelect.value;
   orderByValue = orderBySelect.value;
@@ -55,7 +55,7 @@ async function fetchUserRole() {
 
 window.onload = init;
 async function init() {
-  await loadTableData(generateFetchURL(currentPage));
+  await loadTableData(generateFetchURL(currentPage), currentPage);
   await loadPagination(currentPage);
   handlePrintButton();
 }
@@ -79,7 +79,7 @@ async function generateInteractionButtons(UPC) {
   return htmlContent;
 }
 
-async function loadTableData(fetchURL) {
+async function loadTableData(fetchURL, currentPage) {
   const response = await fetch(fetchURL);
   const data = await response.json();
   const tableBody = document.querySelector('#data-table tbody');
@@ -128,7 +128,7 @@ async function loadPagination(currentPage) {
   previousPageLink.onclick = async () => {
     if (currentPage > 1) {
       currentPage--;
-      await loadTableData(generateFetchURL(currentPage));
+      await loadTableData(generateFetchURL(currentPage), currentPage);
       await loadPagination(currentPage);
     }
   };
@@ -147,7 +147,7 @@ async function loadPagination(currentPage) {
     pageLink.innerText = i;
     pageLink.onclick = async () => {
       currentPage = i;
-      await loadTableData(generateFetchURL(currentPage));
+      await loadTableData(generateFetchURL(currentPage), currentPage);
       await loadPagination(currentPage);
     };
     pageButton.appendChild(pageLink);
@@ -166,7 +166,7 @@ async function loadPagination(currentPage) {
   nextPageLink.onclick = async () => {
     if (currentPage < totalPages) {
       currentPage++;
-      await loadTableData(generateFetchURL(currentPage));
+      await loadTableData(generateFetchURL(currentPage), currentPage);
       await loadPagination(currentPage);
     }
   };
