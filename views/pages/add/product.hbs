@@ -14,19 +14,16 @@
               <label for="productId" class="form-label text-center">ID товару</label>
               <span style="color: red">*</span>
               <input type="number" class="form-control text-center" placeholder="Наприклад: 1" id="productId"
-                     name="productId" min="1" step="1" required>
+                     name="product_id" min="1" step="1" required>
             </div>
 
             <div class="col">
               <label for="categoryName" class="form-label text-center">Категорія</label>
               <span style="color: red">*</span>
-              <select class="form-select text-center" id="categoryName" name="categoryName" required>
-                <option value="Овочі та фрукти">Овочі та фрукти</option>
-                <option value="М'ясо та птиця">М'ясо та птиця</option>
-                <option value="Молочні продукти">Молочні продукти</option>
-                <option value="Хлібобулочні вироби">Хлібобулочні вироби</option>
-                <option value="Кондитерські вироби">Заморожені продукти</option>
-                <option value="Напої">Напої</option>
+              <select class="form-select text-center" id="categoryName" name="category_number" required>
+                {{#each categoriesDict}}
+                  <option value="{{this.[0]}}">{{this.[1]}}</option>
+                {{/each}}
               </select>
             </div>
 
@@ -37,7 +34,7 @@
               <label for="productName" class="form-label text-center">Назва товару</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Назва товару" id="productName"
-                     name="productName" maxlength="50" required>
+                     name="product_name" minlength="3" maxlength="50" required>
             </div>
           </div>
 
@@ -66,5 +63,20 @@
 
       </section>
     </section>
+
+    <div class="modal fade" id="infoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="infoModalTitle">...</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="infoModalBody">
+            ...
+          </div>
+        </div>
+      </div>
+    </div>
   {{/inline}}
 {{/layout}}

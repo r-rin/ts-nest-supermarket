@@ -1,5 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
+import { AddEmployeeDTO } from '../../dto/add-employee.dto';
+import { IResponseInterface } from '../../interfaces/IResponse.interface';
+import { IEmployee } from '../../interfaces/IEmployee.interface';
+import * as bcrypt from 'bcrypt';
+import { AddProductDTO } from '../../dto/add-product.dto';
 
 function filterQueryBuilder(
   id: string,
@@ -42,6 +47,18 @@ function filterQueryBuilder(
 @Injectable()
 export class ProductsService {
   constructor(private databaseService: DatabaseService) {}
+
+  async getProduct(product_id: number) {
+    let queryResult =  await this.databaseService.query(`
+      SELECT *
+      FROM Product
+      WHERE product_id = ${product_id};
+    `);
+
+    if (queryResult.length === 0) return null;
+
+    return queryResult[0];
+  }
 
   async getAllProducts(limit, page) {
     const response_data = {
@@ -107,6 +124,43 @@ export class ProductsService {
     return {
       rows: queryResult,
       amount: allQueryResult.length,
+    };
+  }
+
+  async addNewProduct(
+    addProductDTO: AddProductDTO,
+  ): Promise<IResponseInterface> {
+    const doExists = await this.getProduct(
+      addProductDTO.product_id
+    );
+
+    if (doExists) return {
+      success: false,
+      title: 'Неможливо створити предмет',
+      description: `Предмет з ID ${addProductDTO.product_id} вже існує (${doExists.product_name})`,
+    };
+
+    try {
+      this.databaseService.query(`
+        INSERT INTO Product (product_id, category_number, product_name, characteristics)
+        VALUES (
+                ${addProductDTO.product_id},
+                ${addProductDTO.category_number}, 
+                '${addProductDTO.product_name}', 
+                '${addProductDTO.characteristics}');
+      `);
+    } catch(error) {
+      return {
+        success: false,
+        title: 'Неможливо створити предмет',
+        description: `При виконанні запиту виникла помилка`,
+      };
+    }
+
+    return {
+      success: true,
+      title: 'Предмет створено',
+      description: `Предмет ${addProductDTO.product_name} з ID ${addProductDTO.product_id} було створено`,
     };
   }
 }

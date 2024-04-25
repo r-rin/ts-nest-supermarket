@@ -118,11 +118,7 @@ export class ClientController {
   @Get('products/add-product')
   @Render('add/product')
   async renderAddProductPage(@Req() req) {
-    return {
-      title: 'Злагода: Додати предмет',
-      currentUser: req.currentEmployee,
-      isProducts: true,
-    };
+    return await this.clientService.renderAddProductPage(req);
   }
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)

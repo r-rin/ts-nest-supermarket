@@ -103,4 +103,16 @@ export class ClientService {
       isEmployees: true,
     };
   }
+
+  async renderAddProductPage(req) {
+    return {
+      title: 'Злагода: Додати предмет',
+      script: 'add-product',
+      currentUser: req.currentEmployee,
+      isProducts: true,
+      categoriesDict: Object.entries(
+        await this.categoriesService.getAllCategoriesDict(),
+      ),
+    };
+  }
 }
