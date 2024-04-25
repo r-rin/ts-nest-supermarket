@@ -46,11 +46,7 @@ fetchUserRole().then((role) => {
   userRole = role;
 });
 
-// SELECTORS
-const totalAmountSpan = document.querySelector('#rows-amount');
-
 // PAGINATION SELECTORS
-
 async function fetchUserRole() {
   const response = await fetch('/api/user');
   const userData = await response.json();
