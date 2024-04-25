@@ -253,7 +253,7 @@ function handlePrintButton() {
       `/api/employees/search?employeeId=${employeeIdValue}&text=${textValue}&employeeRole=${employeeRoleValue}&employeeCity=${employeeCityValue}&sortBy=${sortByValue}&order=${orderByValue}`,
     );
     const data = await response.json();
-    const tableBodyToPrint = document.getElementById('table-to-print');
+    const tableBodyToPrint = document.getElementById('table-body-to-print');
     tableBodyToPrint.setAttribute('data-table-theme', 'default');
     const rowTemplate = document.createElement('tr');
     for (let i = 0; i < 13; i++) {
