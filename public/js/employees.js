@@ -8,6 +8,12 @@ const totalAmountElement = document.querySelector('#rows-amount');
 const searchButton = document.querySelector('#search');
 const modalSelector = document.querySelector('#deleteEmployee');
 const resultModal = new bootstrap.Modal(modalSelector);
+
+const infoModalSelector = document.querySelector('#infoModal');
+const infoModal = new bootstrap.Modal(infoModalSelector);
+const infoTitleSelector = document.querySelector('#infoModalTitle');
+const infoBodySelector = document.querySelector('#infoModalBody');
+
 const deleteEmployeeBtnSelector = document.querySelector('#deleteEmployeeBtn');
 
 // Roles Dictionary
@@ -217,23 +223,21 @@ function openDeleteEmployee(button) {
   resultModal.show();
 
   // Видалення категорії при підтвердженні
-  deleteEmployeeBtnSelector.onclick = () => {
-    fetch(`/delete-employee/${id}`, {
+  deleteEmployeeBtnSelector.onclick = async () => {
+    let response = await fetch(`api/employees/delete?id=${id}`, {
       method: 'DELETE',
     })
-      .then((response) => {
-        if (response.ok) {
-          console.log(`Працівника з ID ${id} успішно видалено`);
-        } else {
-          console.error(`Помилка при видаленні працівника з ID ${id}`);
-        }
-      })
-      .catch((error) => {
-        console.error('Помилка при виконанні запиту:', error);
-      })
-      .finally(() => {
-        resultModal.hide();
-      });
+    resultModal.hide();
+
+    let jsonResponse = await response.json();
+    console.log(jsonResponse);
+
+    infoTitleSelector.textContent = jsonResponse.title;
+    infoBodySelector.textContent = jsonResponse.description;
+    infoModal.show();
+
+    loadTableData(generateFetchURL(1), 1);
+    loadPagination(1);
   };
 }
 
