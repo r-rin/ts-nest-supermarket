@@ -1,43 +1,42 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 
+function queryBuilder(employee_id: string, start_date: string, end_date: string) {
+  let queryBase = `
+    SELECT SUM(Receipt.sum_total) AS total_amount_of_products
+    FROM Receipt
+  `;
+
+  if (employee_id != 'all') {
+    queryBase += ` WHERE Receipt.employee_id = '${employee_id}'`
+    if (start_date.length > 0 && end_date.length > 0) {
+      queryBase += ` AND Receipt.print_date >= DATE('${start_date}')`
+      queryBase += ` AND Receipt.print_date <= DATE('${end_date}')`
+    }
+  } else {
+    if (start_date.length > 0 && end_date.length > 0) {
+      queryBase += ` WHERE Receipt.print_date >= DATE('${start_date}')`
+      queryBase += ` AND Receipt.print_date <= DATE('${end_date}')`
+    }
+  }
+
+  queryBase += ';';
+
+  return queryBase;
+}
+
 @Injectable()
 export class StatisticsService {
   constructor(private databaseService: DatabaseService) {}
 
-  async getTotalAmountOfProductsByCashierAndDateRange(
-    cashierId: string,
-    startDate: Date,
-    endDate: Date,
-  ): Promise<number> {
-    const query = `
-        SELECT SUM(Receipt.sum_total) AS total_amount_of_products
-        FROM Receipt
-        WHERE Receipt.employee_id = ?
-          AND Receipt.print_date >= ?
-            AND Receipt.print_date <= ?
-    `;
-    const result = await this.databaseService.query(query, [
-      cashierId,
-      startDate,
-      endDate,
-    ]);
-    return result[0].total_amount_of_products || 0;
-  }
+  async getAllReceiptsSum(employee_id: string, start_date: string, end_date: string) {
+    let query = queryBuilder(employee_id, start_date, end_date)
+    let queryResult = await this.databaseService.query(query);
 
-  async getTotalAmountOfProductsByDateRange(
-    startDate: Date,
-    endDate: Date,
-  ): Promise<number> {
-    const query = `
-      SELECT SUM(Receipt.sum_total) AS total_amount_of_products
-      FROM Receipt
-      WHERE Receipt.print_date >= ?
-        AND Receipt.print_date <= ?;
-    `;
-    const result = await this.databaseService.query(query, [
-      startDate,
-      endDate,
-    ]);
-    return result[0].total_amount_of_products || 0;  }
+    console.log(queryResult)
+
+    if(queryResult[0].total_amount_of_products == null) return 0;
+
+    return queryResult[0].total_amount_of_products;
+  }
 }

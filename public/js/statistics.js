@@ -23,8 +23,8 @@ function getTotalSumOfGoodsFromReceipts(searchForm) {
   });
   let cashierId = document.getElementById('cashier').value;
   const fetchURL = generateFetchURL(
-    formDataObj.date_end,
     formDataObj.date_start,
+    formDataObj.date_end,
     cashierId,
   );
 
@@ -33,7 +33,7 @@ function getTotalSumOfGoodsFromReceipts(searchForm) {
     .then((data) => {
       console.log(data);
       let resSumSpan = document.getElementById('sumAfterSearch');
-      resSumSpan.innerText = data.totalAmount;
+      resSumSpan.innerText = String(data) + ' грн.';
     })
     .catch((error) => {
       // Обробка помилки
@@ -43,6 +43,5 @@ function getTotalSumOfGoodsFromReceipts(searchForm) {
 
 function generateFetchURL(startDate, endDate, cashierId) {
   const baseUrl = 'api/statistics/total-amount-by-cashier-and-date-range';
-  const url = `${baseUrl}?startDate=${startDate}&endDate=${endDate}&cashierId=${cashierId}`;
-  return url;
+  return `${baseUrl}?startDate=${startDate}&endDate=${endDate}&cashierId=${cashierId}`;
 }

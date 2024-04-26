@@ -11,35 +11,8 @@ export class StatisticsController {
     @Query('startDate') startDate: string,
     @Query('endDate') endDate: string,
   ) {
-    if (cashierId.toLowerCase() === 'all') {
-      return await this.getTotalAmountForAllCashiers(startDate, endDate);
-    } else {
-      return await this.getTotalAmountForCashier(cashierId, startDate, endDate);
-    }
+    startDate = new Date(startDate).toISOString().slice(0, 10);
+    endDate = new Date(endDate).toISOString().slice(0, 10);
+    return await this.statisticsService.getAllReceiptsSum(cashierId, startDate, endDate);
   }
-
-  private async getTotalAmountForAllCashiers(
-    startDate: string,
-    endDate: string,
-  ) {
-    const totalAmount =
-      await this.statisticsService.getTotalAmountOfProductsByDateRange(
-        new Date(startDate),
-        new Date(endDate),
-      );
-    return { totalAmount };
-  }
-
-  private async getTotalAmountForCashier(
-    cashierId: string,
-    startDate: string,
-    endDate: string,
-  ) {
-    const totalAmount =
-      await this.statisticsService.getTotalAmountOfProductsByCashierAndDateRange(
-        cashierId,
-        new Date(startDate),
-        new Date(endDate),
-      );
-    return { totalAmount };  }
 }
