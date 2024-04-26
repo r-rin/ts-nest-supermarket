@@ -1,0 +1,73 @@
+{{#> layout }}
+  {{#*inline "pageContent"}}
+    <section class="content-section mb-4">
+      <h1 class="text-center">Статистика</h1>
+    </section>
+
+    <section class="d-flex justify-content-center flex-column align-items-center h-75">
+      <section class="content-section p-3 my-2" style="max-width: 550px;">
+
+          <form id="searchSumCertainCashier">
+
+            <div class="row mb-3">
+              <div class="col">
+                <h4>Загальна сума проданих товарів з чеків</h4>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div>
+                <label for="cashier" class="form-label text-center">Касир</label>
+                <select class="form-select" id="cashier" name="cashier" required>
+                  <option value="" selected>Усі</option>
+                  <option value="1">Петров (EMP001)</option>
+                  <option value="2">Касир 2</option>
+                  <option value="3">Касир 3</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col">
+                <strong>Період:</strong>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-3 w-50">
+                <label for="dateStart" class="form-label">Дата початку</label>
+                <input type="date" id="dateStart" name="date_start" class="form-control">
+              </div>
+
+              <div class="col-3 w-50">
+                <label for="dateEnd" class="form-label">Дата кінця</label>
+                <input type="date" id="dateEnd" name="date_end" class="form-control">
+              </div>
+            </div>
+
+            <div class="row mb-4 mt-4">
+              <div class="col">
+                <span class="h4">Загальна сума: </span>
+                <span class="h4">10000 грн.</span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div>
+                <button type="submit" class="btn btn-primary w-100">
+                  Пошук
+                </button>
+              </div>
+            </div>
+
+          </form>
+
+      </section>
+
+    </section>
+
+
+
+
+  {{/inline}}
+{{/layout}}

@@ -52,6 +52,18 @@ export class ClientController {
   }
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Get('statistics')
+  @Render('statistics')
+  async statistics(@Req() req) {
+    return {
+      script: 'statistics',
+      title: 'Злагода: Статистика',
+      currentUser: req.currentEmployee,
+      isStatistics: true,
+    };
+  }
+
+  @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('products')
   @Render('products')
   async products(@Req() req) {
