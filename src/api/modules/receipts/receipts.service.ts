@@ -187,4 +187,33 @@ export class ReceiptsService {
       amount: allQueryResult.length,
     };
   }
+
+  async deleteReceipt(id) {
+    let doExist = await this.findByReceiptID(id);
+
+    if(!doExist) return {
+      success: false,
+      title: 'Чек не існує',
+      description: `Чек неможливо видалити, оскільки його вже не існує`,
+    };
+
+    try {
+      await this.databaseService.query(`
+        DELETE FROM Receipt
+        WHERE receipt_id = '${id}';
+      `)
+    } catch (e) {
+      return {
+        success: false,
+        title: 'Виникла помилка',
+        description: `При видаленні чкеу виникла помилка`,
+      };
+    }
+
+    return {
+      success: true,
+      title: 'Чек видалено',
+      description: `Чек було успішно видалено`,
+    };
+  }
 }

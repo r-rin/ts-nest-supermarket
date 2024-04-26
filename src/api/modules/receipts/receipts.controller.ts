@@ -1,4 +1,4 @@
-import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
+import { Controller, Delete, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
 import { ReceiptsService } from './receipts.service';
 import { Roles } from '../../auth/roles/roles.decorator';
 import { Role } from '../../auth/roles/role.enum';
@@ -46,5 +46,11 @@ export class ReceiptsController {
       limit,
       page,
     );
+  }
+
+  @Delete('delete')
+  @Roles(Role.Admin, Role.Manager)
+  async deleteReceipt(@Query('id') id) {
+    return await this.receiptsService.deleteReceipt(id);
   }
 }

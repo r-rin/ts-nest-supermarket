@@ -11,8 +11,10 @@ export class StatisticsController {
     @Query('startDate') startDate: string,
     @Query('endDate') endDate: string,
   ) {
-    startDate = new Date(startDate).toISOString().slice(0, 10);
-    endDate = new Date(endDate).toISOString().slice(0, 10);
+    if (startDate.length > 0 && endDate.length > 0){
+      startDate = new Date(startDate).toISOString().slice(0, 10);
+      endDate = new Date(endDate).toISOString().slice(0, 10);
+    }
     return await this.statisticsService.getAllReceiptsSum(
       cashierId,
       startDate,

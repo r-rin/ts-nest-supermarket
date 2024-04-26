@@ -15,12 +15,12 @@ function queryBuilder(
     queryBase += ` WHERE Receipt.employee_id = '${employee_id}'`;
     if (start_date.length > 0 && end_date.length > 0) {
       queryBase += ` AND Receipt.print_date >= DATE('${start_date}')`;
-      queryBase += ` AND Receipt.print_date <= DATE('${end_date}')`;
+      queryBase += ` AND Receipt.print_date <= DATE_ADD(DATE('${end_date}'), INTERVAL 1 DAY) - INTERVAL 1 SECOND`;
     }
   } else {
     if (start_date.length > 0 && end_date.length > 0) {
       queryBase += ` WHERE Receipt.print_date >= DATE('${start_date}')`;
-      queryBase += ` AND Receipt.print_date <= DATE('${end_date}')`;
+      queryBase += ` AND Receipt.print_date <= DATE_ADD(DATE('${end_date}'), INTERVAL 1 DAY) - INTERVAL 1 SECOND`;
     }
   }
   queryBase += ';';
