@@ -3,6 +3,7 @@ import { SuppliesService } from './supplies.service';
 import { Roles } from '../../auth/roles/roles.decorator';
 import { Role } from '../../auth/roles/role.enum';
 import { AddSupplyDTO } from '../../dto/add-supply.dto';
+import { EditSupplyDTO } from '../../dto/edit-supply.dto';
 
 @Controller('api/supplies')
 export class SuppliesController {
@@ -49,5 +50,11 @@ export class SuppliesController {
   @Roles(Role.Admin, Role.Manager)
   async addNewSupply(@Body() addSupplyDTO: AddSupplyDTO) {
     return await this.suppliesService.addNewSupply(addSupplyDTO);
+  }
+
+  @Post('edit')
+  @Roles(Role.Admin, Role.Manager)
+  async editSupply(@Body() editSupplyDTO: EditSupplyDTO) {
+    return await this.suppliesService.editSupply(editSupplyDTO);
   }
 }
