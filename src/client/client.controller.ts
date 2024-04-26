@@ -180,7 +180,10 @@ export class ClientController {
   @Get('products/about')
   @Render('info/about-product')
   async renderAboutProductPage(@Req() req, @Query('id') product_id: number) {
-    return await this.clientService.getAboutProductRenderObject(req, product_id);
+    return await this.clientService.getAboutProductRenderObject(
+      req,
+      product_id,
+    );
   }
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
@@ -220,6 +223,17 @@ export class ClientController {
   }
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Get('receipts/edit-receipt')
+  @Render('edit/receipt')
+  async renderEditReceiptPage(@Req() req) {
+    return {
+      title: 'Злагода: Редагувати чек',
+      currentUser: req.currentEmployee,
+      isReceipts: true,
+    };
+  }
+
+  @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('supplies/edit-supply')
   @Render('edit/supply')
   async renderEditESupplyPage(@Req() req) {
@@ -241,4 +255,15 @@ export class ClientController {
     };
   }
 
+  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Get('settings')
+  @Render('settings')
+  async renderSettingsPage(@Req() req) {
+    return {
+      script: 'settings',
+      title: 'Злагода: Налаштування',
+      currentUser: req.currentEmployee,
+      isSettings: true,
+    };
+  }
 }

@@ -1,7 +1,9 @@
-import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
+import { Body, Controller, HttpStatus, Post, Req, Res } from '@nestjs/common';
 import { CookieOptions, Response } from 'express';
 import { AuthService } from './auth.service';
 import { SignInDTO } from '../dto/sign-in.dto';
+import { Roles } from './roles/roles.decorator';
+import { Role } from './roles/role.enum';
 
 @Controller()
 export class AuthController {
@@ -42,5 +44,17 @@ export class AuthController {
 
     res.clearCookie('access_token', cookieOptions);
     return res.redirect('/login');
+  }
+
+  @Post('update-password')
+  @Roles(Role.Admin, Role.Cashier, Role.Manager)
+  async updatePassword(
+    @Body() updatePasswordDto: { newPassword: string },
+    @Req() req,
+  ) {
+    await this.authService.updatePassword(
+      req.currentEmployee.employee_id,
+      updatePasswordDto.newPassword,
+    );
   }
 }
