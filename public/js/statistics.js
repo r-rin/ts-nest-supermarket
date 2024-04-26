@@ -29,17 +29,16 @@ function getTotalSumOfGoodsFromReceipts(searchForm) {
   );
 
   fetch(fetchURL)
-    .then(response => response.json())
-    .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
       console.log(data);
       let resSumSpan = document.getElementById('sumAfterSearch');
       resSumSpan.innerText = data.totalAmount;
     })
-    .catch(error => {
+    .catch((error) => {
       // Обробка помилки
       console.error('Error:', error);
     });
-
 }
 
 function generateFetchURL(startDate, endDate, cashierId) {
