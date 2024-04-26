@@ -71,10 +71,10 @@
           <div class="col-3">
             <label for="receipt" class="form-label text-center">Чек</label>
             <select class="form-select" id="receipt" name="receipt" required>
-              <option value="" selected>Оберіть чек</option>
-              <option value="1">RCP001</option>
-              <option value="2">RCP002</option>
-              <option value="3">RCP003</option>
+              <option value="all">Усі</option>
+              {{#each receiptsArr}}
+                <option value="{{this.receipt_id}}">{{this.receipt_id}}</option>
+              {{/each}}
             </select>
           </div>
           <div class="row mt-4 mb-4">
@@ -128,10 +128,10 @@
           <div class="col-3">
             <label for="categoryName" class="form-label text-center">Категорія</label>
             <select class="form-select" id="categoryName" name="categoryName" required>
-              <option value="" selected>Оберіть категорію</option>
-              <option value="1">Vegetables and Fruits</option>
-              <option value="2">Meat and Poultry</option>
-              <option value="3">Dairy Products</option>
+              <option value="all">Усі</option>
+              {{#each categoriesArr}}
+                <option value="{{this.category_number}}">{{this.category_name}} ({{this.category_number}})</option>
+              {{/each}}
             </select>
 
           </div>
@@ -241,10 +241,10 @@
           <div class="col-3">
             <label for="productNameId" class="form-label text-center">Предмет</label>
             <select class="form-select" id="productNameId" name="productNameId" required>
-              <option value="" selected>Оберіть предмет</option>
-              <option value="1">Apple (1)</option>
-              <option value="2">Beef Steak (4)</option>
-              <option value="3">Bread (7)</option>
+              <option value="all">Усі</option>
+              {{#each productsArr}}
+                <option value="{{this.product_name}}">{{this.product_name}} ({{this.product_name}})</option>
+              {{/each}}
             </select>
 
           </div>
