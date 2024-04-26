@@ -1,10 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
-import { AddEmployeeDTO } from '../../dto/add-employee.dto';
 import { IResponseInterface } from '../../interfaces/IResponse.interface';
-import { IEmployee } from '../../interfaces/IEmployee.interface';
-import * as bcrypt from 'bcrypt';
 import { AddProductDTO } from '../../dto/add-product.dto';
+import { EditProductDTO } from '../../dto/edit-product.dto';
 
 function filterQueryBuilder(
   id: string,
@@ -217,6 +215,31 @@ export class ProductsService {
       success: true,
       title: 'Видалення успішне',
       description: `Предмет ${id} був видалений`,
+    };
+  }
+
+  async editProduct(editProductDTO: EditProductDTO) {
+
+    try {
+      await this.databaseService.query(`
+        UPDATE Product
+        SET category_number = ${editProductDTO.category_number},
+            product_name = '${editProductDTO.product_name}',
+            characteristics = '${editProductDTO.characteristics}'
+        WHERE product_id = ${editProductDTO.product_id};
+      `);
+    } catch (error) {
+      return {
+        success: false,
+        title: 'Помилка редагування',
+        description: 'При виконанні запиту виникла помилка, зміни не були застосовані',
+      };
+    }
+
+    return {
+      success: true,
+      title: 'Зміни успішно застосовані',
+      description: `Предмет ${editProductDTO.product_name} з ID ${editProductDTO.product_id} був успішно змінений`,
     };
   }
 }

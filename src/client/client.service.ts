@@ -208,4 +208,17 @@ export class ClientService {
       category: await this.categoriesService.getCategory(id),
     };
   }
+
+  async getEditProductRenderObject(req, id) {
+    return {
+      title: 'Злагода: Редагувати дані про предмет',
+      script: 'edit-product',
+      currentUser: req.currentEmployee,
+      isProducts: true,
+      product: await this.productsService.getProductJoin(id),
+      categoriesDict: Object.entries(
+        await this.categoriesService.getAllCategoriesDict(),
+      ),
+    };
+  }
 }

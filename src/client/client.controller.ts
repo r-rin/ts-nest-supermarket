@@ -215,12 +215,8 @@ export class ClientController {
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('products/edit-product')
   @Render('edit/product')
-  async renderEditProductPage(@Req() req) {
-    return {
-      title: 'Злагода: Редагувати дані про предмет',
-      currentUser: req.currentEmployee,
-      isProducts: true,
-    };
+  async renderEditProductPage(@Req() req, @Query('id') id) {
+    return await this.clientService.getEditProductRenderObject(req, id);
   }
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)

@@ -1,32 +1,30 @@
 {{#> layout }}
   {{#*inline "pageContent"}}
-    <section class="content-section mb-4">
-      <h1 class="text-center">Редагування інформації про предмет</h1>
-    </section>
+    <section class="d-flex justify-content-center flex-column align-items-center h-100">
 
-    <section class="d-flex justify-content-center flex-column align-items-center h-75">
+    {{#ifEquals product null}}
+        <section class="content-section" style="width: 700px;">
+          <h1 class="text-center m-3">Такий предмет не знайдено</h1>
+        </section>
+    {{else}}
       <section class="content-section p-3 my-2 mt-5" style="width: 500px;">
 
-        <form id="editProductForm" action="/submit-edited-product" method="POST">
+        <form id="editProductForm">
 
           <div class="row mb-3">
             <div class="col">
               <label for="productId" class="form-label text-center">ID товару</label>
-              <span style="color: red">*</span>
               <input type="number" class="form-control text-center" placeholder="Наприклад: 1" id="productId"
-                     name="productId" min="1" step="1" value="{{product.product_id}}" required>
+                     name="product_id" min="1" step="1" value="{{product.product_id}}" readonly required>
             </div>
 
             <div class="col">
               <label for="categoryName" class="form-label text-center">Категорія</label>
               <span style="color: red">*</span>
-              <select class="form-select text-center" id="categoryName" name="categoryName" required>
-                <option value="Овочі та фрукти">Овочі та фрукти</option>
-                <option value="М'ясо та птиця">М'ясо та птиця</option>
-                <option value="Молочні продукти">Молочні продукти</option>
-                <option value="Хлібобулочні вироби">Хлібобулочні вироби</option>
-                <option value="Кондитерські вироби">Заморожені продукти</option>
-                <option value="Напої">Напої</option>
+              <select class="form-select text-center" id="categoryName" name="category_number" required>
+                {{#each categoriesDict}}
+                  <option value="{{this.[0]}}" {{#ifEquals ../product.category_number this.[0]}}selected{{/ifEquals}}>{{this.[1]}}</option>
+                {{/each}}
               </select>
             </div>
 
@@ -37,7 +35,7 @@
               <label for="productName" class="form-label text-center">Назва товару</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Назва товару" id="productName"
-                     name="productName" maxlength="50" value="{{product.product_name}}" required>
+                     name="product_name" maxlength="50" value="{{product.product_name}}" required>
             </div>
           </div>
 
@@ -59,6 +57,22 @@
         </form>
 
       </section>
+    {{/ifEquals}}
     </section>
+
+    <div class="modal fade" id="infoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="infoModalTitle">...</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="infoModalBody">
+            ...
+          </div>
+        </div>
+      </div>
+    </div>
   {{/inline}}
 {{/layout}}

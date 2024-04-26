@@ -4,6 +4,8 @@ import { Roles } from '../../auth/roles/roles.decorator';
 import { Role } from '../../auth/roles/role.enum';
 import { IResponseInterface } from '../../interfaces/IResponse.interface';
 import { AddProductDTO } from '../../dto/add-product.dto';
+import { EditCategoryDTO } from '../../dto/edit-category.dto';
+import { EditProductDTO } from '../../dto/edit-product.dto';
 
 @Controller('api/products')
 export class ProductsController {
@@ -58,5 +60,11 @@ export class ProductsController {
   @Roles(Role.Admin, Role.Manager)
   async deleteProduct(@Req() req, @Query('id') id) {
     return await this.productsService.deleteProduct(req, id);
+  }
+
+  @Post('edit')
+  @Roles(Role.Admin, Role.Manager)
+  async editProduct(@Body() editProductDTO: EditProductDTO) {
+    return await this.productsService.editProduct(editProductDTO);
   }
 }
