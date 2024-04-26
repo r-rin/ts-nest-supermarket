@@ -1,0 +1,16 @@
+@media print {
+  .justify-content-center {
+    justify-content: start !important;
+  }
+  body * {
+    visibility: hidden;
+  }
+  aside {
+    display: none;
+  }
+  #content-to-print * {
+    visibility: visible;
+  }
+}
+
+/*# sourceMappingURL=about-receipt.css.map */

@@ -96,6 +96,34 @@ WHERE NOT EXISTS (
                 )
 );
 
+
+-- 2 варіант
+-- знайде клієнтів, які здійснили покупки у всіх категоріях товарів
+SELECT cc.card_number, cc.customer_surname, cc.customer_name
+FROM Customer_Card cc
+WHERE NOT EXISTS (
+                SELECT category_number
+                FROM Category
+                WHERE NOT EXISTS (
+                            SELECT *
+                            FROM Product
+                            WHERE Product.category_number = Category.category_number
+                            AND EXISTS (
+                                    SELECT *
+                                    FROM (Sale
+                                        INNER JOIN Receipt ON Sale.receipt_id = Receipt.receipt_id)
+                                    WHERE Receipt.card_number = cc.card_number
+                                    AND Sale.UPC IN (
+                                                SELECT UPC
+                                                FROM Store_Product
+                                                WHERE Store_Product.product_id = Product.product_id
+            )
+        )
+    )
+);
+
+
+
 -- знайти клієнтів, які не здійснили жодних покупок певного предмету
 SELECT Customer_Card.card_number,
        Customer_Card.customer_surname,
@@ -131,6 +159,29 @@ WHERE NOT EXISTS (
                             WHERE Sale.UPC = Store_Product.UPC
                                 AND Receipt.print_date >= '2023-01-01'
                                 AND Receipt.print_date <= '2023-12-31'
+                )
+);
+
+
+-- Знайти товари, які не були продані певним касиром:
+-- ну це мега сумнівний варіант
+SELECT Product.product_name, Product.category_number, Category.category_name
+FROM (Product
+    INNER JOIN Category ON Product.category_number = Category.category_number)
+WHERE NOT EXISTS (
+                SELECT *
+                FROM Sale
+                    INNER JOIN Receipt ON Sale.receipt_id = Receipt.receipt_id
+                WHERE NOT EXISTS (
+                            SELECT *
+                            FROM Employee
+                            WHERE Employee.employee_id = Receipt.employee_id
+                                AND Employee.employee_id = 'employee_id'
+                )
+                AND Sale.UPC IN (
+                                SELECT UPC
+                                FROM Store_Product
+                                WHERE Store_Product.product_id = Product.product_id
                 )
 );
 
