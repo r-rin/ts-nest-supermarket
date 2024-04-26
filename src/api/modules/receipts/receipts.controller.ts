@@ -21,4 +21,30 @@ export class ReceiptsController {
   async findReceipt(@Param('receiptID') receiptID) {
     return await this.receiptsService.findByReceiptID(receiptID);
   }
+
+  @Get('search')
+  @Roles(Role.Admin, Role.Cashier, Role.Manager)
+  async searchByFilter(
+    @Query('receipt_id') receipt_id,
+    @Query('employee_id') employee_id,
+    @Query('text') text,
+    @Query('date_start') date_start,
+    @Query('date_end') date_end,
+    @Query('sortBy') sortBy,
+    @Query('order') order,
+    @Query('limit') limit,
+    @Query('page') page,
+  ) {
+    return this.receiptsService.searchByFilter(
+      receipt_id,
+      text,
+      employee_id,
+      date_start,
+      date_end,
+      sortBy,
+      order,
+      limit,
+      page,
+    );
+  }
 }

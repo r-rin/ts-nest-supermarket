@@ -8,43 +8,51 @@
       <div class="container-fluid">
 
         <div class="row mb-2">
-          <div class="col-2">
+          <div class="col-3">
             <label for="receiptID" class="form-label">ID чеку</label>
-            <input type="text" class="form-control" placeholder="ID чеку" id="receiptID">
+            <input name="receipt_id" type="text" class="form-control" placeholder="ID чеку" id="receiptID">
           </div>
 
-          <div class="col-2">
-            <label for="employeeId" class="form-label">ID працівника</label>
-            <input type="text" class="form-control" placeholder="ID працівника" id="employeeId">
-          </div>
-
-          <div class="col-2">
+          <div class="col-3">
             <label for="searchByText" class="form-label">Пошук за текстом</label>
-            <input type="text" class="form-control" placeholder="Текст" id="searchByText">
+            <input name="text" type="text" class="form-control" placeholder="Текст" id="searchByText">
           </div>
 
-          <div class="col-2">
-            <label for="productDate" class="form-label">Дата</label>
-            <input type="date" id="productDate" name="productDate" class="form-control">
+          <div class="col-3">
+            <label for="dateStart" class="form-label">Дата початку періоду</label>
+            <input type="date" id="dateStart" name="date_start" class="form-control">
           </div>
 
-          <div class="col-2">
+          <div class="col-3">
             <label for="sortBy" class="form-label">Сортувати за</label>
-            <select name="sortBy" id="sortBy" class="form-select">
+            <select name="sort_by" id="sortBy" class="form-select">
               <option value="none">Не сортувати</option>
-              <option value="receipt_id">ID чеку</option>
-              <option value="employee_id">ID працівника</option>
-              <option value="card_number">Номером карти клієнта</option>
-              <option value="print_date">Датою чеку</option>
-              <option value="sum_total">Загальною сумою</option>
+              <option value="Receipt.receipt_id">ID чеку</option>
+              <option value="Employee.employee_id">ID працівника</option>
+              <option value="employee_fullname">ПІБ працівника</option>
+              <option value="Customer_Card.card_number">Номером карти клієнта</option>
+              <option value="customer_fullname">ПІБ клієнта</option>
+              <option value="Receipt.print_date">Датою чеку</option>
+              <option value="Receipt.sum_total">Загальною сумою</option>
             </select>
           </div>
+        </div>
 
-          <div class="col-2">
+        <div class="row mb-2">
+          <div class="col-3">
+            <label for="employeeId" class="form-label">ID працівника</label>
+            <input name='employee_id' type="text" class="form-control" placeholder="ID працівника" id="employeeId">
+          </div>
+          <div class="col-3"></div>
+          <div class="col-3">
+            <label for="dateEnd" class="form-label">Дата кінця періоду</label>
+            <input type="date" id="dateEnd" name="date_end" class="form-control">
+          </div>
+          <div class="col-3">
             <label for="orderBy" class="form-label">Порядок</label>
             <select name="orderBy" id="orderBy" class="form-select">
-              <option value="ascending">За зростанням</option>
-              <option value="descending">За спаданням</option>
+              <option value="ASC">За зростанням</option>
+              <option value="DESC">За спаданням</option>
             </select>
           </div>
         </div>
@@ -53,7 +61,7 @@
 
           <div class="col-12">
             <div class="btn-group w-100" role="group" aria-label="Actions">
-              <button class="btn btn-primary w-100">
+              <button class="btn btn-primary w-100" id="search">
                 Пошук
               </button>
             </div>
@@ -78,9 +86,10 @@
           <tr>
             <th>#</th>
             <th>ID чеку</th>
-            <th>ID працівника</th>
-            <th>Номер карти клієнта</th>
+            <th>Працівник</th>
+            <th>Клієнт</th>
             <th>Дата</th>
+            <th>Товари</th>
             <th>Сума</th>
             <th>Дії</th>
           </tr>
