@@ -4,16 +4,14 @@
       <h1 class="text-center">Статистика</h1>
     </section>
 
-    <section class="d-flex justify-content-center flex-column align-items-center h-75">
-      <section class="content-section p-3 my-2" style="max-width: 550px;">
+      <section class="content-section p-3 my-2">
+        <form id="searchSumCertainCashier">
 
-          <form id="searchSumCertainCashier">
-
-            <div class="row mb-3">
-              <div class="col">
-                <h4>Загальна сума проданих товарів з чеків</h4>
-              </div>
+          <div class="row mb-3">
+            <div class="col">
+              <h4>Загальна сума проданих товарів з чеків</h4>
             </div>
+          </div>
 
             <div class="row mb-3">
               <div>
@@ -26,31 +24,29 @@
                 </select>
               </div>
             </div>
-
-            <div class="row mb-3">
-              <div class="col">
-                <strong>Період:</strong>
-              </div>
+            <div class="col-2 pt-4 d-flex align-items-center justify-content-end">
+              <strong>Період:</strong>
             </div>
 
-            <div class="row mb-3">
-              <div class="col-3 w-50">
-                <label for="dateStart" class="form-label">Дата початку</label>
-                <input type="date" id="dateStart" name="date_start" class="form-control">
-              </div>
-
-              <div class="col-3 w-50">
-                <label for="dateEnd" class="form-label">Дата кінця</label>
-                <input type="date" id="dateEnd" name="date_end" class="form-control">
-              </div>
+            <div class="col-3">
+              <label for="dateStart" class="form-label">Дата початку</label>
+              <input type="date" id="dateStart" name="date_start" class="form-control">
             </div>
 
-            <div class="row mb-4 mt-4">
-              <div class="col">
-                <span class="h4">Загальна сума: </span>
-                <span class="h4">10000 грн.</span>
-              </div>
+            <div class="col-3">
+              <label for="dateEnd" class="form-label">Дата кінця</label>
+              <input type="date" id="dateEnd" name="date_end" class="form-control">
             </div>
+          </div>
+
+
+
+          <div class="row mb-4 mt-4">
+            <div class="col">
+              <span class="h4">Загальна сума: </span>
+              <span class="h4">10000 грн.</span>
+            </div>
+          </div>
 
             <div class="row">
               <div>
@@ -60,7 +56,7 @@
               </div>
             </div>
 
-          </form>
+        </form>
 
       </section>
 
