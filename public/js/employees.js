@@ -118,7 +118,7 @@ async function loadTableData(fetchUrl, currentPage) {
     rowColumns[4].innerText = rolesDict[employee.employee_role];
     rowColumns[5].innerText = employee.employee_salary;
     rowColumns[6].innerText = formatDate(employee.employee_start_date);
-    rowColumns[7].innerText = formatDate(employee.employee_birth_date);
+    rowColumns[7].innerText = employee.employee_phone_number;
     rowColumns[8].innerText = employee.employee_city;
     generateInteractionButtons(employee.employee_id).then((res) => {
       rowColumns[9].innerHTML = `<div class="actions-container">${res}</div>`;
