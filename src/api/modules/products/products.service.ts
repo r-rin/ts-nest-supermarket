@@ -241,4 +241,11 @@ export class ProductsService {
       description: `Предмет ${editProductDTO.product_name} з ID ${editProductDTO.product_id} був успішно змінений`,
     };
   }
+
+  async getAllProductsArr() {
+    const queryResult = await this.databaseService.query(`
+      SELECT *
+      FROM Product`);
+    return queryResult;
+  }
 }

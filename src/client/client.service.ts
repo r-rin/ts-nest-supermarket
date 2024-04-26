@@ -304,6 +304,8 @@ export class ClientService {
       currentUser: req.currentEmployee,
       cashiersArr: await this.employeesService.getAllCashiers(),
       receiptsArr: await this.receiptsService.getAllReceiptsWithNoLimits(),
+      categoriesArr: await this.categoriesService.getAllCategoriesArr(),
+      productsArr: await this.productsService.getAllProductsArr(),
       isStatistics: true,
     };
   }
