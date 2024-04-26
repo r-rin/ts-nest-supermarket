@@ -4,6 +4,7 @@ import { Roles } from '../../auth/roles/roles.decorator';
 import { Role } from '../../auth/roles/role.enum';
 import { AddEmployeeDTO } from '../../dto/add-employee.dto';
 import { IResponseInterface } from '../../interfaces/IResponse.interface';
+import { EditEmployeeDTO } from '../../dto/edit-employee.dto';
 
 @Controller('api/employees')
 export class EmployeesController {
@@ -57,12 +58,21 @@ export class EmployeesController {
   }
 
   @Post('add')
-  @Roles(Role.Admin, Role.Cashier, Role.Manager)
+  @Roles(Role.Admin, Role.Manager)
   async addNewEmployee(
     @Req() req,
     @Body() addEmployeeDTO: AddEmployeeDTO,
   ): Promise<IResponseInterface> {
     return await this.employeesService.addNewEmployee(req, addEmployeeDTO);
+  }
+
+  @Post('edit')
+  @Roles(Role.Admin, Role.Manager)
+  async editEmployee(
+    @Req() req,
+    @Body() editEmployeeDTO: EditEmployeeDTO,
+  ): Promise<IResponseInterface> {
+    return await this.employeesService.editEmployee(req, editEmployeeDTO);
   }
 
   @Delete('delete')

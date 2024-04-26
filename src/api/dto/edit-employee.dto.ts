@@ -30,7 +30,7 @@ export class AgeConstraint implements ValidatorConstraintInterface {
   }
 }
 
-export class AddEmployeeDTO {
+export class EditEmployeeDTO {
   @MaxLength(10)
   employee_id: string;
 
@@ -74,6 +74,4 @@ export class AddEmployeeDTO {
 
   @MaxLength(9)
   employee_zip_code: string;
-
-  password_raw: string;
 }

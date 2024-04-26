@@ -232,12 +232,8 @@ export class ClientController {
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('employees/edit-employee')
   @Render('edit/employee')
-  async renderEditEmployeePage(@Req() req) {
-    return {
-      title: 'Злагода: Редагувати дані працівника',
-      currentUser: req.currentEmployee,
-      isEmployees: true,
-    };
+  async renderEditEmployeePage(@Req() req, @Query('id') id) {
+    return await this.clientService.getEditEmployeeRenderObject(req, id);
   }
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)

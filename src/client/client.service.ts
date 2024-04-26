@@ -231,4 +231,21 @@ export class ClientService {
       isCategories: true,
     };
   }
+
+  async getEditEmployeeRenderObject(req, id) {
+    let employee = await this.employeesService.getEmployee(id);
+    if (employee) {
+      employee.employee_birth_date = new Date(employee.employee_birth_date).toISOString().slice(0, 10);
+      employee.employee_start_date = new Date(employee.employee_start_date).toISOString().slice(0, 10);
+    }
+
+    return {
+      title: 'Злагода: Редагувати дані працівника',
+      script: 'edit-employee',
+      currentUser: req.currentEmployee,
+      employee: employee,
+      rolesDict: Object.entries(await this.apiService.getAllRoles()),
+      isEmployees: true,
+    };
+  }
 }

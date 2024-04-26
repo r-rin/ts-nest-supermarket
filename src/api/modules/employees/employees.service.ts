@@ -4,6 +4,7 @@ import { IEmployee } from '../../interfaces/IEmployee.interface';
 import { IResponseInterface } from '../../interfaces/IResponse.interface';
 import { AddEmployeeDTO } from '../../dto/add-employee.dto';
 import * as bcrypt from 'bcrypt';
+import { EditEmployeeDTO } from '../../dto/edit-employee.dto';
 
 function filterQueryBuilder(id, text, role, city, sortBy, order, limit, page) {
   if (!id) id = '';
@@ -157,7 +158,7 @@ export class EmployeesService {
       };
 
     if (
-      (addEmployeeDTO.employee_role == 3 ||
+      (addEmployeeDTO.employee_role == 1 ||
         addEmployeeDTO.employee_role == 2) &&
       req.currentEmployee.employee_role == 1
     )
@@ -251,6 +252,57 @@ export class EmployeesService {
       success: true,
       title: 'Видалення успішне',
       description: `Працівник ${id} був видалений`,
+    };
+  }
+
+  async editEmployee(req, editEmployeeDTO: EditEmployeeDTO) {
+
+    if (
+      (editEmployeeDTO.employee_role == 1 ||
+        editEmployeeDTO.employee_role == 2) &&
+      req.currentEmployee.employee_role == 1
+    )
+      return {
+        success: false,
+        title: 'Виникла помилка',
+        description: `Недостатньо прав для зміни ролі на Менеджера/Адміністратора`,
+      };
+
+    let doExist = await this.getEmployee(editEmployeeDTO.employee_id);
+    if (doExist == null) return {
+      success: false,
+      title: 'Виникла помилка',
+      description: `Такого працівника не існує`,
+    }
+
+    try {
+      await this.databaseService.query(`
+        UPDATE Employee
+        SET employee_surname = '${editEmployeeDTO.employee_surname}',
+            employee_name = '${editEmployeeDTO.employee_name}',
+            employee_patronymic = ${editEmployeeDTO.employee_patronymic ? "'" + editEmployeeDTO.employee_patronymic + "'" : 'NULL'},
+            employee_role = ${editEmployeeDTO.employee_role},
+            employee_salary = ${editEmployeeDTO.employee_salary},
+            employee_start_date ='${editEmployeeDTO.employee_start_date.toISOString().slice(0, 19).replace('T', ' ')}',
+            employee_birth_date ='${editEmployeeDTO.employee_birth_date.toISOString().slice(0, 19).replace('T', ' ')}',
+            employee_phone_number ='${editEmployeeDTO.employee_phone_number}',
+            employee_city ='${editEmployeeDTO.employee_city}',
+            employee_street = '${editEmployeeDTO.employee_street}',
+            employee_zip_code ='${editEmployeeDTO.employee_zip_code}'
+        WHERE employee_id = '${editEmployeeDTO.employee_id}';
+    `);
+    } catch (error) {
+      return {
+        success: false,
+        title: 'Помилка додавання',
+        description: 'При виконанні запиту виникла помилка',
+      };
+    }
+
+    return {
+      success: true,
+      title: 'Інформацію про працівника змінено',
+      description: `Інформація про працівника ${editEmployeeDTO.employee_surname} ${editEmployeeDTO.employee_name} з ID ${editEmployeeDTO.employee_id} була змінена`,
     };
   }
 }

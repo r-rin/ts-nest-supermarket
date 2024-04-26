@@ -1,27 +1,29 @@
 {{#> layout }}
   {{#*inline "pageContent"}}
-    <section class="content-section" style="margin-bottom: 100px;">
-      <h1 class="text-center">Редагування інформації про працівника</h1>
-    </section>
 
-    <section class="d-flex justify-content-center flex-column align-items-center h-75" style="margin-bottom: 150px;">
+    <section class="d-flex justify-content-center flex-column align-items-center h-100" style="margin-bottom: 150px;">
+
+    {{#ifEquals employee null}}
+        <section class="content-section" style="width: 700px;">
+          <h1 class="text-center m-3">Такого працівника не знайдено</h1>
+        </section>
+    {{else}}
       <section class="content-section p-3 my-2 mt-5" style="width: 500px;">
 
-        <form id="editEmployeeForm" action="/submit-edited-employee" method="POST">
+        <form id="editEmployeeForm">
 
           <div class="row mb-3">
             <div class="col">
               <label for="employeeId" class="form-label text-center">ID працівника</label>
-              <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Наприклад: EMP002" id="employeeId"
-                     name="employeeId" maxlength="10" value="{{employee.employee_id}}" required>
+                     name="employee_id" maxlength="10" value="{{employee.employee_id}}" readonly required>
             </div>
 
             <div class="col">
               <label for="employeeSurname" class="form-label text-center">Прізвище</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Прізвище" id="employeeSurname"
-                     name="employeeSurname" maxlength="50" value="{{employee.employee_surname}}" required>
+                     name="employee_surname" minlength="3" maxlength="50" value="{{employee.employee_surname}}" required>
             </div>
           </div>
 
@@ -30,13 +32,13 @@
               <label for="employeeName" class="form-label text-center">Ім'я</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Ім'я" id="employeeName"
-                     name="employeeName" maxlength="50" value="{{employee.employee_name}}" required>
+                     name="employee_name" minlength="3" maxlength="50" value="{{employee.employee_name}}" required>
             </div>
 
             <div class="col">
               <label for="employeePatronymic" class="form-label text-center">По батькові</label>
               <input type="text" class="form-control text-center" placeholder="По батькові" id="employeePatronymic"
-                     name="employeePatronymic" maxlength="50" value="{{employee.employee_patronymic}}">
+                     name="employee_patronymic" minlength="3" maxlength="50" value="{{employee.employee_patronymic}}">
             </div>
           </div>
 
@@ -44,10 +46,10 @@
             <div class="col">
               <label for="employeeRole" class="form-label text-center">Роль</label>
               <span style="color: red">*</span>
-              <select class="form-select text-center" id="employeeRole" name="employeeRole" required>
-                <option value="Cashier" {{#if (employee.employee_role "Cashier")}}selected{{/if}}>Касир</option>
-                <option value="Manager" {{#if (employee.employee_role "Manager")}}selected{{/if}}>Менеджер</option>
-                <option value="Admin" {{#if (employee.employee_role "Admin")}}selected{{/if}}>Адміністратор</option>
+              <select class="form-select text-center" id="employeeRole" name="employee_role" required>
+                {{#each rolesDict}}
+                  <option value="{{this.[0]}}" {{#ifEquals ../employee.employee_role this.[0]}}selected{{/ifEquals}}>{{this.[1]}}</option>
+                {{/each}}
               </select>
             </div>
 
@@ -55,7 +57,7 @@
               <label for="employeeSalary" class="form-label text-center">Заробітна плата</label>
               <span style="color: red">*</span>
               <input type="number" class="form-control text-center" placeholder="Заробітна плата" id="employeeSalary"
-                     name="employeeSalary" min="7000" step="0.5" value="{{employee.employee_salary}}" required>
+                     name="employee_salary" min="7000" step="0.5" value="{{employee.employee_salary}}" required>
             </div>
           </div>
 
@@ -63,14 +65,14 @@
             <div class="col">
               <label for="employeeStartDate" class="form-label text-center">Дата початку роботи</label>
               <span style="color: red">*</span>
-              <input type="date" class="form-control text-center" id="employeeStartDate" name="employeeStartDate"
+              <input type="date" class="form-control text-center" id="employeeStartDate" name="employee_start_date"
                      value="{{employee.employee_start_date}}" required>
             </div>
 
             <div class="col">
               <label for="employeeBirthDate" class="form-label text-center">Дата народження</label>
               <span style="color: red">*</span>
-              <input type="date" class="form-control text-center" id="employeeBirthDate" name="employeeBirthDate"
+              <input type="date" class="form-control text-center" id="employeeBirthDate" name="employee_birth_date"
                      value="{{employee.employee_birth_date}}" required>
             </div>
           </div>
@@ -80,7 +82,7 @@
               <label for="employeePhoneNumber" class="form-label text-center">Номер телефону</label>
               <span style="color: red">*</span>
               <input type="tel" class="form-control text-center" placeholder="+380000000000" id="employeePhoneNumber"
-                     name="employeePhoneNumber" maxlength="13" pattern="^\+[0-9]{1,12}$"
+                     name="employee_phone_number" minlength="13" maxlength="13" pattern="^\+[0-9]{1,12}$"
                      value="{{employee.employee_phone_number}}" required>
             </div>
 
@@ -88,7 +90,7 @@
               <label for="employeeCity" class="form-label text-center">Місто</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Місто" id="employeeCity"
-                     name="employeeCity" maxlength="50" value="{{employee.employee_city}}" required>
+                     name="employee_city" minlength="3" maxlength="50" value="{{employee.employee_city}}" required>
             </div>
           </div>
 
@@ -97,14 +99,14 @@
               <label for="employeeStreet" class="form-label text-center">Вулиця</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Вулиця" id="employeeStreet"
-                     name="employeeStreet" maxlength="50" value="{{employee.employee_street}}" required>
+                     name="employee_street" minlength="3" maxlength="50" value="{{employee.employee_street}}" required>
             </div>
 
             <div class="col">
               <label for="employeeZipCode" class="form-label text-center">Поштовий індекс</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Поштовий індекс" id="employeeZipCode"
-                     name="employeeZipCode" maxlength="9" value="{{employee.employee_zip_code}}" required>
+                     name="employee_zip_code" minlength="9" maxlength="9" value="{{employee.employee_zip_code}}" required>
             </div>
           </div>
 
@@ -119,6 +121,23 @@
         </form>
 
       </section>
+    {{/ifEquals}}
+
     </section>
+
+    <div class="modal fade" id="infoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="infoModalTitle">...</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="infoModalBody">
+            ...
+          </div>
+        </div>
+      </div>
+    </div>
   {{/inline}}
 {{/layout}}
