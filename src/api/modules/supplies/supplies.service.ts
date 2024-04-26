@@ -366,4 +366,59 @@ export class SuppliesService {
       description: `Створено акційний товар з UPC ${createPromotionalSupplyDTO.UPC_prom} для неакційного товару з UPC ${createPromotionalSupplyDTO.UPC}`,
     };
   }
+
+  async deleteSupplies(id) {
+    const doExist = await this.findByUPC(id);
+    if (!doExist)
+      return {
+        success: false,
+        title: 'Помилка видалення',
+        description: 'Такого товару не існує',
+      };
+
+    if (doExist.UPC_prom != null)
+      return {
+        success: false,
+        title: 'Помилка видалення',
+        description: 'Для цього товару існує повʼязаний акційний',
+      };
+
+    if (doExist.is_promotional) {
+      let findNonPromQuery = await this.databaseService.query(`
+        SELECT *
+        FROM Store_Product
+        WHERE UPC_prom = '${id}';
+      `)
+
+      if (findNonPromQuery.length != 0){
+        let nonPromSupply = findNonPromQuery[0];
+
+        await this.databaseService.query(`
+          UPDATE Store_Product
+          SET UPC_prom = NULL,
+              products_amount = ${nonPromSupply.products_amount + doExist.products_amount}
+          WHERE UPC = '${nonPromSupply.UPC}'
+      `);
+      }
+    }
+
+    try {
+      await this.databaseService.query(`
+        DELETE FROM Store_Product
+        WHERE UPC = '${id}';
+      `);
+    } catch (error) {
+      return {
+        success: false,
+        title: 'Помилка видалення',
+        description: 'Видалення порушує цілісність бази даних',
+      };
+    }
+
+    return {
+      success: true,
+      title: 'Видалення успішне',
+      description: `Товар ${id} був видалений`,
+    };
+  }
 }
