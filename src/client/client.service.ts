@@ -267,4 +267,20 @@ export class ClientService {
       ),
     };
   }
+
+  async getCreatePromotionalSupplyRenderObject(req, upc) {
+    let supply = await this.suppliesService.findByUPCDataRaw(upc);
+    if (supply) {
+      supply.expiration_date = new Date(supply.expiration_date).toISOString().slice(0, 10);
+      supply.manufacturing_date = new Date(supply.manufacturing_date).toISOString().slice(0, 10);
+    }
+
+    return {
+      title: 'Злагода: Створення акційного товару',
+      script: 'create-promotional',
+      currentUser: req.currentEmployee,
+      isSupplies: true,
+      supply: supply,
+    };
+  }
 }

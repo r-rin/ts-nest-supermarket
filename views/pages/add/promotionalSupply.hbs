@@ -1,0 +1,69 @@
+{{#> layout }}
+  {{#*inline "pageContent"}}
+    <section class="content-section mb-5">
+      <h1 class="text-center">Створення акційного товару</h1>
+    </section>
+
+    <section class="d-flex justify-content-center flex-column align-items-center h-75">
+      <section class="content-section p-3 my-2" style="width: 500px;">
+
+        <form id="createPromForm">
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="UPC" class="form-label text-center">UPC</label>
+              <input type="text" class="form-control text-center" placeholder="Наприклад: 799439112766" id="UPC"
+                     name="UPC" value="{{supply.UPC}}" minlength="3" maxlength="12" readonly required>
+            </div>
+
+            <div class="col">
+              <label for="UPC_prom" class="form-label text-center">UPC Акційного товару</label>
+              <span style="color: red">*</span>
+              <input type="text" class="form-control text-center" placeholder="Наприклад: 799439112766" id="UPC_prom"
+                     name="UPC_prom"  minlength="3" maxlength="12" required>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="manufacturingDate" class="form-label text-center">Дата виробництва</label>
+              <span style="color: red">*</span>
+              <input type="date" value="{{supply.manufacturing_date}}" class="form-control text-center" id="manufacturingDate" name="manufacturing_date" required>
+            </div>
+
+            <div class="col">
+              <label for="expirationDate" class="form-label text-center">Термін придатності</label>
+              <span style="color: red">*</span>
+              <input type="date" value="{{supply.expiration_date}}" class="form-control text-center" id="expirationDate" name="expiration_date" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="btn-group w-100" role="group" aria-label="Actions">
+              <button type="submit" class="btn btn-primary w-50">
+                Додати товар
+              </button>
+            </div>
+          </div>
+
+        </form>
+
+      </section>
+    </section>
+
+    <div class="modal fade" id="infoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="infoModalTitle">...</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="infoModalBody">
+            ...
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/inline}}
+{{/layout}}

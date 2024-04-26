@@ -208,17 +208,6 @@ export class ClientController {
   }
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
-  @Get('receipts/edit-receipt')
-  @Render('edit/receipt')
-  async renderEditReceiptPage(@Req() req) {
-    return {
-      title: 'Злагода: Редагувати чек',
-      currentUser: req.currentEmployee,
-      isReceipts: true,
-    };
-  }
-
-  @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('supplies/edit-supply')
   @Render('edit/supply')
   async renderEditSupplyPage(@Req() req, @Query('upc') id) {
@@ -242,5 +231,12 @@ export class ClientController {
       currentUser: req.currentEmployee,
       isSettings: true,
     };
+  }
+
+  @Roles(Role.Manager, Role.Admin)
+  @Get('supplies/create-promotional')
+  @Render('add/promotionalSupply')
+  async renderCreatePromotionalSupplyPage(@Req() req, @Query('upc') upc) {
+    return await this.clientService.getCreatePromotionalSupplyRenderObject(req, upc);
   }
 }

@@ -3,6 +3,7 @@ import { DatabaseService } from '../../database/database.service';
 import { IResponseInterface } from '../../interfaces/IResponse.interface';
 import { AddSupplyDTO } from '../../dto/add-supply.dto';
 import { EditSupplyDTO } from '../../dto/edit-supply.dto';
+import { CreatePromotionalSupplyDTO } from '../../dto/create-promotional.dto';
 
 function filterQueryBuilder(
   upc: string,
@@ -255,18 +256,6 @@ export class SuppliesService {
       if (doExists.UPC_prom != null) {
         let supply_prom = await this.findByUPC(doExists.UPC_prom);
 
-        if (supply_prom && supply_prom.products_amount > editSupplyDTO.products_amount)
-        {
-          return {
-            success: false,
-            title: 'Погана кількість',
-            description: `
-                До поточного товару привʼязаний акційний з кількістю ${supply_prom.products_amount}, 
-                а нова кількість звичайного менша за неї (${editSupplyDTO.products_amount})
-              `,
-          };
-        }
-
         try {
           await this.databaseService.query(`
             UPDATE Store_Product
@@ -287,7 +276,7 @@ export class SuppliesService {
     }
 
     try {
-      this.databaseService.query(`
+      await this.databaseService.query(`
           UPDATE Store_Product
           SET product_id = ${editSupplyDTO.product_id}, 
               selling_price = ${editSupplyDTO.selling_price}, 
@@ -308,6 +297,73 @@ export class SuppliesService {
       success: true,
       title: 'Інформацію про товар змінено',
       description: `Інформація про товар з UPC ${editSupplyDTO.UPC} була змінена`,
+    };
+  }
+
+  async createPromotionalSupply(createPromotionalSupplyDTO: CreatePromotionalSupplyDTO) {
+    let doExist = await this.findByUPC(createPromotionalSupplyDTO.UPC_prom);
+
+    if (doExist) return {
+      success: false,
+      title: 'Неможливо створити акційний товар',
+      description: `Товар з UPC ${createPromotionalSupplyDTO.UPC_prom} вже існує`,
+    };
+
+    let nonPromSupply = await this.findByUPCDataRaw(createPromotionalSupplyDTO.UPC);
+
+    if (nonPromSupply == null) return {
+      success: false,
+      title: 'Неможливо створити акційний товар',
+      description: `Неакційний товар, для якого створюється акційний, не існує`,
+    };
+
+    if (nonPromSupply.UPC_prom != null) return {
+      success: false,
+      title: 'Неможливо створити акційний товар',
+      description: `Неакційний товар, для якого створюється акційний, вже має акційний відповідник`,
+    };
+
+    try {
+      await this.databaseService.query(`
+          INSERT INTO Store_Product (UPC, UPC_prom, product_id, selling_price, products_amount, is_promotional, manufacturing_date, expiration_date)
+          VALUES (
+                  '${createPromotionalSupplyDTO.UPC_prom}', 
+                  NULL,
+                  ${nonPromSupply.product_id}, 
+                  ${nonPromSupply.selling_price * 0.8}, 
+                  0, 
+                  TRUE, 
+                  '${nonPromSupply.manufacturing_date.toISOString().slice(0, 19).replace('T', ' ')}', 
+                  '${nonPromSupply.expiration_date.toISOString().slice(0, 19).replace('T', ' ')}');
+      `);
+    } catch(error) {
+      console.log("Error at creating promotional")
+      return {
+        success: false,
+        title: 'Неможливо створити акційний товар',
+        description: `При виконанні запиту виникла помилка`,
+      };
+    }
+
+    try {
+      await this.databaseService.query(`
+          UPDATE Store_Product
+          SET UPC_prom = '${createPromotionalSupplyDTO.UPC_prom}'
+          WHERE UPC = '${createPromotionalSupplyDTO.UPC}'
+      `);
+    } catch(error) {
+      console.log("Error at assigning promotional")
+      return {
+        success: false,
+        title: 'Неможливо створити акційний товар',
+        description: `При виконанні запиту виникла помилка`,
+      };
+    }
+
+    return {
+      success: true,
+      title: 'Акційний товар створено',
+      description: `Створено акційний товар з UPC ${createPromotionalSupplyDTO.UPC_prom} для неакційного товару з UPC ${createPromotionalSupplyDTO.UPC}`,
     };
   }
 }

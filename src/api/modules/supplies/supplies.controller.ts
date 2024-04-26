@@ -4,6 +4,7 @@ import { Roles } from '../../auth/roles/roles.decorator';
 import { Role } from '../../auth/roles/role.enum';
 import { AddSupplyDTO } from '../../dto/add-supply.dto';
 import { EditSupplyDTO } from '../../dto/edit-supply.dto';
+import { CreatePromotionalSupplyDTO } from '../../dto/create-promotional.dto';
 
 @Controller('api/supplies')
 export class SuppliesController {
@@ -54,7 +55,13 @@ export class SuppliesController {
 
   @Post('edit')
   @Roles(Role.Admin, Role.Manager)
-  async editSupply(@Body() editSupplyDTO: EditSupplyDTO) {
+  async editSupply(@Body() editSupplyDTO: EditSupplyDTO)  {
     return await this.suppliesService.editSupply(editSupplyDTO);
+  }
+
+  @Post('create-promotional')
+  @Roles(Role.Admin, Role.Manager)
+  async createPromotionalSupply(@Body() createPromotionalSupplyDTO: CreatePromotionalSupplyDTO) {
+    return await this.suppliesService.createPromotionalSupply(createPromotionalSupplyDTO);
   }
 }

@@ -69,7 +69,7 @@ async function init() {
   handlePrintButton();
 }
 
-async function generateInteractionButtons(UPC) {
+async function generateInteractionButtons(UPC, isProm, UPC_prom) {
   let htmlContent = `<button class="btn btn-primary" data-upc="${UPC}" onclick="openSupplyInfo(this)"><i class="fa-solid fa-info"></i></button>`;
 
   if (userRole === 0) {
@@ -81,9 +81,10 @@ async function generateInteractionButtons(UPC) {
   if (userRole === 1 || userRole === 2) {
     htmlContent = htmlContent.concat(
       `<button class="btn btn-warning" data-upc="${UPC}" onclick="openEditSupply(this)"><i class="fa-solid fa-pen-to-square"></i></button>` +
-        `<button class="btn btn-success" ><i class="fa-solid fa-percent"></i></button>` +
         `<button class="btn btn-danger" data-upc="${UPC}" onclick="openDeleteSupply(this)"><i class="fa-solid fa-trash"></i></button>`,
     );
+
+    if (!isProm && UPC_prom == null) htmlContent += `<button class="btn btn-success" data-upc="${UPC}" onclick="openCreateProm(this)"><i class="fa-solid fa-percent"></i></button>`;
   }
 
   return htmlContent;
@@ -112,7 +113,7 @@ async function loadTableData(fetchURL, currentPage) {
     rowColumns[4].innerText = supply.selling_price;
     rowColumns[5].innerText = supply.products_amount;
     rowColumns[6].innerText = supply.is_promotional ? 'Так' : 'Ні';
-    generateInteractionButtons(supply.UPC).then((res) => {
+    generateInteractionButtons(supply.UPC, supply.is_promotional, supply.UPC_prom).then((res) => {
       rowColumns[7].innerHTML = `<div class="actions-container">${res}</div>`;
     });
 
@@ -204,6 +205,14 @@ function openEditSupply(button) {
   let upc = button.getAttribute('data-upc');
 
   let newTab = window.open('/supplies/edit-supply?upc=' + upc, '_blank');
+
+  newTab.focus();
+}
+
+function openCreateProm(button) {
+  let upc = button.getAttribute('data-upc');
+
+  let newTab = window.open('/supplies/create-promotional?upc=' + upc, '_blank');
 
   newTab.focus();
 }
