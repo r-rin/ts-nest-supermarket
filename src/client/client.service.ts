@@ -248,4 +248,23 @@ export class ClientService {
       isEmployees: true,
     };
   }
+
+  async getEditSupplyRenderObject(req, id) {
+    let supply = await this.suppliesService.findByUPCDataRaw(id);
+    if (supply) {
+      supply.expiration_date = new Date(supply.expiration_date).toISOString().slice(0, 10);
+      supply.manufacturing_date = new Date(supply.manufacturing_date).toISOString().slice(0, 10);
+    }
+
+    return {
+      title: 'Злагода: Редагувати дані про товар',
+      script: 'edit-supply',
+      currentUser: req.currentEmployee,
+      isSupplies: true,
+      supply: supply,
+      productsDict: Object.entries(
+        await this.productsService.getProductsDict(),
+      ),
+    };
+  }
 }

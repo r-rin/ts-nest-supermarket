@@ -221,12 +221,8 @@ export class ClientController {
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('supplies/edit-supply')
   @Render('edit/supply')
-  async renderEditESupplyPage(@Req() req) {
-    return {
-      title: 'Злагода: Редагувати дані про товар',
-      currentUser: req.currentEmployee,
-      isSupplies: true,
-    };
+  async renderEditSupplyPage(@Req() req, @Query('upc') id) {
+    return await this.clientService.getEditSupplyRenderObject(req, id)
   }
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)

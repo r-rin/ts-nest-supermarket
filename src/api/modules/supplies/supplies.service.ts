@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { IResponseInterface } from '../../interfaces/IResponse.interface';
 import { AddSupplyDTO } from '../../dto/add-supply.dto';
+import { EditSupplyDTO } from '../../dto/edit-supply.dto';
 
 function filterQueryBuilder(
   upc: string,
@@ -67,6 +68,20 @@ export class SuppliesService {
 
     return response_data;
   }
+
+  async findByUPCDataRaw(upcToFind: string) {
+    let queryResult =  await this.databaseService.query(
+      `SELECT * 
+      FROM Store_Product
+      INNER JOIN Product P ON Store_Product.product_id = P.product_id
+      WHERE UPC='${upcToFind}';`,
+    );
+
+    if (queryResult.length === 0) return null;
+
+    return queryResult[0];
+  }
+
 
   async findByUPC(upcToFind: string) {
     let queryResult =  await this.databaseService.query(
@@ -168,6 +183,131 @@ export class SuppliesService {
       success: true,
       title: 'Товар створено',
       description: `Товар з ID ${addSupplyDTO.UPC} було створено`,
+    };
+  }
+
+  async editSupply(editSupplyDTO: EditSupplyDTO) {
+    const doExists = await this.findByUPC(
+      editSupplyDTO.UPC
+    );
+
+    if (doExists == null) return {
+      success: false,
+      title: 'Неможливо редагувати товар',
+      description: `Товару з UPC ${editSupplyDTO.UPC} не існує`,
+    };
+
+    let manDate = new Date(editSupplyDTO.manufacturing_date);
+    let expDate = new Date(editSupplyDTO.expiration_date);
+
+    if (manDate >= expDate) {
+      return {
+        success: false,
+        title: 'Хибні дані товару',
+        description: `Дата виготовлення товару більша або рівна терміну придатності`,
+      };
+    }
+
+    if (doExists.is_promotional) {
+      let oldAmount = doExists.products_amount;
+      let newAmount = editSupplyDTO.products_amount;
+      let difference = newAmount - oldAmount;
+
+      let nonPromSupply = await this.databaseService.query(`
+        SELECT *
+        FROM Store_Product
+        WHERE UPC_prom = '${doExists.UPC}'
+      `)
+
+      if (nonPromSupply.length != 0) {
+        let supply = nonPromSupply[0];
+        if (supply.products_amount - difference < 0) {
+          return {
+            success: false,
+            title: 'Порушення цілісності',
+            description: `
+              Існує не акційний товар ${supply.UPC} повʼязаний з цим, який має менше продуктів, ніж ви намагаєтесь зробити акційними.
+              Доступна кількість ${supply.products_amount}, а різниця між новим і старим значенням ${difference}`,
+          }
+        } else {
+
+          try {
+            await this.databaseService.query(`
+              UPDATE Store_Product
+              SET products_amount = ${supply.products_amount - difference},
+                  product_id = ${editSupplyDTO.product_id}
+              WHERE UPC = '${supply.UPC}';
+            `)
+          } catch (error) {
+            return {
+              success: false,
+              title: 'Погана спроба збереження цілісності',
+              description: `
+                При спробі оновлення кількості не акційного товару виникла помилка 
+              `,
+            };
+          }
+
+        }
+      }
+
+    } else {
+      if (doExists.UPC_prom != null) {
+        let supply_prom = await this.findByUPC(doExists.UPC_prom);
+
+        if (supply_prom && supply_prom.products_amount > editSupplyDTO.products_amount)
+        {
+          return {
+            success: false,
+            title: 'Погана кількість',
+            description: `
+                До поточного товару привʼязаний акційний з кількістю ${supply_prom.products_amount}, 
+                а нова кількість звичайного менша за неї (${editSupplyDTO.products_amount})
+              `,
+          };
+        }
+
+        try {
+          await this.databaseService.query(`
+            UPDATE Store_Product
+            SET product_id = ${editSupplyDTO.product_id}
+            WHERE UPC = '${supply_prom.UPC}';
+        `)
+        } catch (error) {
+          return {
+            success: false,
+            title: 'Погана спроба збереження цілісності',
+            description: `
+                При спробі оновлення інформації повʼязаного акційного товару виникла помилка 
+              `,
+          };
+        }
+      }
+
+    }
+
+    try {
+      this.databaseService.query(`
+          UPDATE Store_Product
+          SET product_id = ${editSupplyDTO.product_id}, 
+              selling_price = ${editSupplyDTO.selling_price}, 
+              products_amount = ${editSupplyDTO.products_amount},
+              manufacturing_date = '${editSupplyDTO.manufacturing_date.toISOString().slice(0, 19).replace('T', ' ')}', 
+              expiration_date = '${editSupplyDTO.expiration_date.toISOString().slice(0, 19).replace('T', ' ')}'
+          WHERE UPC = '${editSupplyDTO.UPC}';
+      `);
+    } catch(error) {
+      return {
+        success: false,
+        title: 'Помилка при оновленні товару',
+        description: `При виконанні запиту виникла помилка`,
+      };
+    }
+
+    return {
+      success: true,
+      title: 'Інформацію про товар змінено',
+      description: `Інформація про товар з UPC ${editSupplyDTO.UPC} була змінена`,
     };
   }
 }
