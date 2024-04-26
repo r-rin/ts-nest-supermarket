@@ -305,4 +305,12 @@ export class EmployeesService {
       description: `Інформація про працівника ${editEmployeeDTO.employee_surname} ${editEmployeeDTO.employee_name} з ID ${editEmployeeDTO.employee_id} була змінена`,
     };
   }
+
+  async getAllCashiers() {
+    return await this.databaseService.query(`
+    SELECT *
+    FROM Employee
+    WHERE employee_role = 0
+    ORDER BY employee_id;`);
+  }
 }

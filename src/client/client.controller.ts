@@ -55,12 +55,7 @@ export class ClientController {
   @Get('statistics')
   @Render('statistics')
   async statistics(@Req() req) {
-    return {
-      script: 'statistics',
-      title: 'Злагода: Статистика',
-      currentUser: req.currentEmployee,
-      isStatistics: true,
-    };
+    return await this.clientService.getStatisticsRenderObject(req);
   }
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)

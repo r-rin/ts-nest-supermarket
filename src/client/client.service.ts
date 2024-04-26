@@ -283,4 +283,14 @@ export class ClientService {
       supply: supply,
     };
   }
+
+  async getStatisticsRenderObject(req: any) {
+    return {
+      script: 'statistics',
+      title: 'Злагода: Статистика',
+      currentUser: req.currentEmployee,
+      cashiersArr: await this.employeesService.getAllCashiers(),
+      isStatistics: true,
+    };
+  }
 }
