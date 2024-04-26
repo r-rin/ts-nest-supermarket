@@ -177,7 +177,6 @@ export class ClientService {
   }
 
   async getReceiptAboutRenderObject(req, id) {
-
     let receipt = await this.receiptsService.findByReceiptID(id);
 
     let products_sum = (rec) => {
@@ -185,14 +184,14 @@ export class ClientService {
       let productsAmount = rec.product_id_list.length;
       let sum = 0;
       for (let i = 0; i < productsAmount; i++) {
-        sum += rec.sold_products_amount_list[i] * rec.selling_price_list[i]
+        sum += rec.sold_products_amount_list[i] * rec.selling_price_list[i];
       }
-      return sum
+      return sum;
     };
 
     return {
-      style:'about-receipt',
-      script:'about-receipt',
+      style: 'about-receipt',
+      script: 'about-receipt',
       title: 'Злагода: Інформація про чек',
       currentUser: req.currentEmployee,
       isReceipts: true,
@@ -237,8 +236,12 @@ export class ClientService {
   async getEditEmployeeRenderObject(req, id) {
     let employee = await this.employeesService.getEmployee(id);
     if (employee) {
-      employee.employee_birth_date = new Date(employee.employee_birth_date).toISOString().slice(0, 10);
-      employee.employee_start_date = new Date(employee.employee_start_date).toISOString().slice(0, 10);
+      employee.employee_birth_date = new Date(employee.employee_birth_date)
+        .toISOString()
+        .slice(0, 10);
+      employee.employee_start_date = new Date(employee.employee_start_date)
+        .toISOString()
+        .slice(0, 10);
     }
 
     return {
@@ -254,8 +257,12 @@ export class ClientService {
   async getEditSupplyRenderObject(req, id) {
     let supply = await this.suppliesService.findByUPCDataRaw(id);
     if (supply) {
-      supply.expiration_date = new Date(supply.expiration_date).toISOString().slice(0, 10);
-      supply.manufacturing_date = new Date(supply.manufacturing_date).toISOString().slice(0, 10);
+      supply.expiration_date = new Date(supply.expiration_date)
+        .toISOString()
+        .slice(0, 10);
+      supply.manufacturing_date = new Date(supply.manufacturing_date)
+        .toISOString()
+        .slice(0, 10);
     }
 
     return {
@@ -273,8 +280,12 @@ export class ClientService {
   async getCreatePromotionalSupplyRenderObject(req, upc) {
     let supply = await this.suppliesService.findByUPCDataRaw(upc);
     if (supply) {
-      supply.expiration_date = new Date(supply.expiration_date).toISOString().slice(0, 10);
-      supply.manufacturing_date = new Date(supply.manufacturing_date).toISOString().slice(0, 10);
+      supply.expiration_date = new Date(supply.expiration_date)
+        .toISOString()
+        .slice(0, 10);
+      supply.manufacturing_date = new Date(supply.manufacturing_date)
+        .toISOString()
+        .slice(0, 10);
     }
 
     return {

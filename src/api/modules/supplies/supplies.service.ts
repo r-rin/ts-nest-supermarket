@@ -71,7 +71,7 @@ export class SuppliesService {
   }
 
   async findByUPCDataRaw(upcToFind: string) {
-    let queryResult =  await this.databaseService.query(
+    let queryResult = await this.databaseService.query(
       `SELECT * 
       FROM Store_Product
       INNER JOIN Product P ON Store_Product.product_id = P.product_id
@@ -83,9 +83,8 @@ export class SuppliesService {
     return queryResult[0];
   }
 
-
   async findByUPC(upcToFind: string) {
-    let queryResult =  await this.databaseService.query(
+    let queryResult = await this.databaseService.query(
       `SELECT * 
       FROM Store_Product
       INNER JOIN Product P ON Store_Product.product_id = P.product_id
@@ -94,10 +93,12 @@ export class SuppliesService {
 
     if (queryResult.length === 0) return null;
 
-    queryResult[0].manufacturing_date = new Date(queryResult[0].manufacturing_date)
-      .toLocaleDateString('en-GB');
-    queryResult[0].expiration_date = new Date(queryResult[0].expiration_date)
-      .toLocaleDateString('en-GB');
+    queryResult[0].manufacturing_date = new Date(
+      queryResult[0].manufacturing_date,
+    ).toLocaleDateString('en-GB');
+    queryResult[0].expiration_date = new Date(
+      queryResult[0].expiration_date,
+    ).toLocaleDateString('en-GB');
 
     return queryResult[0];
   }
@@ -139,15 +140,14 @@ export class SuppliesService {
   }
 
   async addNewSupply(addSupplyDTO: AddSupplyDTO): Promise<IResponseInterface> {
-    const doExists = await this.findByUPC(
-      addSupplyDTO.UPC
-    );
+    const doExists = await this.findByUPC(addSupplyDTO.UPC);
 
-    if (doExists) return {
-      success: false,
-      title: 'Неможливо створити товар',
-      description: `Товар з UPC ${addSupplyDTO.UPC} вже існує`,
-    };
+    if (doExists)
+      return {
+        success: false,
+        title: 'Неможливо створити товар',
+        description: `Товар з UPC ${addSupplyDTO.UPC} вже існує`,
+      };
 
     let manDate = new Date(addSupplyDTO.manufacturing_date);
     let expDate = new Date(addSupplyDTO.expiration_date);
@@ -172,7 +172,7 @@ export class SuppliesService {
                   '${addSupplyDTO.manufacturing_date.toISOString().slice(0, 19).replace('T', ' ')}', 
                   '${addSupplyDTO.expiration_date.toISOString().slice(0, 19).replace('T', ' ')}');
       `);
-    } catch(error) {
+    } catch (error) {
       return {
         success: false,
         title: 'Неможливо створити товар',
@@ -188,15 +188,14 @@ export class SuppliesService {
   }
 
   async editSupply(editSupplyDTO: EditSupplyDTO) {
-    const doExists = await this.findByUPC(
-      editSupplyDTO.UPC
-    );
+    const doExists = await this.findByUPC(editSupplyDTO.UPC);
 
-    if (doExists == null) return {
-      success: false,
-      title: 'Неможливо редагувати товар',
-      description: `Товару з UPC ${editSupplyDTO.UPC} не існує`,
-    };
+    if (doExists == null)
+      return {
+        success: false,
+        title: 'Неможливо редагувати товар',
+        description: `Товару з UPC ${editSupplyDTO.UPC} не існує`,
+      };
 
     let manDate = new Date(editSupplyDTO.manufacturing_date);
     let expDate = new Date(editSupplyDTO.expiration_date);
@@ -218,7 +217,7 @@ export class SuppliesService {
         SELECT *
         FROM Store_Product
         WHERE UPC_prom = '${doExists.UPC}'
-      `)
+      `);
 
       if (nonPromSupply.length != 0) {
         let supply = nonPromSupply[0];
@@ -229,16 +228,15 @@ export class SuppliesService {
             description: `
               Існує не акційний товар ${supply.UPC} повʼязаний з цим, який має менше продуктів, ніж ви намагаєтесь зробити акційними.
               Доступна кількість ${supply.products_amount}, а різниця між новим і старим значенням ${difference}`,
-          }
+          };
         } else {
-
           try {
             await this.databaseService.query(`
               UPDATE Store_Product
               SET products_amount = ${supply.products_amount - difference},
                   product_id = ${editSupplyDTO.product_id}
               WHERE UPC = '${supply.UPC}';
-            `)
+            `);
           } catch (error) {
             return {
               success: false,
@@ -248,10 +246,8 @@ export class SuppliesService {
               `,
             };
           }
-
         }
       }
-
     } else {
       if (doExists.UPC_prom != null) {
         let supply_prom = await this.findByUPC(doExists.UPC_prom);
@@ -261,7 +257,7 @@ export class SuppliesService {
             UPDATE Store_Product
             SET product_id = ${editSupplyDTO.product_id}
             WHERE UPC = '${supply_prom.UPC}';
-        `)
+        `);
         } catch (error) {
           return {
             success: false,
@@ -272,7 +268,6 @@ export class SuppliesService {
           };
         }
       }
-
     }
 
     try {
@@ -285,7 +280,7 @@ export class SuppliesService {
               expiration_date = '${editSupplyDTO.expiration_date.toISOString().slice(0, 19).replace('T', ' ')}'
           WHERE UPC = '${editSupplyDTO.UPC}';
       `);
-    } catch(error) {
+    } catch (error) {
       return {
         success: false,
         title: 'Помилка при оновленні товару',
@@ -300,28 +295,35 @@ export class SuppliesService {
     };
   }
 
-  async createPromotionalSupply(createPromotionalSupplyDTO: CreatePromotionalSupplyDTO) {
+  async createPromotionalSupply(
+    createPromotionalSupplyDTO: CreatePromotionalSupplyDTO,
+  ) {
     let doExist = await this.findByUPC(createPromotionalSupplyDTO.UPC_prom);
 
-    if (doExist) return {
-      success: false,
-      title: 'Неможливо створити акційний товар',
-      description: `Товар з UPC ${createPromotionalSupplyDTO.UPC_prom} вже існує`,
-    };
+    if (doExist)
+      return {
+        success: false,
+        title: 'Неможливо створити акційний товар',
+        description: `Товар з UPC ${createPromotionalSupplyDTO.UPC_prom} вже існує`,
+      };
 
-    let nonPromSupply = await this.findByUPCDataRaw(createPromotionalSupplyDTO.UPC);
+    let nonPromSupply = await this.findByUPCDataRaw(
+      createPromotionalSupplyDTO.UPC,
+    );
 
-    if (nonPromSupply == null) return {
-      success: false,
-      title: 'Неможливо створити акційний товар',
-      description: `Неакційний товар, для якого створюється акційний, не існує`,
-    };
+    if (nonPromSupply == null)
+      return {
+        success: false,
+        title: 'Неможливо створити акційний товар',
+        description: `Неакційний товар, для якого створюється акційний, не існує`,
+      };
 
-    if (nonPromSupply.UPC_prom != null) return {
-      success: false,
-      title: 'Неможливо створити акційний товар',
-      description: `Неакційний товар, для якого створюється акційний, вже має акційний відповідник`,
-    };
+    if (nonPromSupply.UPC_prom != null)
+      return {
+        success: false,
+        title: 'Неможливо створити акційний товар',
+        description: `Неакційний товар, для якого створюється акційний, вже має акційний відповідник`,
+      };
 
     try {
       await this.databaseService.query(`
@@ -336,8 +338,8 @@ export class SuppliesService {
                   '${nonPromSupply.manufacturing_date.toISOString().slice(0, 19).replace('T', ' ')}', 
                   '${nonPromSupply.expiration_date.toISOString().slice(0, 19).replace('T', ' ')}');
       `);
-    } catch(error) {
-      console.log("Error at creating promotional")
+    } catch (error) {
+      console.log('Error at creating promotional');
       return {
         success: false,
         title: 'Неможливо створити акційний товар',
@@ -351,8 +353,8 @@ export class SuppliesService {
           SET UPC_prom = '${createPromotionalSupplyDTO.UPC_prom}'
           WHERE UPC = '${createPromotionalSupplyDTO.UPC}'
       `);
-    } catch(error) {
-      console.log("Error at assigning promotional")
+    } catch (error) {
+      console.log('Error at assigning promotional');
       return {
         success: false,
         title: 'Неможливо створити акційний товар',
@@ -388,9 +390,9 @@ export class SuppliesService {
         SELECT *
         FROM Store_Product
         WHERE UPC_prom = '${id}';
-      `)
+      `);
 
-      if (findNonPromQuery.length != 0){
+      if (findNonPromQuery.length != 0) {
         let nonPromSupply = findNonPromQuery[0];
 
         await this.databaseService.query(`

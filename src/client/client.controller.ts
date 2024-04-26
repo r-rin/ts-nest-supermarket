@@ -206,7 +206,7 @@ export class ClientController {
   @Get('supplies/edit-supply')
   @Render('edit/supply')
   async renderEditSupplyPage(@Req() req, @Query('upc') id) {
-    return await this.clientService.getEditSupplyRenderObject(req, id)
+    return await this.clientService.getEditSupplyRenderObject(req, id);
   }
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
@@ -232,6 +232,9 @@ export class ClientController {
   @Get('supplies/create-promotional')
   @Render('add/promotionalSupply')
   async renderCreatePromotionalSupplyPage(@Req() req, @Query('upc') upc) {
-    return await this.clientService.getCreatePromotionalSupplyRenderObject(req, upc);
+    return await this.clientService.getCreatePromotionalSupplyRenderObject(
+      req,
+      upc,
+    );
   }
 }

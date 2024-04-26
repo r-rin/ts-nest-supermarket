@@ -1,4 +1,9 @@
-import { IsNumber, IsOptional, IsPhoneNumber, MaxLength } from 'class-validator';
+import {
+  IsNumber,
+  IsOptional,
+  IsPhoneNumber,
+  MaxLength,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class AddClientDTO {

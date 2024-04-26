@@ -152,13 +152,12 @@ export class CategoriesService {
   }
 
   async editCategory(editCategoryDTO: EditCategoryDTO) {
-
     try {
       this.databaseService.query(`
         UPDATE Category
         SET category_name = '${editCategoryDTO.category_name}'
         WHERE category_number = ${editCategoryDTO.category_number};
-      `)
+      `);
     } catch (error) {
       return {
         success: false,
@@ -175,15 +174,14 @@ export class CategoriesService {
   }
 
   async addCategory(addCategoryDTO: AddCategoryDTO) {
-    const doExists = await this.getCategory(
-      addCategoryDTO.category_number
-    );
+    const doExists = await this.getCategory(addCategoryDTO.category_number);
 
-    if (doExists) return {
-      success: false,
-      title: 'Неможливо створити категорію',
-      description: `Категорія з ID ${addCategoryDTO.category_number} вже існує (${doExists.category_name})`,
-    };
+    if (doExists)
+      return {
+        success: false,
+        title: 'Неможливо створити категорію',
+        description: `Категорія з ID ${addCategoryDTO.category_number} вже існує (${doExists.category_name})`,
+      };
 
     try {
       this.databaseService.query(`
@@ -192,7 +190,7 @@ export class CategoriesService {
                   ${addCategoryDTO.category_number},
                   '${addCategoryDTO.category_name}');
       `);
-    } catch(error) {
+    } catch (error) {
       return {
         success: false,
         title: 'Неможливо створити категорію',

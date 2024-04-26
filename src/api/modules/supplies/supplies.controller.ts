@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { SuppliesService } from './supplies.service';
 import { Roles } from '../../auth/roles/roles.decorator';
 import { Role } from '../../auth/roles/role.enum';
@@ -55,14 +64,18 @@ export class SuppliesController {
 
   @Post('edit')
   @Roles(Role.Admin, Role.Manager)
-  async editSupply(@Body() editSupplyDTO: EditSupplyDTO)  {
+  async editSupply(@Body() editSupplyDTO: EditSupplyDTO) {
     return await this.suppliesService.editSupply(editSupplyDTO);
   }
 
   @Post('create-promotional')
   @Roles(Role.Admin, Role.Manager)
-  async createPromotionalSupply(@Body() createPromotionalSupplyDTO: CreatePromotionalSupplyDTO) {
-    return await this.suppliesService.createPromotionalSupply(createPromotionalSupplyDTO);
+  async createPromotionalSupply(
+    @Body() createPromotionalSupplyDTO: CreatePromotionalSupplyDTO,
+  ) {
+    return await this.suppliesService.createPromotionalSupply(
+      createPromotionalSupplyDTO,
+    );
   }
 
   @Delete('delete')
@@ -70,5 +83,4 @@ export class SuppliesController {
   async deleteSupply(@Query('upc') id) {
     return await this.suppliesService.deleteSupplies(id);
   }
-
 }

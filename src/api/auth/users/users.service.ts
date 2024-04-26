@@ -66,5 +66,4 @@ export class UsersService {
 
     return employee;
   }
-
 }

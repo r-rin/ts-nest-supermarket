@@ -3,16 +3,16 @@ import { Type } from 'class-transformer';
 
 export class CreatePromotionalSupplyDTO {
   @MaxLength(12)
-  UPC: string
+  UPC: string;
 
   @MaxLength(12)
-  UPC_prom: string
+  UPC_prom: string;
 
   @IsDate()
   @Type(() => Date)
-  manufacturing_date: Date
+  manufacturing_date: Date;
 
   @IsDate()
   @Type(() => Date)
-  expiration_date: Date
+  expiration_date: Date;
 }

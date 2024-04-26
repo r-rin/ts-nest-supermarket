@@ -13,6 +13,10 @@ export class StatisticsController {
   ) {
     startDate = new Date(startDate).toISOString().slice(0, 10);
     endDate = new Date(endDate).toISOString().slice(0, 10);
-    return await this.statisticsService.getAllReceiptsSum(cashierId, startDate, endDate);
+    return await this.statisticsService.getAllReceiptsSum(
+      cashierId,
+      startDate,
+      endDate,
+    );
   }
 }

@@ -256,7 +256,6 @@ export class EmployeesService {
   }
 
   async editEmployee(req, editEmployeeDTO: EditEmployeeDTO) {
-
     if (
       (editEmployeeDTO.employee_role == 1 ||
         editEmployeeDTO.employee_role == 2) &&
@@ -268,12 +267,13 @@ export class EmployeesService {
         description: `Недостатньо прав для зміни ролі на Менеджера/Адміністратора`,
       };
 
-    let doExist = await this.getEmployee(editEmployeeDTO.employee_id);
-    if (doExist == null) return {
-      success: false,
-      title: 'Виникла помилка',
-      description: `Такого працівника не існує`,
-    }
+    const doExist = await this.getEmployee(editEmployeeDTO.employee_id);
+    if (doExist == null)
+      return {
+        success: false,
+        title: 'Виникла помилка',
+        description: `Такого працівника не існує`,
+      };
 
     try {
       await this.databaseService.query(`

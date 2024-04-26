@@ -20,7 +20,7 @@ import { ReceiptsService } from '../api/modules/receipts/receipts.service';
     CategoriesService,
     ProductsService,
     SuppliesService,
-    ReceiptsService
+    ReceiptsService,
   ],
   controllers: [ClientController],
   exports: [],

@@ -47,7 +47,7 @@ export class ProductsService {
   constructor(private databaseService: DatabaseService) {}
 
   async getProductJoin(product_id: number) {
-    let queryResult =  await this.databaseService.query(`
+    let queryResult = await this.databaseService.query(`
       SELECT *
       FROM Product
       INNER JOIN Category ON product.category_number = Category.category_number
@@ -60,7 +60,7 @@ export class ProductsService {
   }
 
   async getProduct(product_id: number) {
-    let queryResult =  await this.databaseService.query(`
+    let queryResult = await this.databaseService.query(`
       SELECT *
       FROM Product
       WHERE product_id = ${product_id};
@@ -155,15 +155,14 @@ export class ProductsService {
   async addNewProduct(
     addProductDTO: AddProductDTO,
   ): Promise<IResponseInterface> {
-    const doExists = await this.getProduct(
-      addProductDTO.product_id
-    );
+    const doExists = await this.getProduct(addProductDTO.product_id);
 
-    if (doExists) return {
-      success: false,
-      title: 'Неможливо створити предмет',
-      description: `Предмет з ID ${addProductDTO.product_id} вже існує (${doExists.product_name})`,
-    };
+    if (doExists)
+      return {
+        success: false,
+        title: 'Неможливо створити предмет',
+        description: `Предмет з ID ${addProductDTO.product_id} вже існує (${doExists.product_name})`,
+      };
 
     try {
       this.databaseService.query(`
@@ -174,7 +173,7 @@ export class ProductsService {
                 '${addProductDTO.product_name}', 
                 '${addProductDTO.characteristics}');
       `);
-    } catch(error) {
+    } catch (error) {
       return {
         success: false,
         title: 'Неможливо створити предмет',
@@ -219,7 +218,6 @@ export class ProductsService {
   }
 
   async editProduct(editProductDTO: EditProductDTO) {
-
     try {
       await this.databaseService.query(`
         UPDATE Product
@@ -232,7 +230,8 @@ export class ProductsService {
       return {
         success: false,
         title: 'Помилка редагування',
-        description: 'При виконанні запиту виникла помилка, зміни не були застосовані',
+        description:
+          'При виконанні запиту виникла помилка, зміни не були застосовані',
       };
     }
 

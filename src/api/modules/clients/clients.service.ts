@@ -115,11 +115,12 @@ export class ClientsService {
   async addNewClient(addClientDTO: AddClientDTO) {
     let doExist = await this.getClientCard(addClientDTO.card_number);
 
-    if (doExist) return {
-      success: false,
-      title: 'Виникла помилка',
-      description: `Клієнт ${addClientDTO.customer_surname} ${addClientDTO.customer_name} з ID ${addClientDTO.card_number} вже існує`,
-    };
+    if (doExist)
+      return {
+        success: false,
+        title: 'Виникла помилка',
+        description: `Клієнт ${addClientDTO.customer_surname} ${addClientDTO.customer_name} з ID ${addClientDTO.card_number} вже існує`,
+      };
 
     try {
       await this.databaseService.query(`
@@ -129,13 +130,13 @@ export class ClientsService {
                 '${addClientDTO.card_number}', 
                 '${addClientDTO.customer_surname}', 
                 '${addClientDTO.customer_name}', 
-                ${addClientDTO.customer_patronymic ? "'" + addClientDTO.customer_patronymic + "'" : 'NULL' }, 
+                ${addClientDTO.customer_patronymic ? "'" + addClientDTO.customer_patronymic + "'" : 'NULL'}, 
                 '${addClientDTO.customer_phone_number}',
-                ${addClientDTO.customer_city ? "'" + addClientDTO.customer_city + "'" : 'NULL' },
-                ${addClientDTO.customer_street ? "'" + addClientDTO.customer_street + "'" : 'NULL' },
-                ${addClientDTO.customer_zip_code ? "'" + addClientDTO.customer_zip_code + "'" : 'NULL' }, 
+                ${addClientDTO.customer_city ? "'" + addClientDTO.customer_city + "'" : 'NULL'},
+                ${addClientDTO.customer_street ? "'" + addClientDTO.customer_street + "'" : 'NULL'},
+                ${addClientDTO.customer_zip_code ? "'" + addClientDTO.customer_zip_code + "'" : 'NULL'}, 
                 ${addClientDTO.customer_percent});
-      `)
+      `);
     } catch (error) {
       return {
         success: false,
@@ -186,14 +187,14 @@ export class ClientsService {
         UPDATE Customer_Card
         SET customer_surname = '${editClientDTO.customer_surname}',
             customer_name = '${editClientDTO.customer_name}',
-            customer_patronymic = ${editClientDTO.customer_patronymic ? "'" + editClientDTO.customer_patronymic + "'" : 'NULL' },
+            customer_patronymic = ${editClientDTO.customer_patronymic ? "'" + editClientDTO.customer_patronymic + "'" : 'NULL'},
             customer_phone_number = '${editClientDTO.customer_phone_number}',
-            customer_city = ${editClientDTO.customer_city ? "'" + editClientDTO.customer_city + "'" : 'NULL' },
-            customer_street = ${editClientDTO.customer_street ? "'" + editClientDTO.customer_street + "'" : 'NULL' },
-            customer_zip_code = ${editClientDTO.customer_zip_code ? "'" + editClientDTO.customer_zip_code + "'" : 'NULL' },
+            customer_city = ${editClientDTO.customer_city ? "'" + editClientDTO.customer_city + "'" : 'NULL'},
+            customer_street = ${editClientDTO.customer_street ? "'" + editClientDTO.customer_street + "'" : 'NULL'},
+            customer_zip_code = ${editClientDTO.customer_zip_code ? "'" + editClientDTO.customer_zip_code + "'" : 'NULL'},
             customer_percent = ${editClientDTO.customer_percent}
         WHERE card_number = '${editClientDTO.card_number}';
-      `)
+      `);
     } catch (error) {
       return {
         success: false,
