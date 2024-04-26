@@ -18,20 +18,28 @@ export class StatisticsController {
     }
   }
 
-  private async getTotalAmountForAllCashiers(startDate: string, endDate: string) {
-    const totalAmount = await this.statisticsService.getTotalAmountOfProductsByDateRange(
-      new Date(startDate),
-      new Date(endDate),
-    );
+  private async getTotalAmountForAllCashiers(
+    startDate: string,
+    endDate: string,
+  ) {
+    const totalAmount =
+      await this.statisticsService.getTotalAmountOfProductsByDateRange(
+        new Date(startDate),
+        new Date(endDate),
+      );
     return { totalAmount };
   }
 
-  private async getTotalAmountForCashier(cashierId: string, startDate: string, endDate: string) {
-    const totalAmount = await this.statisticsService.getTotalAmountOfProductsByCashierAndDateRange(
-      cashierId,
-      new Date(startDate),
-      new Date(endDate),
-    );
-    return { totalAmount };
-  }
+  private async getTotalAmountForCashier(
+    cashierId: string,
+    startDate: string,
+    endDate: string,
+  ) {
+    const totalAmount =
+      await this.statisticsService.getTotalAmountOfProductsByCashierAndDateRange(
+        cashierId,
+        new Date(startDate),
+        new Date(endDate),
+      );
+    return { totalAmount };  }
 }

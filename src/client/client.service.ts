@@ -191,6 +191,8 @@ export class ClientService {
     };
 
     return {
+      style:'about-receipt',
+      script:'about-receipt',
       title: 'Злагода: Інформація про чек',
       currentUser: req.currentEmployee,
       isReceipts: true,

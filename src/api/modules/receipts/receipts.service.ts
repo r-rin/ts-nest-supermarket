@@ -1,9 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 
-function filterQueryBuilder(receipt_id: string, text: string, employee_id: string, date_start: string,
-                            date_end: string, sortBy: string, order: string, limit: any, page: any) {
-
+function filterQueryBuilder(
+  receipt_id: string,
+  text: string,
+  employee_id: string,
+  date_start: string,
+  date_end: string,
+  sortBy: string,
+  order: string,
+  limit: any,
+  page: any,
+) {
   if (!receipt_id) receipt_id = '';
   if (!employee_id) employee_id = '';
   if (!text) {
@@ -47,13 +55,13 @@ function filterQueryBuilder(receipt_id: string, text: string, employee_id: strin
       AND Receipt.employee_id LIKE '%${employee_id}%'
   `;
 
-  if (date_start.length != 0 && date_end.length != 0) queryBase +=
-    ` AND (Receipt.print_date >= DATE('${date_start}') AND Receipt.print_date <= DATE_ADD(DATE('${date_end}'), INTERVAL 1 DAY) - INTERVAL 1 SECOND)`;
+  if (date_start.length != 0 && date_end.length != 0)
+    queryBase += ` AND (Receipt.print_date >= DATE('${date_start}') AND Receipt.print_date <= DATE_ADD(DATE('${date_end}'), INTERVAL 1 DAY) - INTERVAL 1 SECOND)`;
 
   queryBase += ' GROUP BY Receipt.receipt_id';
   queryBase += ` HAVING (customer_fullname LIKE '%${text}%'
                 OR employee_fullname LIKE '%${text}%'
-                OR JSON_SEARCH(product_name_list, 'one', '%${text}%', NULL, '$[*]') IS NOT NULL)`
+                OR JSON_SEARCH(product_name_list, 'one', '%${text}%', NULL, '$[*]') IS NOT NULL)`;
   if (sortBy && sortBy != 'none') queryBase += ` ORDER BY ${sortBy} ${order}`;
   if (limit) queryBase += ` LIMIT ${limit} OFFSET ${(page - 1) * limit}`;
   queryBase += ';';
@@ -88,7 +96,7 @@ export class ReceiptsService {
   }
 
   async findByReceiptID(receiptIDToFind: string) {
-    let queryResult = await this.databaseService.query(`
+    const queryResult = await this.databaseService.query(`
         SELECT
           Receipt.receipt_id,
           Receipt.employee_id,
@@ -124,40 +132,55 @@ export class ReceiptsService {
 
     if (queryResult.length == 0) return null;
 
-    let tempDate = new Date(queryResult[0].print_date);
-    queryResult[0].print_date = `${tempDate.toLocaleDateString('en-GB')} ${tempDate.toLocaleTimeString('en-GB')}`
+    const tempDate = new Date(queryResult[0].print_date);
+    queryResult[0].print_date = `${tempDate.toLocaleDateString('en-GB')} ${tempDate.toLocaleTimeString('en-GB')}`;
 
     return queryResult[0];
   }
 
-  async searchByFilter(receipt_id,
-                       text,
-                       employee_id,
-                       date_start,
-                       date_end,
-                       sortBy,
-                       order,
-                       limit,
-                       page,) {
+  async searchByFilter(
+    receipt_id,
+    text,
+    employee_id,
+    date_start,
+    date_end,
+    sortBy,
+    order,
+    limit,
+    page,
+  ) {
     const query = filterQueryBuilder(
-      receipt_id, text, employee_id, date_start,
-      date_end, sortBy, order, limit, page
+      receipt_id,
+      text,
+      employee_id,
+      date_start,
+      date_end,
+      sortBy,
+      order,
+      limit,
+      page,
     );
     const allQuery = filterQueryBuilder(
-      receipt_id, text, employee_id, date_start,
-      date_end, sortBy, order, null, null,
+      receipt_id,
+      text,
+      employee_id,
+      date_start,
+      date_end,
+      sortBy,
+      order,
+      null,
+      null,
     );
 
     const queryResult = await this.databaseService.query(query);
     const allQueryResult = await this.databaseService.query(allQuery);
 
     if (queryResult.length !== 0) {
-      queryResult.forEach(result => {
-        let tempDate = new Date(result.print_date);
+      queryResult.forEach((result) => {
+        const tempDate = new Date(result.print_date);
         result.print_date = `${tempDate.toLocaleDateString('en-GB')} ${tempDate.toLocaleTimeString('en-GB')}`;
       });
     }
-
 
     return {
       rows: queryResult,

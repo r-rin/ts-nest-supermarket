@@ -21,33 +21,28 @@ function getTotalSumOfGoodsFromReceipts(searchForm) {
     if (typeof value == 'string') value = value.trim();
     formDataObj[key] = value;
   });
-  console.log(formDataObj);
-  console.log(formDataObj.date_end);
-  console.log(formDataObj.date_start);
   let cashierId = document.getElementById('cashier').value;
+  const fetchURL = generateFetchURL(
+    formDataObj.date_end,
+    formDataObj.date_start,
+    cashierId,
+  );
 
-  let res = {};
-
-  const fetchURL = generateFetchURL(formDataObj.date_end, formDataObj.date_start, cashierId);
-
-  // Виконуємо запит fetch і передаємо URL
   fetch(fetchURL)
     .then(response => response.json())
     .then(data => {
-      // Обробка отриманих даних
       console.log(data);
-      res = data;
+      let resSumSpan = document.getElementById('sumAfterSearch');
+      resSumSpan.innerText = data.totalAmount;
     })
     .catch(error => {
       // Обробка помилки
       console.error('Error:', error);
     });
-  let resSumSpan = document.getElementById('sumAfterSearch').value;
-  resSumSpan.value = res.value;
+
 }
 
 function generateFetchURL(startDate, endDate, cashierId) {
-  // Формуємо URL для виконання запиту на сервер
   const baseUrl = 'api/statistics/total-amount-by-cashier-and-date-range';
   const url = `${baseUrl}?startDate=${startDate}&endDate=${endDate}&cashierId=${cashierId}`;
   return url;
