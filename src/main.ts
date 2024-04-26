@@ -28,6 +28,9 @@ async function bootstrap() {
       return value;
     }
   });
+  hbs.registerHelper('multiply', function (arg1: any, arg2: any, options: any) {
+    return arg1 * arg2;
+  });
 
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe({ transform: true }));

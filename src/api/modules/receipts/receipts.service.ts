@@ -21,6 +21,7 @@ function filterQueryBuilder(receipt_id: string, text: string, employee_id: strin
       Receipt.card_number,
       Receipt.print_date,
       Receipt.sum_total,
+      Customer_Card.customer_percent,
       CONCAT_WS(' ', Customer_Card.customer_surname, Customer_Card.customer_name,
              Customer_Card.customer_patronymic) AS customer_fullname,
       JSON_ARRAYAGG(Sale.UPC) AS UPC_list,
@@ -86,12 +87,47 @@ export class ReceiptsService {
     return response_data;
   }
 
-  findByReceiptID(receiptIDToFind: string) {
-    return this.databaseService.query(
-      `SELECT * 
-      FROM Receipt
-      WHERE receipt_id LIKE '%${receiptIDToFind}%';`,
-    );
+  async findByReceiptID(receiptIDToFind: string) {
+    let queryResult = await this.databaseService.query(`
+        SELECT
+          Receipt.receipt_id,
+          Receipt.employee_id,
+          Receipt.card_number,
+          Receipt.print_date,
+          Receipt.sum_total,
+          Customer_Card.customer_percent,
+          CONCAT_WS(' ', Customer_Card.customer_surname, Customer_Card.customer_name,
+                 Customer_Card.customer_patronymic) AS customer_fullname,
+          JSON_ARRAYAGG(Sale.UPC) AS UPC_list,
+          JSON_ARRAYAGG(Store_Product.product_id) AS product_id_list,
+          JSON_ARRAYAGG(Sale.selling_price) AS selling_price_list,
+          JSON_ARRAYAGG(Sale.products_amount) AS sold_products_amount_list,
+          CONCAT_WS(' ', Employee.employee_surname, Employee.employee_name,
+                 Employee.employee_patronymic) AS employee_fullname,
+          JSON_ARRAYAGG(Product.product_name) AS product_name_list
+        FROM Receipt
+          INNER JOIN
+            Sale ON Sale.receipt_id = Receipt.receipt_id
+          INNER JOIN
+            Store_Product ON Store_Product.UPC = Sale.UPC
+          INNER JOIN
+            Employee ON Employee.employee_id = Receipt.employee_id
+          INNER JOIN
+            Product ON Store_Product.product_id = Product.product_id
+          INNER JOIN
+            Customer_Card ON Receipt.card_number = Customer_Card.card_number
+        WHERE
+          Receipt.receipt_id = '${receiptIDToFind}'
+        GROUP BY 
+          Receipt.receipt_id
+      `);
+
+    if (queryResult.length == 0) return null;
+
+    let tempDate = new Date(queryResult[0].print_date);
+    queryResult[0].print_date = `${tempDate.toLocaleDateString('en-GB')} ${tempDate.toLocaleTimeString('en-GB')}`
+
+    return queryResult[0];
   }
 
   async searchByFilter(receipt_id,
@@ -112,10 +148,16 @@ export class ReceiptsService {
       date_end, sortBy, order, null, null,
     );
 
-    console.log(query);
     const queryResult = await this.databaseService.query(query);
     const allQueryResult = await this.databaseService.query(allQuery);
-    console.log(queryResult);
+
+    if (queryResult.length !== 0) {
+      queryResult.forEach(result => {
+        let tempDate = new Date(result.print_date);
+        result.print_date = `${tempDate.toLocaleDateString('en-GB')} ${tempDate.toLocaleTimeString('en-GB')}`;
+      });
+    }
+
 
     return {
       rows: queryResult,

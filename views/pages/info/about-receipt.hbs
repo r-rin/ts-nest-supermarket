@@ -27,53 +27,51 @@
               <div class="row mb-3">
                 <div class="col">
                   <strong>Касир: </strong>
-                  <span>{{receipt.employee_fullname}} ({{receipt.employee_id}})</span>
+                  <span>{{receipt.employee_fullname}} <span class="fst-italic text-muted">({{receipt.employee_id}})</span></span>
                 </div>
               </div>
 
               <div class="row mb-3">
                 <div class="col">
                   <strong>Клієнт: </strong>
-                  <span>{{receipt.customer_fullname}} ({{receipt.card_number}})</span>
+                  <span>{{receipt.customer_fullname}} <span class="fst-italic text-muted">({{receipt.card_number}})</span></span>
                 </div>
               </div>
 
               <div class="row mb-3">
                 <div class="col">
-                  <h3 class="text-center">Вміст покупки:</h3>
+                  <h3 class="text-center">Вміст покупки</h3>
+                  <ol>
+                    {{#each receipt.product_name_list}}
+                      <li>
+                        {{this}} <span class="fst-italic text-muted">({{lookup ../receipt.product_id_list @index}})</span>
+                        <div class="d-flex flex-row justify-content-between">
+                          <span>x{{lookup ../receipt.sold_products_amount_list @index}} по {{lookup ../receipt.selling_price_list @index}}грн.</span>
+                          <span>{{multiply (lookup ../receipt.sold_products_amount_list @index) (lookup ../receipt.selling_price_list @index)}} грн.</span>
+                        </div>
+                        <span class="fst-italic text-muted">(UPC: {{lookup ../receipt.UPC_list @index}})</span>
+                      </li>
+                    {{/each}}
+                  </ol>
                 </div>
               </div>
 
-              <div class="row mb-3">
+              <div class="row">
                 <div class="col">
-                  <strong> - {{receipt.product_name_list}} ({{receipt.product_id_list}})</strong>
-                  <span>x{{receipt.sold_products_amount_list}} по {{receipt.selling_price_list}} грн.</span>
-                  <span> тут якась ще selling_price грн.</span>
-
-                  <span>(UPC: {{receipt.UPC_list}})</span>
-
-                </div>
-              </div>
-
-              <div class="row mb-3">
-                <div class="col">
+                  <h5>Загальна сума:</h5>
+                  <div class="d-flex flex-row justify-content-between">
+                    <span>{{products_sum}} x {{receipt.customer_percent}}%</span>
+                    <span>{{receipt.sum_total}} грн.</span>
+                  </div>
                   <strong>Знижка: </strong>
-                  <span>{{receipt.???}} </span>
-
-                </div>
-              </div>
-
-              <div class="row mb-3">
-                <div class="col">
-                  <strong>Загальна сума:</strong>
-                  <span>{{receipt.sum_total}} </span>
+                  <span>{{receipt.customer_percent}}%</span>
                 </div>
               </div>
 
               <div class="row mb-3">
                 <div class="col">
                   <strong>ПДВ: </strong>
-                  <span>{{receipt.???}} </span>
+                  <span>{{#multiply vat.variable_value receipt.sum_total}}{{/multiply}} грн.</span>
                 </div>
               </div>
 

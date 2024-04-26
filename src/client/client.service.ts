@@ -5,6 +5,7 @@ import { ApiService } from '../api/api.service';
 import { CategoriesService } from '../api/modules/categories/categories.service';
 import { SuppliesService } from '../api/modules/supplies/supplies.service';
 import { ProductsService } from '../api/modules/products/products.service';
+import { ReceiptsService } from '../api/modules/receipts/receipts.service';
 
 @Injectable()
 export class ClientService {
@@ -15,6 +16,7 @@ export class ClientService {
     private categoriesService: CategoriesService,
     private productsService: ProductsService,
     private suppliesService: SuppliesService,
+    private receiptsService: ReceiptsService,
   ) {}
 
   formatDate(inputDate: string) {
@@ -172,6 +174,30 @@ export class ClientService {
       currentUser: req.currentEmployee,
       isCategories: true,
       category: await this.categoriesService.getCategory(id),
+    };
+  }
+
+  async getReceiptAboutRenderObject(req, id) {
+
+    let receipt = await this.receiptsService.findByReceiptID(id);
+
+    let products_sum = (rec) => {
+      if (!rec) return 0;
+      let productsAmount = rec.product_id_list.length;
+      let sum = 0;
+      for (let i = 0; i < productsAmount; i++) {
+        sum += rec.sold_products_amount_list[i] * rec.selling_price_list[i]
+      }
+      return sum
+    };
+
+    return {
+      title: 'Злагода: Інформація про чек',
+      currentUser: req.currentEmployee,
+      isReceipts: true,
+      receipt: receipt,
+      vat: await this.apiService.getVariableValue('vat'),
+      products_sum: products_sum(receipt),
     };
   }
 }

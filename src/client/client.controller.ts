@@ -174,12 +174,8 @@ export class ClientController {
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('receipts/about')
   @Render('info/about-receipt')
-  async renderAboutReceiptPage(@Req() req) {
-    return {
-      title: 'Злагода: Інформація про чек',
-      currentUser: req.currentEmployee,
-      isReceipts: true,
-    };
+  async renderAboutReceiptPage(@Req() req, @Query('id') id) {
+    return await this.clientService.getReceiptAboutRenderObject(req, id);
   }
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
@@ -216,17 +212,6 @@ export class ClientController {
       title: 'Злагода: Редагувати дані про предмет',
       currentUser: req.currentEmployee,
       isProducts: true,
-    };
-  }
-
-  @Roles(Role.Cashier, Role.Manager, Role.Admin)
-  @Get('receipts/edit-receipt')
-  @Render('edit/receipt')
-  async renderEditReceiptPage(@Req() req) {
-    return {
-      title: 'Злагода: Редагувати чек',
-      currentUser: req.currentEmployee,
-      isReceipts: true,
     };
   }
 

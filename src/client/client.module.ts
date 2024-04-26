@@ -8,6 +8,7 @@ import { ApiService } from '../api/api.service';
 import { CategoriesService } from '../api/modules/categories/categories.service';
 import { ProductsService } from '../api/modules/products/products.service';
 import { SuppliesService } from '../api/modules/supplies/supplies.service';
+import { ReceiptsService } from '../api/modules/receipts/receipts.service';
 
 @Module({
   imports: [DatabaseModule],
@@ -19,6 +20,7 @@ import { SuppliesService } from '../api/modules/supplies/supplies.service';
     CategoriesService,
     ProductsService,
     SuppliesService,
+    ReceiptsService
   ],
   controllers: [ClientController],
   exports: [],
