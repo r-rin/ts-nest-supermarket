@@ -18,7 +18,12 @@
             <input type="text" class="form-control" placeholder="Текст" id="searchByText">
           </div>
 
-          <div class="col-3">
+          <div class="col-2">
+            <label for="searchByPercent" class="form-label">Пошук за відсотком</label>
+            <input type="number" class="form-control" min="0" step="0.1" max="100" placeholder="Відсоток" id="searchByPercent">
+          </div>
+
+          <div class="col-2">
             <label for="sortBy" class="form-label">Сортувати за</label>
             <select name="sortBy" id="sortBy" class="form-select">
               <option value="none">Не сортувати</option>
@@ -30,7 +35,7 @@
             </select>
           </div>
 
-          <div class="col-3">
+          <div class="col-2">
             <label for="orderBy" class="form-label">Порядок</label>
             <select name="orderBy" id="orderBy" class="form-select">
               <option value="ASC">За зростанням</option>

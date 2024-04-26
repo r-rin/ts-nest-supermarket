@@ -19,12 +19,15 @@ const deleteClientBtnSelector = document.querySelector('#deleteClientBtn');
 //Filter Selectors
 const cardNumberInput = document.querySelector('#cardNumber');
 const textInput = document.querySelector('#searchByText');
+const percentInput = document.querySelector('#searchByPercent');
+
 const sortBySelect = document.querySelector('#sortBy');
 const orderBySelect = document.querySelector('#orderBy');
 
 //Filter values
 let cardNumberValue = cardNumberInput.value;
 let textValue = encodeURIComponent(textInput.value);
+let percentValue = percentInput.value;
 let sortByValue = sortBySelect.value;
 let orderByValue = orderBySelect.value;
 
@@ -38,12 +41,13 @@ searchButton.onclick = async function () {
 };
 
 function generateFetchURL(currentPage) {
-  return `/api/clients/search?limit=${itemsPerPage}&page=${currentPage}&id=${cardNumberValue}&text=${textValue}&&sortBy=${sortByValue}&order=${orderByValue}`;
+  return `/api/clients/search?limit=${itemsPerPage}&page=${currentPage}&id=${cardNumberValue}&text=${textValue}&percent=${percentValue}&&sortBy=${sortByValue}&order=${orderByValue}`;
 }
 
 function updateInputValues() {
   cardNumberValue = cardNumberInput.value;
   textValue = encodeURIComponent(textInput.value);
+  percentValue = percentInput.value;
   sortByValue = sortBySelect.value;
   orderByValue = orderBySelect.value;
 }
