@@ -6,6 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
+  private databaseService: any;
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
@@ -32,5 +33,20 @@ export class AuthService {
     return {
       access_token: await this.jwtService.signAsync(payload),
     };
+  }
+
+  async updatePassword(employeeId: string, newPassword: string): Promise<void> {
+    try {
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      console.log(newPassword);
+      console.log(employeeId);
+      await this.databaseService.query(
+        `UPDATE Auth_data
+             SET password_hash = '${hashedPassword}'
+             WHERE employee_id = '${employeeId}'`,
+      );
+    } catch (error) {
+      throw new Error('Failed to update password');
+    }
   }
 }
