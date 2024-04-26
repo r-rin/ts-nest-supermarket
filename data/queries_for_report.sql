@@ -96,8 +96,11 @@ WHERE NOT EXISTS (
                 )
 );
 
--- знайти клієнтів, які не здійснили жодних покупок певного продукту
-SELECT Customer_Card.card_number
+-- знайти клієнтів, які не здійснили жодних покупок певного предмету
+SELECT Customer_Card.card_number,
+       Customer_Card.customer_surname,
+       Customer_Card.customer_name,
+       Customer_Card.customer_phone_number
 FROM Customer_Card
 WHERE NOT EXISTS (
                 SELECT *
@@ -113,9 +116,10 @@ WHERE NOT EXISTS (
                 )
 );
 
--- знайти продукти, які не були продані протягом певного періоду часу
-SELECT Product.product_name, Product.category_number
-FROM Product
+-- знайти предмети, які не були продані протягом певного періоду часу
+SELECT Product.product_name, Product.category_number, Category.category_name
+FROM (Product
+    INNER JOIN Category ON Product.category_number = Category.category_number)
 WHERE NOT EXISTS (
                 SELECT Store_Product.product_id
                 FROM Store_Product
