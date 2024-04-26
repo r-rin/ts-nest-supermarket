@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { IResponseInterface } from '../../interfaces/IResponse.interface';
 import { ICategory } from '../../interfaces/ICategory.interface';
+import { EditCategoryDTO } from '../../dto/edit-category.dto';
 
 function filterQueryBuilder(
   id: string,
@@ -146,6 +147,29 @@ export class CategoriesService {
       success: true,
       title: 'Видалення успішне',
       description: `Категорія ${id} була видалена`,
+    };
+  }
+
+  async editCategory(editCategoryDTO: EditCategoryDTO) {
+
+    try {
+      this.databaseService.query(`
+        UPDATE Category
+        SET category_name = '${editCategoryDTO.category_name}'
+        WHERE category_number = ${editCategoryDTO.category_number};
+      `)
+    } catch (error) {
+      return {
+        success: false,
+        title: 'Помилка при редагуванні',
+        description: `При виконанні запиту виникла помилка, перевірте введені дані`,
+      };
+    }
+
+    return {
+      success: true,
+      title: 'Зміни успішно застосовані',
+      description: `Для категорії з ID ${editCategoryDTO.category_number} було застосовано зміни`,
     };
   }
 }
