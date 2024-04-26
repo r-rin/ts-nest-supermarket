@@ -177,11 +177,11 @@ export class ClientService {
   }
 
   async getReceiptAboutRenderObject(req, id) {
-    let receipt = await this.receiptsService.findByReceiptID(id);
+    const receipt = await this.receiptsService.findByReceiptID(id);
 
-    let products_sum = (rec) => {
+    const products_sum = (rec) => {
       if (!rec) return 0;
-      let productsAmount = rec.product_id_list.length;
+      const productsAmount = rec.product_id_list.length;
       let sum = 0;
       for (let i = 0; i < productsAmount; i++) {
         sum += rec.sold_products_amount_list[i] * rec.selling_price_list[i];
@@ -234,7 +234,7 @@ export class ClientService {
   }
 
   async getEditEmployeeRenderObject(req, id) {
-    let employee = await this.employeesService.getEmployee(id);
+    const employee = await this.employeesService.getEmployee(id);
     if (employee) {
       employee.employee_birth_date = new Date(employee.employee_birth_date)
         .toISOString()
@@ -255,7 +255,7 @@ export class ClientService {
   }
 
   async getEditSupplyRenderObject(req, id) {
-    let supply = await this.suppliesService.findByUPCDataRaw(id);
+    const supply = await this.suppliesService.findByUPCDataRaw(id);
     if (supply) {
       supply.expiration_date = new Date(supply.expiration_date)
         .toISOString()
@@ -278,7 +278,7 @@ export class ClientService {
   }
 
   async getCreatePromotionalSupplyRenderObject(req, upc) {
-    let supply = await this.suppliesService.findByUPCDataRaw(upc);
+    const supply = await this.suppliesService.findByUPCDataRaw(upc);
     if (supply) {
       supply.expiration_date = new Date(supply.expiration_date)
         .toISOString()
@@ -303,6 +303,7 @@ export class ClientService {
       title: 'Злагода: Статистика',
       currentUser: req.currentEmployee,
       cashiersArr: await this.employeesService.getAllCashiers(),
+      receiptsArr: await this.receiptsService.getAllReceiptsWithNoLimits(),
       isStatistics: true,
     };
   }

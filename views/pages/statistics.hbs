@@ -71,10 +71,10 @@
           <div class="col-3">
             <label for="receipt" class="form-label text-center">Чек</label>
             <select class="form-select" id="receipt" name="receipt" required>
-              <option value="" selected>Оберіть чек</option>
-              <option value="1">RCP001</option>
-              <option value="2">RCP002</option>
-              <option value="3">RCP003</option>
+              <option value="all">Усі</option>
+              {{#each receiptsArr}}
+                <option value="{{this.receipt_id}}">{{this.receipt_id}}</option>
+              {{/each}}
             </select>
           </div>
           <div class="row mt-4 mb-4">
