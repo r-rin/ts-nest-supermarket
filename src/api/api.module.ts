@@ -15,6 +15,8 @@ import { ClientsService } from './modules/clients/clients.service';
 import { ClientsController } from './modules/clients/clients.controller';
 import { ReceiptsService } from './modules/receipts/receipts.service';
 import { ReceiptsController } from './modules/receipts/receipts.controller';
+import { StatisticsService } from './modules/statistics/statistics.service';
+import { StatisticsController } from './modules/statistics/statistics.controller';
 
 @Module({
   imports: [DatabaseModule, AuthModule],
@@ -26,6 +28,7 @@ import { ReceiptsController } from './modules/receipts/receipts.controller';
     ProductsService,
     ClientsService,
     ReceiptsService,
+    StatisticsService,
   ],
   controllers: [
     ApiController,
@@ -35,6 +38,7 @@ import { ReceiptsController } from './modules/receipts/receipts.controller';
     ProductsController,
     ClientsController,
     ReceiptsController,
+    StatisticsController,
   ],
   exports: [],
 })
