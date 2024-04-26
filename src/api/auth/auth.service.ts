@@ -9,9 +9,9 @@ import { DatabaseService } from '../database/database.service';
 @Injectable()
 export class AuthService {
   constructor(
+    private databaseService: DatabaseService,
     private usersService: UsersService,
     private jwtService: JwtService,
-    private databaseService: DatabaseService,
   ) {}
 
   async signIn(employee_id: string, password: string): Promise<any> {
@@ -37,26 +37,28 @@ export class AuthService {
     };
   }
 
-  async updatePassword(employeeId: string, newPassword: string): Promise<IResponseInterface> {
+  async updatePassword(
+    employeeId: string,
+    newPassword: string,
+  ): Promise<IResponseInterface> {
     try {
       const hashedPassword = await bcrypt.hash(newPassword, 10);
       await this.databaseService.query(`
         UPDATE Auth_data
         SET password_hash = '${hashedPassword}'
-        WHERE employee_id = '${employeeId}';`,
-      );
+        WHERE employee_id = '${employeeId}';`);
     } catch (error) {
       return {
         success: false,
         title: 'Пароль не змінено',
-        description: `При виконанні запиту сталася помилка`
-      }
+        description: `При виконанні запиту сталася помилка`,
+      };
     }
 
     return {
       success: true,
       title: 'Пароль змінено',
-      description: `Пароль для працівника ${employeeId} успішно змінено`
-    }
+      description: `Пароль для працівника ${employeeId} успішно змінено`,
+    };
   }
 }
