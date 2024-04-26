@@ -49,6 +49,7 @@ export class ClientsController {
   async searchByFilter(
     @Query('id') id,
     @Query('text') text,
+    @Query('percent') percent,
     @Query('sortBy') sortBy,
     @Query('order') order,
     @Query('limit') limit,
@@ -57,6 +58,7 @@ export class ClientsController {
     return await this.clientsService.searchByFilter(
       id,
       text,
+      percent,
       sortBy,
       order,
       limit,
