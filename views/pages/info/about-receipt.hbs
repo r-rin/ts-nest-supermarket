@@ -1,0 +1,95 @@
+{{#> layout }}
+  {{#*inline "pageContent"}}
+    <section class="d-flex flex-column justify-content-center align-items-center h-100">
+
+      {{#ifEquals receipt null}}
+        <section class="content-section" style="width: 700px;">
+          <h1 class="text-center m-3">Такий чек не знайдено</h1>
+        </section>
+      {{else}}
+        <section class="d-flex justify-content-center flex-column align-items-center h-75">
+          <section  class="content-section p-3 my-2" style="width: 500px;">
+            <section id="content-to-print">
+              <div class="row mb-3">
+                <div class="col">
+                  <strong>ID чеку: </strong>
+                  <span>{{receipt.receipt_id}}</span>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col">
+                  <strong>Дата чеку: </strong>
+                  <span>{{receipt.print_date}} </span>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col">
+                  <strong>Касир: </strong>
+                  <span>{{receipt.employee_fullname}} ({{receipt.employee_id}})</span>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col">
+                  <strong>Клієнт: </strong>
+                  <span>{{receipt.customer_fullname}} ({{receipt.card_number}})</span>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col">
+                  <h3 class="text-center">Вміст покупки:</h3>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col">
+                  <strong> - {{receipt.product_name_list}} ({{receipt.product_id_list}})</strong>
+                  <span>x{{receipt.sold_products_amount_list}} по {{receipt.selling_price_list}} грн.</span>
+                  <span> тут якась ще selling_price грн.</span>
+
+                  <span>(UPC: {{receipt.UPC_list}})</span>
+
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col">
+                  <strong>Знижка: </strong>
+                  <span>{{receipt.???}} </span>
+
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col">
+                  <strong>Загальна сума:</strong>
+                  <span>{{receipt.sum_total}} </span>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col">
+                  <strong>ПДВ: </strong>
+                  <span>{{receipt.???}} </span>
+                </div>
+              </div>
+
+            </section>
+            <div class="row">
+              <div class="col">
+                <button id="print-button" type="button" class="btn btn-outline-success w-100">
+                  Надрукувати звіт
+                </button>
+              </div>
+            </div>
+
+          </section>
+        </section>
+      {{/ifEquals}}
+
+    </section>
+  {{/inline}}
+{{/layout}}
