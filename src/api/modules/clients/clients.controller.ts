@@ -4,6 +4,8 @@ import { Roles } from '../../auth/roles/roles.decorator';
 import { Role } from '../../auth/roles/role.enum';
 import { IResponseInterface } from '../../interfaces/IResponse.interface';
 import { AddClientDTO } from '../../dto/add-client.dto';
+import { EditCategoryDTO } from '../../dto/edit-category.dto';
+import { EditClientDTO } from '../../dto/edit-client.dto';
 
 @Controller('api/clients')
 export class ClientsController {
@@ -58,6 +60,12 @@ export class ClientsController {
     @Body() addClientDTO: AddClientDTO,
   ): Promise<IResponseInterface> {
     return await this.clientsService.addNewClient(addClientDTO);
+  }
+
+  @Post('edit')
+  @Roles(Role.Admin, Role.Manager)
+  async editClient(@Body() editClientDTO: EditClientDTO) {
+    return await this.clientsService.editClient(editClientDTO);
   }
 
   @Delete('delete')

@@ -66,15 +66,13 @@ export class ClientService {
   }
 
   async getClientEditAboutRender(req, card_id: string) {
-    const toRender = {
+    return {
       title: 'Редагувати дані клієнта',
+      script: 'edit-client',
       currentUser: req.currentEmployee,
       isClients: true,
-      customer_card: null,
+      customer_card: await this.clientsService.getClientCard(card_id),
     };
-
-    toRender.customer_card = await this.clientsService.getClientCard(card_id);
-    return toRender;
   }
 
   async getEmployeesRenderObject(req: any) {

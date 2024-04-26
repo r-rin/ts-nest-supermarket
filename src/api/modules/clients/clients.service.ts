@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { AddClientDTO } from '../../dto/add-client.dto';
 import { IResponseInterface } from '../../interfaces/IResponse.interface';
+import { EditClientDTO } from '../../dto/edit-client.dto';
 
 function filterQueryBuilder(
   id: string,
@@ -176,6 +177,35 @@ export class ClientsService {
       success: true,
       title: 'Видалення успішне',
       description: `Клієнт ${id} був видалений`,
+    };
+  }
+
+  async editClient(editClientDTO: EditClientDTO) {
+    try {
+      this.databaseService.query(`
+        UPDATE Customer_Card
+        SET customer_surname = '${editClientDTO.customer_surname}',
+            customer_name = '${editClientDTO.customer_name}',
+            customer_patronymic = ${editClientDTO.customer_patronymic ? "'" + editClientDTO.customer_patronymic + "'" : 'NULL' },
+            customer_phone_number = '${editClientDTO.customer_phone_number}',
+            customer_city = ${editClientDTO.customer_city ? "'" + editClientDTO.customer_city + "'" : 'NULL' },
+            customer_street = ${editClientDTO.customer_street ? "'" + editClientDTO.customer_street + "'" : 'NULL' },
+            customer_zip_code = ${editClientDTO.customer_zip_code ? "'" + editClientDTO.customer_zip_code + "'" : 'NULL' },
+            customer_percent = ${editClientDTO.customer_percent}
+        WHERE card_number = '${editClientDTO.card_number}';
+      `)
+    } catch (error) {
+      return {
+        success: false,
+        title: 'Помилка при редагуванні',
+        description: `При виконанні запиту виникла помилка, перевірте введені дані`,
+      };
+    }
+
+    return {
+      success: true,
+      title: 'Зміни успішно застосовані',
+      description: `До клієнта ${editClientDTO.customer_surname} ${editClientDTO.customer_name} з ID ${editClientDTO.card_number} було застосовано зміни`,
     };
   }
 }
