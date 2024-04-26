@@ -3,6 +3,7 @@ import { CategoriesService } from './categories.service';
 import { Roles } from '../../auth/roles/roles.decorator';
 import { Role } from '../../auth/roles/role.enum';
 import { EditCategoryDTO } from '../../dto/edit-category.dto';
+import { AddCategoryDTO } from '../../dto/add-category.dto';
 
 @Controller('api/categories')
 export class CategoriesController {
@@ -53,5 +54,11 @@ export class CategoriesController {
   @Roles(Role.Admin, Role.Manager)
   async editCategory(@Body() editCategoryDTO: EditCategoryDTO) {
     return await this.categoryService.editCategory(editCategoryDTO);
+  }
+
+  @Post('add')
+  @Roles(Role.Admin, Role.Manager)
+  async addCategory(@Body() addCategoryDTO: AddCategoryDTO) {
+    return await this.categoryService.addCategory(addCategoryDTO);
   }
 }

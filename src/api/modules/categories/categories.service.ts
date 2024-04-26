@@ -3,6 +3,7 @@ import { DatabaseService } from '../../database/database.service';
 import { IResponseInterface } from '../../interfaces/IResponse.interface';
 import { ICategory } from '../../interfaces/ICategory.interface';
 import { EditCategoryDTO } from '../../dto/edit-category.dto';
+import { AddCategoryDTO } from '../../dto/add-category.dto';
 
 function filterQueryBuilder(
   id: string,
@@ -170,6 +171,39 @@ export class CategoriesService {
       success: true,
       title: 'Зміни успішно застосовані',
       description: `Для категорії з ID ${editCategoryDTO.category_number} було застосовано зміни`,
+    };
+  }
+
+  async addCategory(addCategoryDTO: AddCategoryDTO) {
+    const doExists = await this.getCategory(
+      addCategoryDTO.category_number
+    );
+
+    if (doExists) return {
+      success: false,
+      title: 'Неможливо створити категорію',
+      description: `Категорія з ID ${addCategoryDTO.category_number} вже існує (${doExists.category_name})`,
+    };
+
+    try {
+      this.databaseService.query(`
+          INSERT INTO Category (category_number, category_name)
+          VALUES (
+                  ${addCategoryDTO.category_number},
+                  '${addCategoryDTO.category_name}');
+      `);
+    } catch(error) {
+      return {
+        success: false,
+        title: 'Неможливо створити категорію',
+        description: `При виконанні запиту виникла помилка`,
+      };
+    }
+
+    return {
+      success: true,
+      title: 'Категорію створено',
+      description: `Категорію ${addCategoryDTO.category_name} з ID ${addCategoryDTO.category_number} було створено`,
     };
   }
 }

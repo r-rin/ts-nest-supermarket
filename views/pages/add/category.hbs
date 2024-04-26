@@ -1,20 +1,16 @@
 {{#> layout }}
   {{#*inline "pageContent"}}
-    <section class="content-section">
-      <h1 class="text-center">Додавання категорії</h1>
-    </section>
-
     <section class="d-flex justify-content-center flex-column align-items-center h-75" >
       <section class="content-section p-3 my-2" style="width: 500px;">
 
-        <form id="addCategoryForm" action="/submit-category" method="POST">
+        <form id="addCategoryForm">
 
           <div class="row mb-3">
             <div>
               <label for="categoryNumber" class="form-label text-center">Номер категорії</label>
               <span style="color: red">*</span>
               <input type="number" class="form-control text-center" placeholder="Наприклад: 1" id="categoryNumber"
-                     name="categoryNumber" min="0" required>
+                     name="category_number" min="0" required>
             </div>
           </div>
 
@@ -23,7 +19,7 @@
               <label for="categoryName" class="form-label text-center">Назва</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Наприклад: Овочі та фрукти" id="categoryName"
-                     name="categoryName" maxlength="50" required>
+                     name="category_name" minlength="3" maxlength="50" required>
             </div>
           </div>
 
@@ -43,5 +39,19 @@
 
       </section>
     </section>
+    <div class="modal fade" id="infoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="infoModalTitle">...</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="infoModalBody">
+            ...
+          </div>
+        </div>
+      </div>
+    </div>
   {{/inline}}
 {{/layout}}

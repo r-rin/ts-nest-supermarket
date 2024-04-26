@@ -108,11 +108,7 @@ export class ClientController {
   @Get('categories/add-category')
   @Render('add/category')
   async renderAddCategoryPage(@Req() req) {
-    return {
-      title: 'Злагода: Додати категорію',
-      currentUser: req.currentEmployee,
-      isCategories: true,
-    };
+    return await this.clientService.getAddCategoryRenderObject(req);
   }
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)

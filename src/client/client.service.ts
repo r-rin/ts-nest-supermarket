@@ -222,4 +222,13 @@ export class ClientService {
       ),
     };
   }
+
+  async getAddCategoryRenderObject(req) {
+    return {
+      title: 'Злагода: Додати категорію',
+      script: 'add-category',
+      currentUser: req.currentEmployee,
+      isCategories: true,
+    };
+  }
 }
