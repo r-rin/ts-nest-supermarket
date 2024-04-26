@@ -2,7 +2,7 @@
 
 -- кількість товарів кожної категорії у конкретному чеку
 SELECT
-    Category.category_name,
+    Receipt.receipt_id, Category.category_name,
     SUM(Sale.products_amount) AS TotalProducts
 FROM ((((Receipt
     INNER JOIN Sale ON Receipt.receipt_id = Sale.receipt_id)
