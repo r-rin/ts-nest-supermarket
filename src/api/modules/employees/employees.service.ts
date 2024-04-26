@@ -192,7 +192,7 @@ export class EmployeesService {
             '${addEmployeeDTO.employee_zip_code}');
     `);
 
-    const hashed_password = bcrypt.hash(addEmployeeDTO.password_raw, 10);
+    const hashed_password = await bcrypt.hash(addEmployeeDTO.password_raw, 10);
 
     await this.databaseService.query(`
     INSERT INTO Auth_data (employee_id, password_hash)
