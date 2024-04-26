@@ -199,14 +199,10 @@ export class ClientController {
 
   //сторінки для редагування
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
-  @Get('categories/edit-categories')
-  @Render('edit/categories')
-  async renderEditCategoryPage(@Req() req) {
-    return {
-      title: 'Злагода: Редагувати категорію',
-      currentUser: req.currentEmployee,
-      isCategories: true,
-    };
+  @Get('categories/edit-category')
+  @Render('edit/category')
+  async renderEditCategoryPage(@Req() req, @Query('id') id) {
+    return await this.clientService.getEditCategoriesRenderObject(req, id);
   }
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)

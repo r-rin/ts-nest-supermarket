@@ -200,4 +200,14 @@ export class ClientService {
       products_sum: products_sum(receipt),
     };
   }
+
+  async getEditCategoriesRenderObject(req, id) {
+    return {
+      title: 'Злагода: Редагувати категорію',
+      script: 'edit-category',
+      currentUser: req.currentEmployee,
+      isCategories: true,
+      category: await this.categoriesService.getCategory(id),
+    };
+  }
 }

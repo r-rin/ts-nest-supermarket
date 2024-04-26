@@ -1,7 +1,8 @@
-import { Controller, Delete, Get, Param, ParseIntPipe, Query, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Query, Req } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { Roles } from '../../auth/roles/roles.decorator';
 import { Role } from '../../auth/roles/role.enum';
+import { EditCategoryDTO } from '../../dto/edit-category.dto';
 
 @Controller('api/categories')
 export class CategoriesController {
@@ -46,5 +47,11 @@ export class CategoriesController {
   @Roles(Role.Admin, Role.Manager)
   async deleteCategory(@Req() req, @Query('id') id) {
     return await this.categoryService.deleteCategory(req, id);
+  }
+
+  @Post('edit')
+  @Roles(Role.Admin, Role.Manager)
+  async editCategory(@Body() editCategoryDTO: EditCategoryDTO) {
+    return await this.categoryService.editCategory(editCategoryDTO);
   }
 }
