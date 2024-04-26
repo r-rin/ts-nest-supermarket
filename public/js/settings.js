@@ -1,38 +1,43 @@
-window.onload = init;
+const formSelector = document.querySelector('#changePassword');
+const passwordInputSelector = document.getElementById('newPassword');
 
-function init() {
-  handleNewPasswordButton();
-}
+const modalSelector = document.querySelector('#infoModal');
+const resultModal = new bootstrap.Modal(modalSelector);
+const modalTitleSelector = document.querySelector('#infoModalTitle');
+const modalBodySelector = document.querySelector('#infoModalBody');
 
-function handleNewPasswordButton() {
-  let passwordButton = document.getElementById('changePasswordButton');
-  passwordButton.addEventListener('click', () => {
-    let passwordInput = document.getElementById('newPassword').value;
-    changePassword(passwordInput);
-  });
-}
+formSelector.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  await changePassword(passwordInputSelector.value);
+})
 
 async function changePassword(passwordToChange) {
   const updatePasswordDto = {
     newPassword: passwordToChange,
   };
 
-  try {
-    const response = await fetch('/update-password', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(updatePasswordDto),
+  fetch(`/update-password`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(updatePasswordDto),
+  })
+    .then((res) => {
+      if (!res.ok) {
+        return res.json().then((errorData) => {
+          return {
+            success: false,
+            title: 'Виникла помилка',
+            description: errorData.message.toString(),
+          };
+        });
+      }
+      return res.json();
+    })
+    .then((response) => {
+      modalTitleSelector.textContent = response.title;
+      modalBodySelector.textContent = response.description;
+      resultModal.show();
     });
-
-    if (!response.ok) {
-      throw new Error('Failed to update password');
-    }
-
-    const data = await response.json();
-    console.log(data);
-  } catch (error) {
-    console.error('Error:', error.message);
-  }
 }

@@ -3,13 +3,15 @@ import { UsersService } from './users/users.service';
 import { IEmployeeAuth } from '../interfaces/IEmployeeAuth.interface';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { IResponseInterface } from '../interfaces/IResponse.interface';
+import { DatabaseService } from '../database/database.service';
 
 @Injectable()
 export class AuthService {
-  private databaseService: any;
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
+    private databaseService: DatabaseService,
   ) {}
 
   async signIn(employee_id: string, password: string): Promise<any> {
@@ -35,18 +37,26 @@ export class AuthService {
     };
   }
 
-  async updatePassword(employeeId: string, newPassword: string): Promise<void> {
+  async updatePassword(employeeId: string, newPassword: string): Promise<IResponseInterface> {
     try {
       const hashedPassword = await bcrypt.hash(newPassword, 10);
-      console.log(newPassword);
-      console.log(employeeId);
-      await this.databaseService.query(
-        `UPDATE Auth_data
-             SET password_hash = '${hashedPassword}'
-             WHERE employee_id = '${employeeId}'`,
+      await this.databaseService.query(`
+        UPDATE Auth_data
+        SET password_hash = '${hashedPassword}'
+        WHERE employee_id = '${employeeId}';`,
       );
     } catch (error) {
-      throw new Error('Failed to update password');
+      return {
+        success: false,
+        title: 'Пароль не змінено',
+        description: `При виконанні запиту сталася помилка`
+      }
+    }
+
+    return {
+      success: true,
+      title: 'Пароль змінено',
+      description: `Пароль для працівника ${employeeId} успішно змінено`
     }
   }
 }

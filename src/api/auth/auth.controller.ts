@@ -52,7 +52,7 @@ export class AuthController {
     @Body() updatePasswordDto: { newPassword: string },
     @Req() req,
   ) {
-    await this.authService.updatePassword(
+    return await this.authService.updatePassword(
       req.currentEmployee.employee_id,
       updatePasswordDto.newPassword,
     );

@@ -3,6 +3,7 @@ import { UsersModule } from './users/users.module';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
+import { DatabaseService } from '../database/database.service';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { JwtModule } from '@nestjs/jwt';
       signOptions: { expiresIn: '12h' },
     }),
   ],
-  providers: [AuthService],
+  providers: [AuthService, DatabaseService],
   controllers: [AuthController],
   exports: [],
 })
