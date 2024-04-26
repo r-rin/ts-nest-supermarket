@@ -43,7 +43,7 @@
           <div class="row mb-4 mt-4">
             <div class="col">
               <span class="h4">Загальна сума: </span>
-              <span id="sumAfterSearch" class="h4">10000 грн.</span>
+              <span id="sumAfterSearch" class="h4">? грн.</span>
             </div>
           </div>
 
@@ -71,7 +71,6 @@
           <div class="col-3">
             <label for="receipt" class="form-label text-center">Чек</label>
             <select class="form-select" id="receipt" name="receipt" required>
-              <option value="all">Усі</option>
               {{#each receiptsArr}}
                 <option value="{{this.receipt_id}}">{{this.receipt_id}}</option>
               {{/each}}

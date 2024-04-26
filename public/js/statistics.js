@@ -3,10 +3,11 @@ todayDate = new Date();
 window.onload = init;
 
 function init() {
-  handleSearchButton();
+  handleSearchButtonSearchSumCertainCashier();
+  handleSearchButtonGoodsOfEachCategoryInReceipt();
 }
 
-function handleSearchButton() {
+function handleSearchButtonSearchSumCertainCashier() {
   let searchForm = document.getElementById('searchSumCertainCashier');
   searchForm.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -22,7 +23,7 @@ function getTotalSumOfGoodsFromReceipts(searchForm) {
     formDataObj[key] = value;
   });
   let cashierId = document.getElementById('cashier').value;
-  const fetchURL = generateFetchURL(
+  const fetchURL = generateFetchURLForSearchButtonSearchSumCertainCashier(
     formDataObj.date_start,
     formDataObj.date_end,
     cashierId,
@@ -41,7 +42,33 @@ function getTotalSumOfGoodsFromReceipts(searchForm) {
     });
 }
 
-function generateFetchURL(startDate, endDate, cashierId) {
+function generateFetchURLForSearchButtonSearchSumCertainCashier(
+  startDate,
+  endDate,
+  cashierId,
+) {
   const baseUrl = 'api/statistics/total-amount-by-cashier-and-date-range';
   return `${baseUrl}?startDate=${startDate}&endDate=${endDate}&cashierId=${cashierId}`;
+}
+
+function handleSearchButtonGoodsOfEachCategoryInReceipt() {
+  let searchForm = document.getElementById('goodsOfEachCategoryInReceipt');
+  searchForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    getGoodsOfEachCategoryInReceipt();
+  });
+}
+
+function getGoodsOfEachCategoryInReceipt() {
+  let receiptId = document.getElementById('receipt').value;
+  const fetchURL = `api/statistics/the-amount-of-goods-of-each-category-in-a-specific-check?receiptNum=${receiptId}`;
+
+  fetch(fetchURL)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
 }
