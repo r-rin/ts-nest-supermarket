@@ -19,10 +19,10 @@
               <div>
                 <label for="cashier" class="form-label text-center">Касир</label>
                 <select class="form-select" id="cashier" name="cashier" required>
-                  <option value="" selected>Усі</option>
-                  <option value="1">Петров (EMP001)</option>
-                  <option value="2">Касир 2</option>
-                  <option value="3">Касир 3</option>
+                  <option value="all">Усі</option>
+                  {{#each cashiersArr}}
+                    <option value="{{this.employee_id}}">{{this.employee_surname}} {{this.employee_name}} ({{this.employee_id}}) </option>
+                  {{/each}}
                 </select>
               </div>
             </div>
@@ -54,7 +54,7 @@
 
             <div class="row">
               <div>
-                <button type="submit" class="btn btn-primary w-100">
+                <button id="searchButton" type="submit" class="btn btn-primary w-100">
                   Пошук
                 </button>
               </div>
