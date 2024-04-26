@@ -11,7 +11,7 @@ export class StatisticsController {
     @Query('startDate') startDate: string,
     @Query('endDate') endDate: string,
   ) {
-    if (startDate.length > 0 && endDate.length > 0){
+    if (startDate.length > 0 && endDate.length > 0) {
       startDate = new Date(startDate).toISOString().slice(0, 10);
       endDate = new Date(endDate).toISOString().slice(0, 10);
     }
@@ -19,6 +19,15 @@ export class StatisticsController {
       cashierId,
       startDate,
       endDate,
+    );
+  }
+
+  @Get('the-amount-of-goods-of-each-category-in-a-specific-check')
+  async getTotalAmountOfGoodsInEachCategoryInASpecificCheck(
+    @Query('receiptNum') receiptNum: string,
+  ) {
+    return await this.statisticsService.getTotalAmountOfGoodsInEachCategory(
+      receiptNum,
     );
   }
 }

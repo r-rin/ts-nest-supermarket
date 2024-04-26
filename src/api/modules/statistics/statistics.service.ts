@@ -46,4 +46,23 @@ export class StatisticsService {
 
     return queryResult[0].total_amount_of_products;
   }
+
+  async getTotalAmountOfGoodsInEachCategory(receiptNumber: string) {
+    const query = `
+      SELECT
+    Receipt.receipt_id, Category.category_name,
+    SUM(Sale.products_amount) AS TotalProducts
+FROM ((((Receipt
+    INNER JOIN Sale ON Receipt.receipt_id = Sale.receipt_id)
+    INNER JOIN Store_Product ON Sale.UPC = Store_Product.UPC)
+    INNER JOIN Product ON Store_Product.product_id = Product.product_id)
+    INNER JOIN Category ON Product.category_number = Category.category_number)
+WHERE
+    Receipt.receipt_id = '${receiptNumber}'
+GROUP BY
+    Category.category_name;
+      `;
+    const queryResult = await this.databaseService.query(query);
+    return queryResult;
+  }
 }
