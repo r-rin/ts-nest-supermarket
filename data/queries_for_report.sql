@@ -50,7 +50,7 @@ ORDER BY
     Employee.employee_surname, Employee.employee_name;
 
 
--- кількість продажів кожного товару для кожного працівника
+-- кількість продажів кожного предмету для кожного працівника
 SELECT
     Employee.employee_id,
     Employee.employee_surname,
