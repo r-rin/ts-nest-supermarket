@@ -1,0 +1,39 @@
+{{#> layout }}
+  {{#*inline "pageContent"}}
+    <section class="content-section">
+      <h1 class="text-center">Налаштування</h1>
+    </section>
+
+    <section class="d-flex justify-content-center flex-column align-items-center h-75">
+      <section class="content-section p-3 my-2" style="width: 500px;">
+
+        <form id="changePassword">
+
+          <div class="row mb-3">
+            <div class="col">
+              <strong>Зміна паролю:</strong>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div>
+              <label for="newPassword" class="form-label text-center">Новий пароль</label>
+              <input type="password" class="form-control text-center" placeholder="Новий пароль" id="newPassword"
+                     name="newPassword">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="btn-group w-100" role="group" aria-label="Actions">
+              <button type="submit" class="btn btn-primary w-100">
+                Змінити пароль
+              </button>
+            </div>
+          </div>
+
+        </form>
+
+      </section>
+    </section>
+  {{/inline}}
+{{/layout}}
