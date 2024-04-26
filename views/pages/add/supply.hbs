@@ -7,20 +7,14 @@
     <section class="d-flex justify-content-center flex-column align-items-center h-75">
       <section class="content-section p-3 my-2" style="width: 500px;">
 
-        <form id="addSupplyForm" action="/submit-supply" method="POST">
+        <form id="addSupplyForm">
 
           <div class="row mb-3">
             <div class="col">
               <label for="UPC" class="form-label text-center">UPC</label>
               <span style="color: red">*</span>
               <input type="text" class="form-control text-center" placeholder="Наприклад: 799439112766" id="UPC"
-                     name="upc"  minlength="12" maxlength="12" required>
-            </div>
-
-            <div class="col">
-              <label for="upcProm" class="form-label text-center">UPC (акційний)</label>
-              <input type="text" class="form-control text-center" placeholder="Наприклад: 835346892595" id="upcProm"
-                     name="upc_prom"  minlength="12" maxlength="12">
+                     name="UPC"  minlength="3" maxlength="12" required>
             </div>
           </div>
 
@@ -28,7 +22,7 @@
             <div class="col">
               <label for="productName" class="form-label text-center">Назва предмета</label>
               <span style="color: red">*</span>
-              <select class="form-select text-center" id="productName" name="productName" required>
+              <select class="form-select text-center" id="productName" name="product_id" required>
                 <option value="" disabled selected>Оберіть предмет</option>
                 {{#each productsDict}}
                   <option value="{{this.[0]}}">{{this.[1]}}</option>
@@ -40,7 +34,7 @@
               <label for="sellingPrice" class="form-label text-center">Ціна продажу</label>
               <span style="color: red">*</span>
               <input type="number" class="form-control text-center" placeholder="Ціна продажу" id="sellingPrice"
-                     name="sellingPrice" min="0" step="0.01" required>
+                     name="selling_price" min="0" step="0.01" required>
             </div>
           </div>
 
@@ -49,49 +43,21 @@
               <label for="productsAmount" class="form-label text-center">Кількість товарів</label>
               <span style="color: red">*</span>
               <input type="number" class="form-control text-center" placeholder="Кількість товарів" id="productsAmount"
-                     name="productsAmount" min="0" step="1" required>
+                     name="products_amount" min="0" step="1" required>
             </div>
-
-            <div class="col">
-              <div class="row">
-                <div class="col">
-                  <label class="form-label">Чи акційний товар?</label>
-                  <span style="color: red">*</span>
-                </div>
-              </div>
-
-              <div class="row mt-2">
-                <div class="col">
-
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="is_promotional" id="promotionalYes"
-                           value="true" required>
-                    <label class="form-check-label" for="promotionalYes">Так</label>
-                  </div>
-
-                  <div class="form-check form-check-inline ms-3">
-                    <input class="form-check-input" type="radio" name="is_promotional" id="promotionalNo"
-                           value="false" checked required>
-                    <label class="form-check-label" for="promotionalNo">Ні</label>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
           </div>
 
           <div class="row mb-3">
             <div class="col">
               <label for="manufacturingDate" class="form-label text-center">Дата виробництва</label>
               <span style="color: red">*</span>
-              <input type="date" class="form-control text-center" id="manufacturingDate" name="manufacturingDate" required>
+              <input type="date" class="form-control text-center" id="manufacturingDate" name="manufacturing_date" required>
             </div>
 
             <div class="col">
               <label for="expirationDate" class="form-label text-center">Термін придатності</label>
               <span style="color: red">*</span>
-              <input type="date" class="form-control text-center" id="expirationDate" name="expirationDate" required>
+              <input type="date" class="form-control text-center" id="expirationDate" name="expiration_date" required>
             </div>
           </div>
 
@@ -111,5 +77,20 @@
 
       </section>
     </section>
+
+    <div class="modal fade" id="infoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="infoModalTitle">...</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="infoModalBody">
+            ...
+          </div>
+        </div>
+      </div>
+    </div>
   {{/inline}}
 {{/layout}}

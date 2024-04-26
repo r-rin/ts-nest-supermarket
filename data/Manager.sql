@@ -22,8 +22,8 @@ INSERT INTO Product (product_id, category_number, product_name, characteristics)
 VALUES (0, 0, '', '');
 
 -- Додавання нового товару у магазин:
-INSERT INTO Store_Product (UPC, product_id, selling_price, products_amount, is_promotional)
-VALUES ('', 0, 0, 0, FALSE);
+INSERT INTO Store_Product (UPC, product_id, selling_price, products_amount, is_promotional, manufacturing_date, expiration_date)
+VALUES ('', 0, 0, 0, FALSE, '', '');
 
 
 -- 2. Редагувати дані про працівників, постійних клієнтів, категорії товарів, товари, товари у магазині;

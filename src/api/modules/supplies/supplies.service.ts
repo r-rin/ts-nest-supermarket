@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
+import { IResponseInterface } from '../../interfaces/IResponse.interface';
+import { AddSupplyDTO } from '../../dto/add-supply.dto';
 
 function filterQueryBuilder(
   upc: string,
@@ -117,6 +119,55 @@ export class SuppliesService {
     return {
       rows: queryResult,
       amount: allQueryResult.length,
+    };
+  }
+
+  async addNewSupply(addSupplyDTO: AddSupplyDTO): Promise<IResponseInterface> {
+    const doExists = await this.findByUPC(
+      addSupplyDTO.UPC
+    );
+
+    if (doExists) return {
+      success: false,
+      title: 'Неможливо створити товар',
+      description: `Товар з UPC ${addSupplyDTO.UPC} вже існує`,
+    };
+
+    let manDate = new Date(addSupplyDTO.manufacturing_date);
+    let expDate = new Date(addSupplyDTO.expiration_date);
+    if (manDate >= expDate) {
+      return {
+        success: false,
+        title: 'Хибні дані товару',
+        description: `Дата виготовлення товару більша або рівна терміну придатності`,
+      };
+    }
+
+    try {
+      this.databaseService.query(`
+          INSERT INTO Store_Product (UPC, UPC_prom, product_id, selling_price, products_amount, is_promotional, manufacturing_date, expiration_date)
+          VALUES (
+                  '${addSupplyDTO.UPC}', 
+                  NULL,
+                  ${addSupplyDTO.product_id}, 
+                  ${addSupplyDTO.selling_price}, 
+                  ${addSupplyDTO.products_amount}, 
+                  FALSE, 
+                  '${addSupplyDTO.manufacturing_date.toISOString().slice(0, 19).replace('T', ' ')}', 
+                  '${addSupplyDTO.expiration_date.toISOString().slice(0, 19).replace('T', ' ')}');
+      `);
+    } catch(error) {
+      return {
+        success: false,
+        title: 'Неможливо створити товар',
+        description: `При виконанні запиту виникла помилка`,
+      };
+    }
+
+    return {
+      success: true,
+      title: 'Товар створено',
+      description: `Товар з ID ${addSupplyDTO.UPC} було створено`,
     };
   }
 }

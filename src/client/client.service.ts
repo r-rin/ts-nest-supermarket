@@ -125,6 +125,7 @@ export class ClientService {
   async getAddSupplyRenderObject(req) {
     return {
       title: 'Злагода: Додати товар',
+      script: 'add-supply',
       currentUser: req.currentEmployee,
       isSupplies: true,
       productsDict: Object.entries(

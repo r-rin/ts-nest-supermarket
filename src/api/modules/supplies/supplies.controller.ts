@@ -1,7 +1,8 @@
-import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
 import { SuppliesService } from './supplies.service';
 import { Roles } from '../../auth/roles/roles.decorator';
 import { Role } from '../../auth/roles/role.enum';
+import { AddSupplyDTO } from '../../dto/add-supply.dto';
 
 @Controller('api/supplies')
 export class SuppliesController {
@@ -33,7 +34,7 @@ export class SuppliesController {
     @Query('limit') limit,
     @Query('page') page,
   ) {
-    return this.suppliesService.searchByFilter(
+    return await this.suppliesService.searchByFilter(
       upc,
       text,
       type,
@@ -42,5 +43,11 @@ export class SuppliesController {
       limit,
       page,
     );
+  }
+
+  @Post('add')
+  @Roles(Role.Admin, Role.Manager)
+  async addNewSupply(@Body() addSupplyDTO: AddSupplyDTO) {
+    return await this.suppliesService.addNewSupply(addSupplyDTO);
   }
 }

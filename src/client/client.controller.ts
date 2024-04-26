@@ -130,17 +130,6 @@ export class ClientController {
   }
 
   @Roles(Role.Cashier, Role.Manager, Role.Admin)
-  @Get('receipts/add-receipt')
-  @Render('add/receipt')
-  async renderAddReceiptPage(@Req() req) {
-    return {
-      title: 'Злагода: Додати чек',
-      currentUser: req.currentEmployee,
-      isReceipts: true,
-    };
-  }
-
-  @Roles(Role.Cashier, Role.Manager, Role.Admin)
   @Get('supplies/add-supply')
   @Render('add/supply')
   async renderAddSupplyPage(@Req() req) {
