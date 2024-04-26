@@ -124,18 +124,8 @@
         </div>
 
         <div class="row mb-3">
-          <div class="col-3">
-            <label for="categoryName" class="form-label text-center">Категорія</label>
-            <select class="form-select" id="categoryName" name="categoryName" required>
-              <option value="all">Усі</option>
-              {{#each categoriesArr}}
-                <option value="{{this.category_number}}">{{this.category_name}} ({{this.category_number}})</option>
-              {{/each}}
-            </select>
 
-          </div>
-
-          <div class="col-2 pt-4 d-flex align-items-center justify-content-end">
+          <div class="col-1 pt-4 d-flex align-items-center justify-content-start">
             <strong>Період:</strong>
           </div>
 
