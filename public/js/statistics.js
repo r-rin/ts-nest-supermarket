@@ -183,14 +183,14 @@ function getSalesCountPerItemPerEmployee(){
   fetch('api/statistics/sales-count-per-item-per-employee')
     .then((response) => response.json())
     .then((data) => {
-      renderTableTotalSalesPerCategoryForPeriod(data);
+      renderTableTotalSalesAmountOfEachCategory(data);
     })
     .catch((error) => {
       console.error('Error:', error);
     });
 }
 
-function renderTableTotalSalesPerCategoryForPeriod(data) {
+function renderTableTotalSalesAmountOfEachCategory(data) {
   let tableBody = document.getElementById('bodySalesPerCategoryForPeriod');
   const rowTemplate = document.createElement('tr');
   for (let i = 0; i < 6; i++) {
