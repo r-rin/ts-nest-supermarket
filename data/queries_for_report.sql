@@ -217,3 +217,16 @@ WHERE NOT EXISTS (SELECT card_number
                                     FROM Receipt
                                     WHERE Receipt.employee_id = Employee.employee_id AND Customer_Card.card_number = Receipt.card_number)
 );
+
+
+
+-- вивести усіх касирів, які продали усі предмети в магазині
+SELECT Employee.employee_id
+FROM Employee
+WHERE NOT EXISTS(SELECT product_id
+                 FROM Product
+                 WHERE NOT EXISTS (SELECT *
+                                   FROM Receipt
+                                            INNER JOIN Supermarket.Sale on Receipt.receipt_id = Sale.receipt_id
+                                            INNER JOIN Supermarket.Store_Product on Sale.UPC = Store_Product.UPC
+                                   WHERE Receipt.employee_id = Employee.employee_id AND Store_Product.product_id = Product.product_id));
