@@ -30,4 +30,15 @@ export class StatisticsController {
       receiptNum,
     );
   }
+
+  @Get('total-sales-per-category-for-period')
+  async getTotalSalesPerCategoryForPeriod(
+    @Query('startDate') startDate: string,
+    @Query('endDate') endDate: string,
+  ) {
+    return await this.statisticsService.getTotalSalesPerCategoryForPeriod(
+      startDate,
+      endDate,
+    );
+  }
 }
