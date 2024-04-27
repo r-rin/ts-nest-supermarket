@@ -205,3 +205,15 @@ WHERE NOT EXISTS (
 );
 */
 
+
+
+-- знаходимо працівників, які обслугували усіх клієнтів
+
+SELECT employee_id, employee_name, employee_surname
+FROM Employee
+WHERE NOT EXISTS (SELECT card_number
+                  FROM Customer_Card
+                  WHERE NOT EXISTS (SELECT *
+                                    FROM Receipt
+                                    WHERE Receipt.employee_id = Employee.employee_id AND Customer_Card.card_number = Receipt.card_number)
+);
