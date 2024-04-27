@@ -58,6 +58,60 @@
         </form>
       </section>
 
+    <section class="content-section p-3 my-2">
+      <form id="searchSumCertainCashier">
+
+        <div class="row mb-3">
+          <div class="col">
+            <h4 style="color: #5b00ff">Загальна кількість одиниць певного товару, проданого за певний період часу</h4>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-3">
+            <label for="supply" class="form-label text-center">Товар</label>
+            <select class="form-select" id="supply" name="supply" required>
+              <option value="all">Усі</option>
+              {{#each suppliesArr}}
+                <option value="{{this.upc}}">{{this.product_name}} ({{this.upc}}) </option>
+              {{/each}}
+            </select>
+          </div>
+
+          <div class="col-2 pt-4 d-flex align-items-center justify-content-end">
+            <strong>Період:</strong>
+          </div>
+
+          <div class="col-3">
+            <label for="dateStart" class="form-label">Дата початку</label>
+            <input type="date" id="dateStart" name="date_start" class="form-control">
+          </div>
+
+          <div class="col-3">
+            <label for="dateEnd" class="form-label">Дата кінця</label>
+            <input type="date" id="dateEnd" name="date_end" class="form-control">
+          </div>
+
+        </div>
+
+        <div class="row mb-4 mt-4">
+          <div class="col">
+            <span class="h4">Загальна кількість: </span>
+            <span id="numberAfterSearch" class="h4">?</span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <button id="searchButton" type="submit" class="btn btn-primary w-100">
+              Пошук
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </section>
+
     <section class="content-section p-3 my-2 mt-4">
       <form id="goodsOfEachCategoryInReceipt">
 
