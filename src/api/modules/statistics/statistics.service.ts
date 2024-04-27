@@ -65,4 +65,25 @@ GROUP BY
     const queryResult = await this.databaseService.query(query);
     return queryResult;
   }
+
+  async getTotalSalesPerCategoryForPeriod(startDate: string, endDate: string) {
+    let query = `
+        SELECT
+            Category.category_name,
+            SUM(Sale.selling_price * Sale.products_amount) AS TotalSales
+        FROM ((((Category
+            INNER JOIN Product ON Category.category_number = Product.category_number)
+            INNER JOIN Store_Product ON Product.product_id = Store_Product.product_id)
+            INNER JOIN Sale ON Store_Product.UPC = Sale.UPC)
+            INNER JOIN Receipt ON Sale.receipt_id = Receipt.receipt_id)`;
+    if (startDate.length > 0 && endDate.length > 0) {
+      query += `WHERE Receipt.print_date >= DATE('${startDate}')`;
+      query += `AND Receipt.print_date < DATE_ADD(DATE('${endDate}'), INTERVAL 1 DAY) - INTERVAL 1 SECOND`;
+    }
+    query += `
+        GROUP BY Category.category_name;
+      `;
+    const queryResult = await this.databaseService.query(query);
+    return queryResult;
+  }
 }

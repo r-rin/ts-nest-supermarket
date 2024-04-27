@@ -5,6 +5,7 @@ window.onload = init;
 function init() {
   handleSearchButtonSearchSumCertainCashier();
   handleSearchButtonGoodsOfEachCategoryInReceipt();
+  handleSearchButtonGetTotalSalesPerCategoryForPeriod();
 }
 
 function handleSearchButtonSearchSumCertainCashier() {
@@ -62,6 +63,34 @@ function handleSearchButtonGoodsOfEachCategoryInReceipt() {
 function getGoodsOfEachCategoryInReceipt() {
   let receiptId = document.getElementById('receipt').value;
   const fetchURL = `api/statistics/the-amount-of-goods-of-each-category-in-a-specific-check?receiptNum=${receiptId}`;
+
+  fetch(fetchURL)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+}
+
+function handleSearchButtonGetTotalSalesPerCategoryForPeriod() {
+  let searchForm = document.getElementById('salesAmountOfEachCategory');
+  searchForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    getTotalSalesPerCategoryForPeriod(searchForm);
+  });
+}
+
+function getTotalSalesPerCategoryForPeriod(searchForm) {
+  const formData = new FormData(searchForm);
+  const formDataObj = {};
+  formData.forEach((value, key) => {
+    if (typeof value == 'string') value = value.trim();
+    formDataObj[key] = value;
+  });
+  console.log(formDataObj);
+  const fetchURL = `api/statistics/total-sales-per-category-for-period?startDate=${formDataObj.date_start}&endDate=${formDataObj.date_end}`;
 
   fetch(fetchURL)
     .then((response) => response.json())
