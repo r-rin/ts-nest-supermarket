@@ -70,14 +70,14 @@ function getTotalUnitsSoldForProductInPeriod(searchForm) {
     formDataObj[key] = value;
   });
   console.log(formDataObj);
-  const fetchURL = `api/statistics/total-units-sold-for-product-in-period?startDate=${formDataObj.date_start}&endDate=${formDataObj.date_end}&productID=${formDataObj.product_id}`;
+  const fetchURL = `api/statistics/total-units-sold-for-product-in-period?startDate=${formDataObj.date_start}&endDate=${formDataObj.date_end}&productID=${formDataObj.supply}`;
 
   fetch(fetchURL)
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      let resSumSpan = document.getElementById('sumAfterSearch');
-      resSumSpan.innerText = String(data) + ' грн.';
+      let resSumSpan = document.getElementById('numberAfterSearch');
+      resSumSpan.innerText = data[0].total_units_sold;
     })
     .catch((error) => {
       // Обробка помилки
