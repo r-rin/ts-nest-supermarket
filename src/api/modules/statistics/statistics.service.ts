@@ -106,7 +106,8 @@ GROUP BY
     return queryResult;
   }
 
-  async getSalesCountPerItemPerEmployee() {
+  async getSalesCountPerItemPerEmployee(minValue : string) {
+    const minValueInt = Number(minValue);
     const query = `
         SELECT
             Employee.employee_id,
@@ -125,9 +126,10 @@ GROUP BY
             Employee.employee_surname,
             Employee.employee_name,
             Product.product_name
+        HAVING TotalSalesCount >= ${minValueInt} -- Додана умова на мінімальну кількість продажів
         ORDER BY
             Employee.employee_surname, Product.product_name;
-      `;
+    `;
     const queryResult = await this.databaseService.query(query);
     return queryResult;
   }

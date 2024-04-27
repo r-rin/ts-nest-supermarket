@@ -7,14 +7,16 @@ function init() {
   handleSearchButtonGetTotalUnitsSoldForProductInPeriod();
   handleSearchButtonGoodsOfEachCategoryInReceipt();
   handleSearchButtonGetTotalSalesPerCategoryForPeriod();
-  getSalesCountPerItemPerEmployee();
+  handleSearchButtonGetSalesCountPerItemPerEmployee();
   getEmployeesSoldToEveryClient();
   getAllEmployeesWhoSoldAllProducts();
   getEmployeesWhoSoldSuppliesFromEveryCategory();
 }
 
 function renderTableEmployeesWhoSoldSuppliesFromEveryCategory(data) {
-  let tableBody = document.getElementById('employeesWhoSoldSuppliesFromEveryCategory');
+  let tableBody = document.getElementById(
+    'employeesWhoSoldSuppliesFromEveryCategory',
+  );
   const rowTemplate = document.createElement('tr');
   for (let i = 0; i < 4; i++) {
     const td = document.createElement('td');
@@ -76,7 +78,6 @@ function getAllEmployeesWhoSoldAllProducts() {
       console.error('Error:', error);
     });
 }
-
 
 function getEmployeesSoldToEveryClient() {
   fetch('api/statistics/employees-sold-to-every-client')
@@ -182,9 +183,7 @@ function getTotalUnitsSoldForProductInPeriod(searchForm) {
       // Обробка помилки
       console.error('Error:', error);
     });
-
 }
-
 
 function handleSearchButtonGoodsOfEachCategoryInReceipt() {
   let searchForm = document.getElementById('goodsOfEachCategoryInReceipt');
@@ -278,15 +277,27 @@ function renderTableTotalSalesPerCategoryForPeriod(data) {
   });
 }
 
-function getSalesCountPerItemPerEmployee(){
-  fetch('api/statistics/sales-count-per-item-per-employee')
-    .then((response) => response.json())
-    .then((data) => {
-      renderTableTotalSalesAmountOfEachCategory(data);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
+function handleSearchButtonGetSalesCountPerItemPerEmployee() {
+  let searchForm = document.getElementById('numberOfSalesOfEachProduct');
+  searchForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const formData = new FormData(searchForm);
+    const formDataObj = {};
+    formData.forEach((value, key) => {
+      if (typeof value == 'string') value = value.trim();
+      formDataObj[key] = value;
     });
+    console.log(formDataObj);
+
+    fetch(`api/statistics/sales-count-per-item-per-employee?minValue=${formDataObj.minSalesOfProduct}`)
+      .then((response) => response.json())
+      .then((data) => {
+        renderTableTotalSalesAmountOfEachCategory(data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  });
 }
 
 function renderTableTotalSalesAmountOfEachCategory(data) {

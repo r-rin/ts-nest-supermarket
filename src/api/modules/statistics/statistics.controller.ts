@@ -60,8 +60,11 @@ export class StatisticsController {
   }
 
   @Get('sales-count-per-item-per-employee')
-  async getSalesCountPerItemPerEmployee() {
-    return await this.statisticsService.getSalesCountPerItemPerEmployee();
+  async getSalesCountPerItemPerEmployee(
+  @Query('minValue') minValue: string,){
+    return await this.statisticsService.getSalesCountPerItemPerEmployee(
+      minValue,
+    );
   }
 
   @Get('employees-sold-to-every-client')
