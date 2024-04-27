@@ -86,7 +86,7 @@ function renderTableGoodsOfEachCategoryInReceipt(data) {
   data.forEach((receipt) => {
     let rowClone = rowTemplate.cloneNode(true);
     let rowColumns = rowClone.querySelectorAll('td');
-    rowColumns[0].innerText = counter++;
+    rowColumns[0].innerText = 1 + counter++;
     rowColumns[1].innerText = receipt.receipt_id;
     rowColumns[2].innerText = receipt.category_name;
     rowColumns[3].innerText = receipt.TotalProducts;
