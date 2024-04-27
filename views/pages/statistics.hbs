@@ -59,7 +59,7 @@
       </section>
 
     <section class="content-section p-3 my-2">
-      <form id="searchSumCertainCashier">
+      <form id="searchSumCertainProduct">
 
         <div class="row mb-3">
           <div class="col">
@@ -71,9 +71,8 @@
           <div class="col-3">
             <label for="supply" class="form-label text-center">Товар</label>
             <select class="form-select" id="supply" name="supply" required>
-              <option value="all">Усі</option>
-              {{#each suppliesArr}}
-                <option value="{{this.upc}}">{{this.product_name}} ({{this.upc}}) </option>
+              {{#each productsArr}}
+                <option value="{{this.product_id}}">{{this.product_name}} ({{product_id}}) </option>
               {{/each}}
             </select>
           </div>

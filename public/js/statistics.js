@@ -4,9 +4,11 @@ window.onload = init;
 
 function init() {
   handleSearchButtonSearchSumCertainCashier();
+  handleSearchButtonGetTotalUnitsSoldForProductInPeriod();
   handleSearchButtonGoodsOfEachCategoryInReceipt();
   handleSearchButtonGetTotalSalesPerCategoryForPeriod();
-  handleSearchButtonGetSalesCountPerItemPerEmployee();
+  getSalesCountPerItemPerEmployee();
+
 }
 
 function handleSearchButtonSearchSumCertainCashier() {
@@ -52,6 +54,38 @@ function generateFetchURLForSearchButtonSearchSumCertainCashier(
   const baseUrl = 'api/statistics/total-amount-by-cashier-and-date-range';
   return `${baseUrl}?startDate=${startDate}&endDate=${endDate}&cashierId=${cashierId}`;
 }
+
+function handleSearchButtonGetTotalUnitsSoldForProductInPeriod() {
+  let searchForm = document.getElementById('searchSumCertainProduct');
+  searchForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    getTotalUnitsSoldForProductInPeriod(searchForm);
+  });
+}
+function getTotalUnitsSoldForProductInPeriod(searchForm) {
+  const formData = new FormData(searchForm);
+  const formDataObj = {};
+  formData.forEach((value, key) => {
+    if (typeof value == 'string') value = value.trim();
+    formDataObj[key] = value;
+  });
+  console.log(formDataObj);
+  const fetchURL = `api/statistics/total-units-sold-for-product-in-period?startDate=${formDataObj.date_start}&endDate=${formDataObj.date_end}&productID=${formDataObj.product_id}`;
+
+  fetch(fetchURL)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      let resSumSpan = document.getElementById('sumAfterSearch');
+      resSumSpan.innerText = String(data) + ' грн.';
+    })
+    .catch((error) => {
+      // Обробка помилки
+      console.error('Error:', error);
+    });
+
+}
+
 
 function handleSearchButtonGoodsOfEachCategoryInReceipt() {
   let searchForm = document.getElementById('goodsOfEachCategoryInReceipt');
@@ -145,11 +179,10 @@ function renderTableTotalSalesPerCategoryForPeriod(data) {
   });
 }
 
-function handleSearchButtonGetSalesCountPerItemPerEmployee(){
+function getSalesCountPerItemPerEmployee(){
   fetch('api/statistics/sales-count-per-item-per-employee')
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       renderTableTotalSalesPerCategoryForPeriod(data);
     })
     .catch((error) => {
