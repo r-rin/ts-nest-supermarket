@@ -164,6 +164,23 @@ WHERE NOT EXISTS (
                 )
 );
 
+-- ВИПРАВЛЕНИЙ !!!!!!!!!!!!!!!!! (наче)
+SELECT Product.product_name, Product.category_number, Category.category_name
+FROM Product
+         INNER JOIN Category ON Product.category_number = Category.category_number
+WHERE NOT EXISTS (
+    SELECT Store_Product.product_id
+    FROM Store_Product
+    WHERE Store_Product.product_id = Product.product_id
+      AND EXISTS (
+        SELECT Sale.receipt_id
+        FROM Sale
+                 INNER JOIN Receipt ON Sale.receipt_id = Receipt.receipt_id
+        WHERE Sale.UPC = Store_Product.UPC
+          AND Receipt.print_date >= '2023-01-01'
+          AND Receipt.print_date <= '2023-01-04'
+    )
+);
 
 -- Знайти товари, які не були продані певним касиром:
 -- ну це мега сумнівний варіант
