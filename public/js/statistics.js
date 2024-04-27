@@ -95,7 +95,6 @@ function renderTableGoodsOfEachCategoryInReceipt(data) {
   });
 }
 
-
 function handleSearchButtonGetTotalSalesPerCategoryForPeriod() {
   let searchForm = document.getElementById('salesAmountOfEachCategory');
   searchForm.addEventListener('submit', (event) => {
@@ -118,8 +117,29 @@ function getTotalSalesPerCategoryForPeriod(searchForm) {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
+      renderTableTotalSalesPerCategoryForPeriod(data);
     })
     .catch((error) => {
       console.error('Error:', error);
     });
+}
+
+function renderTableTotalSalesPerCategoryForPeriod(data) {
+  let tableBody = document.getElementById('bodySalesAmountOfEachCategory');
+  const rowTemplate = document.createElement('tr');
+  for (let i = 0; i < 3; i++) {
+    const td = document.createElement('td');
+    rowTemplate.appendChild(td);
+  }
+  tableBody.innerHTML = '';
+  let counter = 0;
+  data.forEach((obj) => {
+    let rowClone = rowTemplate.cloneNode(true);
+    let rowColumns = rowClone.querySelectorAll('td');
+    rowColumns[0].innerText = 1 + counter++;
+    rowColumns[1].innerText = obj.category_name;
+    rowColumns[2].innerText = obj.TotalSales;
+
+    tableBody.appendChild(rowClone);
+  });
 }
