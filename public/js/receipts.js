@@ -278,9 +278,7 @@ function handlePrintButton() {
       <div class="fst-italic text-muted">(${receipt.card_number})</div>
     </div>
     `;
-      rowColumns[4].innerText = new Date(receipt.print_date).toLocaleDateString(
-        'en-GB',
-      );
+      rowColumns[4].innerText = receipt.print_date;
       rowColumns[5].appendChild(generateProductsList(receipt));
       rowColumns[6].innerText = receipt.sum_total;
       tableBodyToPrint.appendChild(rowClone);
