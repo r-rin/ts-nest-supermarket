@@ -68,11 +68,33 @@ function getGoodsOfEachCategoryInReceipt() {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
+      renderTableGoodsOfEachCategoryInReceipt(data);
     })
     .catch((error) => {
       console.error('Error:', error);
     });
 }
+function renderTableGoodsOfEachCategoryInReceipt(data) {
+  let tableBody = document.getElementById('body-category-receipt');
+  const rowTemplate = document.createElement('tr');
+  for (let i = 0; i < 4; i++) {
+    const td = document.createElement('td');
+    rowTemplate.appendChild(td);
+  }
+  tableBody.innerHTML = '';
+  let counter = 0;
+  data.forEach((receipt) => {
+    let rowClone = rowTemplate.cloneNode(true);
+    let rowColumns = rowClone.querySelectorAll('td');
+    rowColumns[0].innerText = counter++;
+    rowColumns[1].innerText = receipt.receipt_id;
+    rowColumns[2].innerText = receipt.category_name;
+    rowColumns[3].innerText = receipt.TotalProducts;
+
+    tableBody.appendChild(rowClone);
+  });
+}
+
 
 function handleSearchButtonGetTotalSalesPerCategoryForPeriod() {
   let searchForm = document.getElementById('salesAmountOfEachCategory');

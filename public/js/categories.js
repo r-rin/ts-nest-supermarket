@@ -94,7 +94,6 @@ async function loadTableData(fetchURL, currentPage) {
   data.rows.forEach((category) => {
     let rowClone = rowTemplate.cloneNode(true);
     let rowColumns = rowClone.querySelectorAll('td');
-    console.log(data);
     rowColumns[0].innerText = (currentPage - 1) * itemsPerPage + 1 + counter++;
     rowColumns[1].innerText = category.category_number;
     rowColumns[2].innerText = category.category_name;
