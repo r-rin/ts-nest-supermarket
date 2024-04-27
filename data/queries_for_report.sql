@@ -33,7 +33,7 @@ GROUP BY
 
 -- запит, який виводить інформацію про кожного працівника (його ПІБ),
 -- кількість здійснених продажів (чеків) та загальну суму продажів
-SELECT
+/*SELECT
     Employee.employee_surname,
     Employee.employee_name,
     Employee.employee_patronymic,
@@ -47,7 +47,7 @@ GROUP BY
     Employee.employee_surname,
     Employee.employee_name
 ORDER BY
-    Employee.employee_surname, Employee.employee_name;
+    Employee.employee_surname, Employee.employee_name;*/
 
 
 -- кількість продажів кожного предмету для кожного працівника
@@ -76,7 +76,7 @@ ORDER BY
 
 -- знайти номери карт клієнтів, які здійснили покупки усіх категорій продуктів
 -- цей запит не працює, ХЕЛП
-SELECT Customer_Card.card_number
+/*SELECT Customer_Card.card_number
 FROM Customer_Card
 WHERE NOT EXISTS (
                 SELECT Category.category_number
@@ -95,11 +95,14 @@ WHERE NOT EXISTS (
                                     )
                 )
 );
-
+*/
 
 -- 2 варіант
 -- знайде клієнтів, які здійснили покупки у всіх категоріях товарів
-SELECT cc.card_number, cc.customer_surname, cc.customer_name
+SELECT cc.card_number,
+       cc.customer_surname,
+       cc.customer_name,
+       cc.customer_phone_number
 FROM Customer_Card cc
 WHERE NOT EXISTS (
                 SELECT category_number
@@ -121,7 +124,6 @@ WHERE NOT EXISTS (
         )
     )
 );
-
 
 
 -- знайти клієнтів, які не здійснили жодних покупок певного предмету
@@ -165,7 +167,7 @@ WHERE NOT EXISTS (
 
 -- Знайти товари, які не були продані певним касиром:
 -- ну це мега сумнівний варіант
-SELECT Product.product_name, Product.category_number, Category.category_name
+/*SELECT Product.product_name, Product.category_number, Category.category_name
 FROM (Product
     INNER JOIN Category ON Product.category_number = Category.category_number)
 WHERE NOT EXISTS (
@@ -184,5 +186,5 @@ WHERE NOT EXISTS (
                                 WHERE Store_Product.product_id = Product.product_id
                 )
 );
-
+*/
 

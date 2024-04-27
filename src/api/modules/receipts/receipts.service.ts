@@ -100,6 +100,16 @@ export class ReceiptsService {
     return response_data;
   }
 
+  async getAllReceiptsWithNoLimits() {
+
+    let response_data = await this.databaseService.query(
+      `SELECT * 
+      FROM Receipt
+      `,
+    );
+    return response_data;
+  }
+
   async findByReceiptID(receiptIDToFind: string) {
     const queryResult = await this.databaseService.query(`
         SELECT

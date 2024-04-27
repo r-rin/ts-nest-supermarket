@@ -43,7 +43,7 @@
           <div class="row mb-4 mt-4">
             <div class="col">
               <span class="h4">Загальна сума: </span>
-              <span id="sumAfterSearch" class="h4">10000 грн.</span>
+              <span id="sumAfterSearch" class="h4">? грн.</span>
             </div>
           </div>
 
@@ -58,6 +58,60 @@
         </form>
       </section>
 
+    <section class="content-section p-3 my-2">
+      <form id="searchSumCertainCashier">
+
+        <div class="row mb-3">
+          <div class="col">
+            <h4 style="color: #5b00ff">Загальна кількість одиниць певного товару, проданого за певний період часу</h4>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-3">
+            <label for="supply" class="form-label text-center">Товар</label>
+            <select class="form-select" id="supply" name="supply" required>
+              <option value="all">Усі</option>
+              {{#each suppliesArr}}
+                <option value="{{this.upc}}">{{this.product_name}} ({{this.upc}}) </option>
+              {{/each}}
+            </select>
+          </div>
+
+          <div class="col-2 pt-4 d-flex align-items-center justify-content-end">
+            <strong>Період:</strong>
+          </div>
+
+          <div class="col-3">
+            <label for="dateStart" class="form-label">Дата початку</label>
+            <input type="date" id="dateStart" name="date_start" class="form-control">
+          </div>
+
+          <div class="col-3">
+            <label for="dateEnd" class="form-label">Дата кінця</label>
+            <input type="date" id="dateEnd" name="date_end" class="form-control">
+          </div>
+
+        </div>
+
+        <div class="row mb-4 mt-4">
+          <div class="col">
+            <span class="h4">Загальна кількість: </span>
+            <span id="numberAfterSearch" class="h4">?</span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <button id="searchButton" type="submit" class="btn btn-primary w-100">
+              Пошук
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </section>
+
     <section class="content-section p-3 my-2 mt-4">
       <form id="goodsOfEachCategoryInReceipt">
 
@@ -71,10 +125,9 @@
           <div class="col-3">
             <label for="receipt" class="form-label text-center">Чек</label>
             <select class="form-select" id="receipt" name="receipt" required>
-              <option value="" selected>Оберіть чек</option>
-              <option value="1">RCP001</option>
-              <option value="2">RCP002</option>
-              <option value="3">RCP003</option>
+              {{#each receiptsArr}}
+                <option value="{{this.receipt_id}}">{{this.receipt_id}}</option>
+              {{/each}}
             </select>
           </div>
           <div class="row mt-4 mb-4">
@@ -99,7 +152,7 @@
           </tr>
           </thead>
 
-          <tbody class="table-group-divider">
+          <tbody id="body-category-receipt" class="table-group-divider">
           <tr>
             <td colspan="4">{{> partials/loading}}</td>
           </tr>
@@ -125,18 +178,8 @@
         </div>
 
         <div class="row mb-3">
-          <div class="col-3">
-            <label for="categoryName" class="form-label text-center">Категорія</label>
-            <select class="form-select" id="categoryName" name="categoryName" required>
-              <option value="" selected>Оберіть категорію</option>
-              <option value="1">Vegetables and Fruits</option>
-              <option value="2">Meat and Poultry</option>
-              <option value="3">Dairy Products</option>
-            </select>
 
-          </div>
-
-          <div class="col-2 pt-4 d-flex align-items-center justify-content-end">
+          <div class="col-1 pt-4 d-flex align-items-center justify-content-start">
             <strong>Період:</strong>
           </div>
 
@@ -172,7 +215,7 @@
           </tr>
           </thead>
 
-          <tbody class="table-group-divider">
+          <tbody id="bodySalesAmountOfEachCategory" class="table-group-divider">
           <tr>
             <td colspan="3">{{> partials/loading}}</td>
           </tr>
@@ -212,7 +255,7 @@
           </tr>
           </thead>
 
-          <tbody class="table-group-divider">
+          <tbody id="bodySalesPerCategoryForPeriod" class="table-group-divider">
           <tr>
             <td colspan="6">{{> partials/loading}}</td>
           </tr>
@@ -241,10 +284,10 @@
           <div class="col-3">
             <label for="productNameId" class="form-label text-center">Предмет</label>
             <select class="form-select" id="productNameId" name="productNameId" required>
-              <option value="" selected>Оберіть предмет</option>
-              <option value="1">Apple (1)</option>
-              <option value="2">Beef Steak (4)</option>
-              <option value="3">Bread (7)</option>
+              <option value="all">Усі</option>
+              {{#each productsArr}}
+                <option value="{{this.product_name}}">{{this.product_name}} ({{this.product_name}})</option>
+              {{/each}}
             </select>
 
           </div>
@@ -332,6 +375,42 @@
             <th>Назва предмету</th>
             <th>Номер категорії</th>
             <th>Назва категорії</th>
+          </tr>
+          </thead>
+
+          <tbody class="table-group-divider">
+          <tr>
+            <td colspan="5">{{> partials/loading}}</td>
+          </tr>
+          <tr>
+            <td colspan="5">{{> partials/loading}}</td>
+          </tr>
+          <tr>
+            <td colspan="5">{{> partials/loading}}</td>
+          </tr>
+          </tbody>
+
+        </table>
+      </div>
+    </section>
+
+    <section class="content-section p-3 my-2 mt-4">
+
+      <div class="row mb-3">
+        <div class="col">
+          <h4 style="color: #5b00ff">Клієнти, які здійснили покупки у всіх категоріях товарів</h4>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table class="m-0 table table-striped table-hover table-bordered" id="data-table">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Номер картки клієнта</th>
+            <th>Прізвище</th>
+            <th>Ім'я</th>
+            <th>Номер телефону</th>
           </tr>
           </thead>
 

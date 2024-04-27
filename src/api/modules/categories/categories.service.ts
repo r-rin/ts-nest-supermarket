@@ -89,6 +89,13 @@ export class CategoriesService {
     );
   }
 
+  async getAllCategoriesArr() {
+    const queryResult = await this.databaseService.query(
+      `SELECT *
+      FROM Category;`,
+    );
+    return queryResult;
+  }
   async getAllCategoriesDict() {
     const queryResult = await this.databaseService.query(
       `SELECT *

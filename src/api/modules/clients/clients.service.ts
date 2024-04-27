@@ -7,6 +7,7 @@ import { EditClientDTO } from '../../dto/edit-client.dto';
 function filterQueryBuilder(
   id: string,
   text: string,
+  persent: number,
   sortBy: string,
   order: string,
   limit: any,
@@ -34,6 +35,8 @@ function filterQueryBuilder(
         OR COALESCE(customer_street, '') LIKE '%${text}%'
         OR COALESCE(customer_zip_code, '') LIKE '%${text}%'
     )`;
+
+  if (persent) queryBase += ` AND customer_percent = ${persent}`;
 
   if (sortBy && sortBy != 'none') queryBase += ` ORDER BY ${sortBy} ${order}`;
   if (limit) queryBase += ` LIMIT ${limit} OFFSET ${(page - 1) * limit}`;
@@ -96,13 +99,30 @@ export class ClientsService {
   async searchByFilter(
     id: string,
     text: string,
+    persent: number,
     sortBy: string,
     order: string,
     limit: any,
     page: any,
   ) {
-    const query = filterQueryBuilder(id, text, sortBy, order, limit, page);
-    const allQuery = filterQueryBuilder(id, text, sortBy, order, null, null);
+    const query = filterQueryBuilder(
+      id,
+      text,
+      persent,
+      sortBy,
+      order,
+      limit,
+      page,
+    );
+    const allQuery = filterQueryBuilder(
+      id,
+      text,
+      null,
+      sortBy,
+      order,
+      null,
+      null,
+    );
     const queryResult = await this.databaseService.query(query);
     const allQueryResult = await this.databaseService.query(allQuery);
 
