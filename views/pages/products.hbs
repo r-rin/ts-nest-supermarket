@@ -54,9 +54,12 @@
               <button class="btn btn-primary w-75" id="search">
                 Пошук
               </button>
+            {{#ifEquals currentUser.employee_role 0}}
+            {{else}}
               <button type="button" class="btn btn-outline-primary" id="addProductBtn">
                 Додати предмет
               </button>
+            {{/ifEquals}}
             </div>
           </div>
         </div>

@@ -175,10 +175,11 @@ async function loadPagination(currentPage) {
 }
 
 let addProductButton = document.querySelector('#addProductBtn');
-
-addProductButton.onclick = function () {
-  window.open('/products/add-product', '_blank');
-};
+if (addProductButton) {
+  addProductButton.onclick = function () {
+    window.open('/products/add-product', '_blank');
+  };
+}
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function openProductInfo(button) {

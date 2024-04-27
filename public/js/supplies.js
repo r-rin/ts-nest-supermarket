@@ -187,9 +187,11 @@ async function loadPagination(currentPage) {
 
 let addSupplyButton = document.querySelector('#addSupplyBtn');
 
-addSupplyButton.onclick = function () {
-  window.open('/supplies/add-supply', '_blank');
-};
+if (addSupplyButton) {
+  addSupplyButton.onclick = function () {
+    window.open('/supplies/add-supply', '_blank');
+  };
+}
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function openSupplyInfo(button) {

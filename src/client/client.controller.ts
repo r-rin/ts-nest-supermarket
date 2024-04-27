@@ -25,7 +25,7 @@ export class ClientController {
     };
   }
 
-  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Roles(Role.Manager, Role.Admin)
   @Get('categories')
   @Render('categories')
   async categories(@Req() req) {
@@ -51,7 +51,7 @@ export class ClientController {
     };
   }
 
-  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Roles(Role.Manager, Role.Admin)
   @Get('statistics')
   @Render('statistics')
   async statistics(@Req() req) {
@@ -91,7 +91,7 @@ export class ClientController {
     };
   }
 
-  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Roles(Role.Manager, Role.Admin)
   @Get('employees')
   @Render('employees')
   async employees(@Req() req) {
@@ -99,7 +99,7 @@ export class ClientController {
   }
 
   //сторінки для додавання
-  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Roles(Role.Manager, Role.Admin)
   @Get('categories/add-category')
   @Render('add/category')
   async renderAddCategoryPage(@Req() req) {
@@ -113,21 +113,21 @@ export class ClientController {
     return await this.clientService.getAddClientRenderObject(req);
   }
 
-  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Roles(Role.Manager, Role.Admin)
   @Get('products/add-product')
   @Render('add/product')
   async renderAddProductPage(@Req() req) {
     return await this.clientService.renderAddProductPage(req);
   }
 
-  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Roles(Role.Manager, Role.Admin)
   @Get('supplies/add-supply')
   @Render('add/supply')
   async renderAddSupplyPage(@Req() req) {
     return await this.clientService.getAddSupplyRenderObject(req);
   }
 
-  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Roles(Role.Manager, Role.Admin)
   @Get('employees/add-employee')
   @Render('add/employee')
   async renderAddEmployeePage(@Req() req) {
@@ -142,7 +142,7 @@ export class ClientController {
     return await this.clientService.getProfileRenderObj(req, employee_id);
   }
 
-  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Roles(Role.Manager, Role.Admin)
   @Get('categories/about')
   @Render('info/about-category')
   async renderAboutCategoryPage(@Req() req, @Query('id') id: number) {
@@ -181,7 +181,7 @@ export class ClientController {
   }
 
   //сторінки для редагування
-  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Roles(Role.Manager, Role.Admin)
   @Get('categories/edit-category')
   @Render('edit/category')
   async renderEditCategoryPage(@Req() req, @Query('id') id) {
@@ -195,21 +195,21 @@ export class ClientController {
     return await this.clientService.getClientEditAboutRender(req, card_id);
   }
 
-  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Roles(Role.Manager, Role.Admin)
   @Get('products/edit-product')
   @Render('edit/product')
   async renderEditProductPage(@Req() req, @Query('id') id) {
     return await this.clientService.getEditProductRenderObject(req, id);
   }
 
-  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Roles(Role.Manager, Role.Admin)
   @Get('supplies/edit-supply')
   @Render('edit/supply')
   async renderEditSupplyPage(@Req() req, @Query('upc') id) {
     return await this.clientService.getEditSupplyRenderObject(req, id);
   }
 
-  @Roles(Role.Cashier, Role.Manager, Role.Admin)
+  @Roles(Role.Manager, Role.Admin)
   @Get('employees/edit-employee')
   @Render('edit/employee')
   async renderEditEmployeePage(@Req() req, @Query('id') id) {

@@ -6,11 +6,13 @@
           <div class="col text-center">
             <h1>Товари</h1>
           </div>
-          <div class="col-auto" style="margin-top: 9px;">
-            <button type="button" class="btn" id="basketBtn" style="background-color: #ff6a27; color: #ffffff;">
-              <i class="fa-solid fa-cart-shopping"></i>
-            </button>
-          </div>
+          {{#ifEquals currentUser.employee_role 0}}
+            <div class="col-auto" style="margin-top: 9px;">
+              <button type="button" class="btn" id="basketBtn" style="background-color: #ff6a27; color: #ffffff;">
+                <i class="fa-solid fa-cart-shopping"></i>
+              </button>
+            </div>
+          {{/ifEquals}}
 
         </div>
       </div>
@@ -68,9 +70,12 @@
               <button class="btn btn-primary w-75" id="search">
                 Пошук
               </button>
+            {{#ifEquals currentUser.employee_role 0}}
+            {{else}}
               <button type="button" class="btn btn-outline-primary" id="addSupplyBtn">
                 Додати товар
               </button>
+            {{/ifEquals}}
             </div>
           </div>
         </div>

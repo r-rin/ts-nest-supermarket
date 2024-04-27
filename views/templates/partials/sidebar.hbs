@@ -12,12 +12,23 @@
       </a>
     </li>
 
-    <li>
-      <a href="/employees" class="nav-link {{#if isEmployees}}active{{else}}link-body-emphasis{{/if}}" {{#if isEmployees}}aria-current="page"{{/if}}>
-        <i class="me-2 fa-solid fa-users-gear"></i>
-        Працівники
-      </a>
-    </li>
+    {{#ifEquals currentUser.employee_role 1}}
+      <li>
+        <a href="/employees" class="nav-link {{#if isEmployees}}active{{else}}link-body-emphasis{{/if}}" {{#if isEmployees}}aria-current="page"{{/if}}>
+          <i class="me-2 fa-solid fa-users-gear"></i>
+          Працівники
+        </a>
+      </li>
+    {{/ifEquals}}
+
+    {{#ifEquals currentUser.employee_role 2}}
+      <li>
+        <a href="/employees" class="nav-link {{#if isEmployees}}active{{else}}link-body-emphasis{{/if}}" {{#if isEmployees}}aria-current="page"{{/if}}>
+          <i class="me-2 fa-solid fa-users-gear"></i>
+          Працівники
+        </a>
+      </li>
+    {{/ifEquals}}
 
     <li>
       <a href="/products" class="nav-link {{#if isProducts}}active{{else}}link-body-emphasis{{/if}}" {{#if isProducts}}aria-current="page"{{/if}}>
@@ -33,12 +44,23 @@
       </a>
     </li>
 
-    <li>
-      <a href="/categories" class="nav-link {{#if isCategories}}active{{else}}link-body-emphasis{{/if}}" {{#if isCategories}}aria-current="page"{{/if}}>
-        <i class="me-2 fa-solid fa-tags"></i>
-        Категорії
-      </a>
-    </li>
+    {{#ifEquals currentUser.employee_role 1}}
+      <li>
+        <a href="/categories" class="nav-link {{#if isCategories}}active{{else}}link-body-emphasis{{/if}}" {{#if isCategories}}aria-current="page"{{/if}}>
+          <i class="me-2 fa-solid fa-tags"></i>
+          Категорії
+        </a>
+      </li>
+    {{/ifEquals}}
+
+    {{#ifEquals currentUser.employee_role 2}}
+      <li>
+        <a href="/categories" class="nav-link {{#if isCategories}}active{{else}}link-body-emphasis{{/if}}" {{#if isCategories}}aria-current="page"{{/if}}>
+          <i class="me-2 fa-solid fa-tags"></i>
+          Категорії
+        </a>
+      </li>
+    {{/ifEquals}}
 
     <li>
       <a href="/receipts" class="nav-link {{#if isReceipts}}active{{else}}link-body-emphasis{{/if}}" {{#if isReceipts}}aria-current="page"{{/if}}>
@@ -54,12 +76,24 @@
       </a>
     </li>
 
-    <li>
-      <a href="/statistics" class="nav-link {{#if isStatistics}}active{{else}}link-body-emphasis{{/if}}" {{#if isStatistics}}aria-current="page"{{/if}}>
-        <i class="me-2 fa-solid fa-chart-simple"></i>
-        Статистика
-      </a>
-    </li>
+    {{#ifEquals currentUser.employee_role 1}}
+      <li>
+        <a href="/statistics" class="nav-link {{#if isStatistics}}active{{else}}link-body-emphasis{{/if}}" {{#if isStatistics}}aria-current="page"{{/if}}>
+          <i class="me-2 fa-solid fa-chart-simple"></i>
+          Статистика
+        </a>
+      </li>
+    {{/ifEquals}}
+
+    {{#ifEquals currentUser.employee_role 2}}
+      <li>
+        <a href="/statistics" class="nav-link {{#if isStatistics}}active{{else}}link-body-emphasis{{/if}}" {{#if isStatistics}}aria-current="page"{{/if}}>
+          <i class="me-2 fa-solid fa-chart-simple"></i>
+          Статистика
+        </a>
+      </li>
+    {{/ifEquals}}
+
 
   </ul>
   <hr>
