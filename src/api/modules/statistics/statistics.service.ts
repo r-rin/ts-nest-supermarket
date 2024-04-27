@@ -103,7 +103,6 @@ GROUP BY
         GROUP BY Category.category_name;
       `;
     const queryResult = await this.databaseService.query(query);
-    console.log(queryResult);
     return queryResult;
   }
 
