@@ -131,4 +131,45 @@ GROUP BY
     const queryResult = await this.databaseService.query(query);
     return queryResult;
   }
+
+  async getEmployeesSoldToEveryClient() {
+    return await this.databaseService.query(`
+      SELECT employee_id, employee_name, employee_surname
+      FROM Employee
+      WHERE NOT EXISTS (SELECT card_number
+                        FROM Customer_Card
+                        WHERE NOT EXISTS (SELECT *
+                                          FROM Receipt
+                                          WHERE Receipt.employee_id = Employee.employee_id AND Customer_Card.card_number = Receipt.card_number));
+    `);
+  }
+
+  async getAllEmployeesWhoSoldAllProducts() {
+    return await this.databaseService.query(`
+      SELECT EMP.employee_id, EMP.employee_name, EMP.employee_surname
+      FROM Employee EMP
+      WHERE NOT EXISTS(SELECT product_id
+                      FROM Product PRD
+                      WHERE NOT EXISTS (SELECT *
+                                          FROM Receipt
+                                          INNER JOIN Supermarket.Sale S on Receipt.receipt_id = S.receipt_id
+                                          INNER JOIN Supermarket.Store_Product SP on S.UPC = SP.UPC
+                                          WHERE Receipt.employee_id = EMP.employee_id AND SP.product_id = PRD.product_id));
+    `)
+  }
+
+  async getEmployeesWhoSoldSuppliesFromEveryCategory() {
+    return await this.databaseService.query(`
+        SELECT EMP.employee_id, EMP.employee_name, EMP.employee_surname
+        FROM Employee EMP
+        WHERE NOT EXISTS(SELECT category_number
+                         FROM Category CTG
+                         WHERE NOT EXISTS (SELECT *
+                                           FROM Receipt
+                                                    INNER JOIN Supermarket.Sale S on Receipt.receipt_id = S.receipt_id
+                                                    INNER JOIN Supermarket.Store_Product SP on S.UPC = SP.UPC
+                                                    INNER JOIN Supermarket.Product P on SP.product_id = P.product_id
+                                                    WHERE Receipt.employee_id = EMP.employee_id AND CTG.category_number = P.category_number));
+    `)
+  }
 }
