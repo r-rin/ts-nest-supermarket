@@ -217,3 +217,17 @@ WHERE NOT EXISTS (SELECT card_number
                                     FROM Receipt
                                     WHERE Receipt.employee_id = Employee.employee_id AND Customer_Card.card_number = Receipt.card_number)
 );
+
+USE Supermarket;
+
+-- Працівники, які продали товари з кожної категорії
+SELECT EMP.employee_id
+FROM Employee EMP
+WHERE NOT EXISTS(SELECT category_number
+                 FROM Category CTG
+                 WHERE NOT EXISTS (SELECT *
+                                   FROM Receipt
+                                            INNER JOIN Supermarket.Sale S on Receipt.receipt_id = S.receipt_id
+                                            INNER JOIN Supermarket.Store_Product SP on S.UPC = SP.UPC
+                                            INNER JOIN Supermarket.Product P on SP.product_id = P.product_id
+                                   WHERE Receipt.employee_id = EMP.employee_id AND CTG.category_number = P.category_number));
