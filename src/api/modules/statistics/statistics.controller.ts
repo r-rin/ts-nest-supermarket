@@ -22,6 +22,23 @@ export class StatisticsController {
     );
   }
 
+  @Get('total-units-sold-for-product-in-period')
+  async getTotalUnitsSoldForProductInPeriod(
+    @Query('productID') productID: string,
+    @Query('startDate') startDate: string,
+    @Query('endDate') endDate: string,
+  ) {
+    if (startDate.length > 0 && endDate.length > 0) {
+      startDate = new Date(startDate).toISOString().slice(0, 10);
+      endDate = new Date(endDate).toISOString().slice(0, 10);
+    }
+    return await this.statisticsService.getTotalUnitsSoldForProductInPeriod(
+      productID,
+      startDate,
+      endDate,
+    );
+  }
+
   @Get('the-amount-of-goods-of-each-category-in-a-specific-check')
   async getTotalAmountOfGoodsInEachCategoryInASpecificCheck(
     @Query('receiptNum') receiptNum: string,

@@ -47,6 +47,25 @@ export class StatisticsService {
     return queryResult[0].total_amount_of_products;
   }
 
+  async getTotalUnitsSoldForProductInPeriod(
+    productID: string,
+    startDate: string,
+    endDate: string,
+  ) {
+    let query = `
+        SELECT SUM(Sale.products_amount) AS total_units_sold
+        FROM ((Sale
+            INNER JOIN Receipt ON Receipt.receipt_id = Sale.receipt_id)
+            INNER JOIN Store_Product ON Sale.UPC = Store_Product.UPC)
+        WHERE Store_Product.product_id = '${productID}'`;
+    if (startDate.length > 0 && endDate.length > 0) {
+      query += `WHERE Receipt.print_date >= DATE('${startDate}')`;
+      query += `AND Receipt.print_date < DATE_ADD(DATE('${endDate}'), INTERVAL 1 DAY) - INTERVAL 1 SECOND`;
+    }
+    const queryResult = await this.databaseService.query(query);
+    return queryResult;
+  }
+
   async getTotalAmountOfGoodsInEachCategory(receiptNumber: string) {
     const query = `
       SELECT
@@ -100,6 +119,7 @@ GROUP BY
             LEFT JOIN Sale ON Receipt.receipt_id = Sale.receipt_id)
             LEFT JOIN Store_Product ON Sale.UPC = Store_Product.UPC)
             LEFT JOIN Product ON Store_Product.product_id = Product.product_id)
+        WHERE Employee.employee_role = 0
         GROUP BY
             Employee.employee_id,
             Employee.employee_surname,
