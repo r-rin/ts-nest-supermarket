@@ -6,6 +6,7 @@ function init() {
   handleSearchButtonSearchSumCertainCashier();
   handleSearchButtonGoodsOfEachCategoryInReceipt();
   handleSearchButtonGetTotalSalesPerCategoryForPeriod();
+  handleSearchButtonGetSalesCountPerItemPerEmployee();
 }
 
 function handleSearchButtonSearchSumCertainCashier() {
@@ -140,6 +141,40 @@ function renderTableTotalSalesPerCategoryForPeriod(data) {
     rowColumns[1].innerText = obj.category_name;
     rowColumns[2].innerText = obj.TotalSales;
 
+    tableBody.appendChild(rowClone);
+  });
+}
+
+function handleSearchButtonGetSalesCountPerItemPerEmployee(){
+  fetch('api/statistics/sales-count-per-item-per-employee')
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      renderTableTotalSalesPerCategoryForPeriod(data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+}
+
+function renderTableTotalSalesPerCategoryForPeriod(data) {
+  let tableBody = document.getElementById('bodySalesPerCategoryForPeriod');
+  const rowTemplate = document.createElement('tr');
+  for (let i = 0; i < 6; i++) {
+    const td = document.createElement('td');
+    rowTemplate.appendChild(td);
+  }
+  tableBody.innerHTML = '';
+  let counter = 0;
+  data.forEach((obj) => {
+    let rowClone = rowTemplate.cloneNode(true);
+    let rowColumns = rowClone.querySelectorAll('td');
+    rowColumns[0].innerText = 1 + counter++;
+    rowColumns[1].innerText = obj.employee_id;
+    rowColumns[2].innerText = obj.employee_surname;
+    rowColumns[3].innerText = obj.employee_name;
+    rowColumns[4].innerText = obj.product_name;
+    rowColumns[5].innerText = obj.TotalSalesCount;
     tableBody.appendChild(rowClone);
   });
 }

@@ -41,4 +41,9 @@ export class StatisticsController {
       endDate,
     );
   }
+
+  @Get('sales-count-per-item-per-employee')
+  async getSalesCountPerItemPerEmployee() {
+    return await this.statisticsService.getSalesCountPerItemPerEmployee();
+  }
 }

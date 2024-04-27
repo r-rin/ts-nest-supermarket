@@ -86,4 +86,29 @@ GROUP BY
     const queryResult = await this.databaseService.query(query);
     return queryResult;
   }
+
+  async getSalesCountPerItemPerEmployee() {
+    const query = `
+        SELECT
+            Employee.employee_id,
+            Employee.employee_surname,
+            Employee.employee_name,
+            Product.product_name,
+            COUNT(Sale.receipt_id) AS TotalSalesCount
+        FROM ((((Employee
+            LEFT JOIN Receipt ON Employee.employee_id = Receipt.employee_id)
+            LEFT JOIN Sale ON Receipt.receipt_id = Sale.receipt_id)
+            LEFT JOIN Store_Product ON Sale.UPC = Store_Product.UPC)
+            LEFT JOIN Product ON Store_Product.product_id = Product.product_id)
+        GROUP BY
+            Employee.employee_id,
+            Employee.employee_surname,
+            Employee.employee_name,
+            Product.product_name
+        ORDER BY
+            Employee.employee_surname, Product.product_name;
+      `;
+    const queryResult = await this.databaseService.query(query);
+    return queryResult;
+  }
 }
