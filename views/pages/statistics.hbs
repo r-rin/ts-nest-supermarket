@@ -271,121 +271,32 @@
     </section>
 
     <section class="content-section p-3 my-2 mt-4">
-      <form id="CustomersDidntBuyCertainProduct">
-
         <div class="row mb-3">
           <div class="col">
-            <h4 style="color: #5b00ff">Клієнти, які не здійснили жодних покупок певного предмету</h4>
+            <h4 style="color: #5b00ff">Працівники, які продали товари з кожної категорії</h4>
           </div>
         </div>
-
-        <div class="row mb-3">
-          <div class="col-3">
-            <label for="productNameId" class="form-label text-center">Предмет</label>
-            <select class="form-select" id="productNameId" name="productNameId" required>
-              <option value="all">Усі</option>
-              {{#each productsArr}}
-                <option value="{{this.product_name}}">{{this.product_name}} ({{this.product_name}})</option>
-              {{/each}}
-            </select>
-
-          </div>
-        </div>
-
-        <div class="row mt-4 mb-4">
-          <div>
-            <button type="submit" class="btn btn-primary w-100">
-              Пошук
-            </button>
-          </div>
-        </div>
-
-      </form>
 
       <div class="table-container">
         <table class="m-0 table table-striped table-hover table-bordered" id="data-table">
           <thead>
           <tr>
             <th>#</th>
-            <th>Номер картки клієнта</th>
+            <th>ID робітника</th>
             <th>Прізвище</th>
             <th>Ім'я</th>
-            <th>Номер телефону</th>
           </tr>
           </thead>
 
-          <tbody class="table-group-divider">
+          <tbody class="table-group-divider" id="employeesWhoSoldSuppliesFromEveryCategory">
           <tr>
-            <td colspan="5">{{> partials/loading}}</td>
+            <td colspan="4">{{> partials/loading}}</td>
           </tr>
           <tr>
-            <td colspan="5">{{> partials/loading}}</td>
+            <td colspan="4">{{> partials/loading}}</td>
           </tr>
           <tr>
-            <td colspan="5">{{> partials/loading}}</td>
-          </tr>
-          </tbody>
-
-        </table>
-      </div>
-    </section>
-
-    <section class="content-section p-3 my-2 mt-4">
-      <form id="productsNotSold">
-
-        <div class="row mb-3">
-          <div class="col">
-            <h4 style="color: #5b00ff">Знайти предмети, які не були продані протягом певного періоду часу</h4>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <div class="col-1 pt-4 d-flex align-items-center justify-content-start">
-            <strong>Період:</strong>
-          </div>
-
-          <div class="col-3">
-            <label for="dateStart" class="form-label">Дата початку</label>
-            <input type="date" id="dateStart" name="date_start" class="form-control">
-          </div>
-
-          <div class="col-3">
-            <label for="dateEnd" class="form-label">Дата кінця</label>
-            <input type="date" id="dateEnd" name="date_end" class="form-control">
-          </div>
-
-        </div>
-
-        <div class="row mt-4 mb-4">
-          <div>
-            <button type="submit" class="btn btn-primary w-100">
-              Пошук
-            </button>
-          </div>
-        </div>
-
-      </form>
-
-      <div class="table-container">
-        <table class="m-0 table table-striped table-hover table-bordered" id="data-table">
-          <thead>
-          <tr>
-            <th>#</th>
-            <th>Назва предмету</th>
-            <th>Номер категорії</th>
-            <th>Назва категорії</th>
-          </tr>
-          </thead>
-
-          <tbody class="table-group-divider">
-          <tr>
-            <td colspan="5">{{> partials/loading}}</td>
-          </tr>
-          <tr>
-            <td colspan="5">{{> partials/loading}}</td>
-          </tr>
-          <tr>
-            <td colspan="5">{{> partials/loading}}</td>
+            <td colspan="4">{{> partials/loading}}</td>
           </tr>
           </tbody>
 
@@ -397,7 +308,7 @@
 
       <div class="row mb-3">
         <div class="col">
-          <h4 style="color: #5b00ff">Клієнти, які здійснили покупки у всіх категоріях товарів</h4>
+          <h4 style="color: #5b00ff">Усіх працівники, які продали усі види предметів</h4>
         </div>
       </div>
 
@@ -406,22 +317,56 @@
           <thead>
           <tr>
             <th>#</th>
-            <th>Номер картки клієнта</th>
+            <th>ID робітника</th>
             <th>Прізвище</th>
             <th>Ім'я</th>
-            <th>Номер телефону</th>
           </tr>
           </thead>
 
-          <tbody class="table-group-divider">
+          <tbody class="table-group-divider" id="allEmployeesWhoSoldAllProducts">
           <tr>
-            <td colspan="5">{{> partials/loading}}</td>
+            <td colspan="4">{{> partials/loading}}</td>
           </tr>
           <tr>
-            <td colspan="5">{{> partials/loading}}</td>
+            <td colspan="4">{{> partials/loading}}</td>
           </tr>
           <tr>
-            <td colspan="5">{{> partials/loading}}</td>
+            <td colspan="4">{{> partials/loading}}</td>
+          </tr>
+          </tbody>
+
+        </table>
+      </div>
+    </section>
+
+    <section class="content-section p-3 my-2 mt-4">
+
+      <div class="row mb-3">
+        <div class="col">
+          <h4 style="color: #5b00ff">Працівники, які обслугували усіх клієнтів</h4>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table class="m-0 table table-striped table-hover table-bordered" id="data-table">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>ID робітника</th>
+            <th>Прізвище</th>
+            <th>Ім'я</th>
+          </tr>
+          </thead>
+
+          <tbody class="table-group-divider" id="bodyEmployeesSoldToEveryClient">
+          <tr>
+            <td colspan="4">{{> partials/loading}}</td>
+          </tr>
+          <tr>
+            <td colspan="4">{{> partials/loading}}</td>
+          </tr>
+          <tr>
+            <td colspan="4">{{> partials/loading}}</td>
           </tr>
           </tbody>
 

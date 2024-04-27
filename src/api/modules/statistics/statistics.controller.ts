@@ -63,4 +63,19 @@ export class StatisticsController {
   async getSalesCountPerItemPerEmployee() {
     return await this.statisticsService.getSalesCountPerItemPerEmployee();
   }
+
+  @Get('employees-sold-to-every-client')
+  async getEmployeesSoldToEveryClient() {
+    return await this.statisticsService.getEmployeesSoldToEveryClient();
+  }
+
+  @Get('employees-sold-every-product')
+  async getAllEmployeesWhoSoldAllProducts() {
+    return await this.statisticsService.getAllEmployeesWhoSoldAllProducts();
+  }
+
+  @Get('employees-sold-supply-from-every-category')
+  async getEmployeesWhoSoldSuppliesFromEveryCategory() {
+    return await this.statisticsService.getEmployeesWhoSoldSuppliesFromEveryCategory();
+  }
 }

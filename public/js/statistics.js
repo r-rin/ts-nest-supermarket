@@ -8,7 +8,106 @@ function init() {
   handleSearchButtonGoodsOfEachCategoryInReceipt();
   handleSearchButtonGetTotalSalesPerCategoryForPeriod();
   getSalesCountPerItemPerEmployee();
+  getEmployeesSoldToEveryClient();
+  getAllEmployeesWhoSoldAllProducts();
+  getEmployeesWhoSoldSuppliesFromEveryCategory();
+}
 
+function renderTableEmployeesWhoSoldSuppliesFromEveryCategory(data) {
+  let tableBody = document.getElementById('employeesWhoSoldSuppliesFromEveryCategory');
+  const rowTemplate = document.createElement('tr');
+  for (let i = 0; i < 4; i++) {
+    const td = document.createElement('td');
+    rowTemplate.appendChild(td);
+  }
+  tableBody.innerHTML = '';
+  let counter = 0;
+  data.forEach((receipt) => {
+    let rowClone = rowTemplate.cloneNode(true);
+    let rowColumns = rowClone.querySelectorAll('td');
+    rowColumns[0].innerText = 1 + counter++;
+    rowColumns[1].innerText = receipt.employee_id;
+    rowColumns[2].innerText = receipt.employee_surname;
+    rowColumns[3].innerText = receipt.employee_name;
+
+    tableBody.appendChild(rowClone);
+  });
+}
+
+function getEmployeesWhoSoldSuppliesFromEveryCategory() {
+  fetch('api/statistics/employees-sold-supply-from-every-category')
+    .then((response) => response.json())
+    .then((data) => {
+      renderTableEmployeesWhoSoldSuppliesFromEveryCategory(data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+}
+
+function renderTableAllEmployeesWhoSoldAllProducts(data) {
+  let tableBody = document.getElementById('allEmployeesWhoSoldAllProducts');
+  const rowTemplate = document.createElement('tr');
+  for (let i = 0; i < 4; i++) {
+    const td = document.createElement('td');
+    rowTemplate.appendChild(td);
+  }
+  tableBody.innerHTML = '';
+  let counter = 0;
+  data.forEach((receipt) => {
+    let rowClone = rowTemplate.cloneNode(true);
+    let rowColumns = rowClone.querySelectorAll('td');
+    rowColumns[0].innerText = 1 + counter++;
+    rowColumns[1].innerText = receipt.employee_id;
+    rowColumns[2].innerText = receipt.employee_surname;
+    rowColumns[3].innerText = receipt.employee_name;
+
+    tableBody.appendChild(rowClone);
+  });
+}
+
+function getAllEmployeesWhoSoldAllProducts() {
+  fetch('api/statistics/employees-sold-every-product')
+    .then((response) => response.json())
+    .then((data) => {
+      renderTableAllEmployeesWhoSoldAllProducts(data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+}
+
+
+function getEmployeesSoldToEveryClient() {
+  fetch('api/statistics/employees-sold-to-every-client')
+    .then((response) => response.json())
+    .then((data) => {
+      renderTableEmployeesSoldToEveryClient(data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+}
+
+function renderTableEmployeesSoldToEveryClient(data) {
+  let tableBody = document.getElementById('bodyEmployeesSoldToEveryClient');
+  const rowTemplate = document.createElement('tr');
+  for (let i = 0; i < 4; i++) {
+    const td = document.createElement('td');
+    rowTemplate.appendChild(td);
+  }
+  tableBody.innerHTML = '';
+  let counter = 0;
+  data.forEach((receipt) => {
+    let rowClone = rowTemplate.cloneNode(true);
+    let rowColumns = rowClone.querySelectorAll('td');
+    rowColumns[0].innerText = 1 + counter++;
+    rowColumns[1].innerText = receipt.employee_id;
+    rowColumns[2].innerText = receipt.employee_surname;
+    rowColumns[3].innerText = receipt.employee_name;
+
+    tableBody.appendChild(rowClone);
+  });
 }
 
 function handleSearchButtonSearchSumCertainCashier() {
