@@ -47,8 +47,8 @@
                       <li>
                         {{this}} <span class="fst-italic text-muted">({{lookup ../receipt.product_id_list @index}})</span>
                         <div class="d-flex flex-row justify-content-between">
-                          <span>x{{lookup ../receipt.sold_products_amount_list @index}} по {{lookup ../receipt.selling_price_list @index}}грн.</span>
-                          <span>{{multiply (lookup ../receipt.sold_products_amount_list @index) (lookup ../receipt.selling_price_list @index)}} грн.</span>
+                          <span>x{{lookup ../receipt.sold_products_amount_list @index}} по {{normalize (lookup ../receipt.selling_price_list @index) 2}}грн.</span>
+                          <span>{{normalize (multiply (lookup ../receipt.sold_products_amount_list @index) (lookup ../receipt.selling_price_list @index)) 2}} грн.</span>
                         </div>
                         <span class="fst-italic text-muted">(UPC: {{lookup ../receipt.UPC_list @index}})</span>
                       </li>
@@ -61,18 +61,18 @@
                 <div class="col">
                   <h5>Загальна сума:</h5>
                   <div class="d-flex flex-row justify-content-between">
-                    <span>{{products_sum}} x {{receipt.customer_percent}}%</span>
-                    <span>{{receipt.sum_total}} грн.</span>
+                    <span>{{normalize products_sum 2}} x {{receipt.customer_percent}}%</span>
+                    <span>{{normalize receipt.sum_total 2}} грн.</span>
                   </div>
                   <strong>Знижка: </strong>
-                  <span>{{receipt.customer_percent}}%</span>
+                  <span>{{normalize receipt.customer_percent 2}}%</span>
                 </div>
               </div>
 
               <div class="row mb-3">
                 <div class="col">
                   <strong>ПДВ: </strong>
-                  <span>{{#multiply vat.variable_value receipt.sum_total}}{{/multiply}} грн.</span>
+                  <span>{{normalize (multiply vat.variable_value receipt.sum_total) 2}} грн.</span>
                 </div>
               </div>
 

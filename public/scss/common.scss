@@ -63,6 +63,87 @@ aside {
   overflow: scroll;
 }
 
+div#checkoutSidebar {
+  background-color: red;
+  height: 100vh;
+  width: 350px;
+  position: fixed;
+  right: 0;
+  top: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  transition: transform 0.5s ease-out;
+  border-left: solid 2px $secondary-bg-subtle;
+
+  #checkoutHeader {
+    display: flex;
+    padding: 8px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $body-tertiary-bg;
+
+    border-bottom: solid 1px $secondary-bg-subtle;
+
+    .headerTitle {
+      padding: 5px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    button {
+      width: 45px;
+      height: 45px;
+    }
+  }
+
+  #checkoutBody {
+    height: 100%;
+    padding: 6px;
+    background-color: $body-bg;
+    overflow-y: scroll;
+
+    .checkoutItem {
+      margin-bottom: 6px;
+      padding: 8px 12px 8px 12px;
+      background-color: $body-tertiary-bg;
+      border: solid 1px $secondary-bg-subtle;
+      border-radius: 10px;
+
+      button {
+        border-radius: 5px;
+      }
+
+      .checkoutItemControls {
+        margin-top: 5px;
+        display: flex;
+
+        > span {
+          display: flex;
+          justify-content: space-evenly;
+        }
+      }
+    }
+  }
+
+  #checkoutFooter {
+    padding: 5px;
+    background-color: $body-tertiary-bg;
+    border-top: solid 1px $secondary-bg-subtle;
+
+    > div {
+      padding: 5px 0 5px 0;
+    }
+
+    #createReceipt {
+      width: 100%;
+      height: 40px;
+    }
+  }
+}
+
 @media print {
   aside{
     display: none;

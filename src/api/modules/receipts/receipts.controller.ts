@@ -1,7 +1,8 @@
-import { Controller, Delete, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
 import { ReceiptsService } from './receipts.service';
 import { Roles } from '../../auth/roles/roles.decorator';
 import { Role } from '../../auth/roles/role.enum';
+import { CreateReceiptDTO } from '../../dto/create-receipt.dto';
 
 @Controller('api/receipts')
 export class ReceiptsController {
@@ -52,5 +53,12 @@ export class ReceiptsController {
   @Roles(Role.Admin, Role.Manager)
   async deleteReceipt(@Query('id') id) {
     return await this.receiptsService.deleteReceipt(id);
+  }
+
+  @Post('create-receipt')
+  @Roles(Role.Cashier)
+  async createReceipt(@Body() createReceiptDTO: CreateReceiptDTO)
+  {
+    return await this.receiptsService.createReceipt(createReceiptDTO);
   }
 }

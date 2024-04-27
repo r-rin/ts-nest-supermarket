@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
+import { CreateReceiptDTO } from '../../dto/create-receipt.dto';
+import { SuppliesService } from '../supplies/supplies.service';
+import { ClientsService } from '../clients/clients.service';
 
 function filterQueryBuilder(
   receipt_id: string,
@@ -71,7 +74,9 @@ function filterQueryBuilder(
 
 @Injectable()
 export class ReceiptsService {
-  constructor(private databaseService: DatabaseService) {}
+  constructor(private databaseService: DatabaseService,
+              private suppliesService: SuppliesService,
+              private clientsService:ClientsService) {}
 
   async getAllReceipts(limit, page) {
     const response_data = {
@@ -214,6 +219,109 @@ export class ReceiptsService {
       success: true,
       title: 'Чек видалено',
       description: `Чек було успішно видалено`,
+    };
+  }
+
+  async createReceipt(createReceiptDTO: CreateReceiptDTO) {
+
+    let sumTotal = 0;
+
+    for (const [key, value] of Object.entries(createReceiptDTO.checkout)) {
+      let queryResult = await this.suppliesService.findByUPC(key);
+
+      if(!queryResult) {
+        return {
+          success: false,
+          title: 'Виникла помилка',
+          description: `Товар містить позиції, які не існують або були видалені: ${key}`,
+        };
+      }
+
+      if(queryResult.products_amount < value) {
+        return {
+          success: false,
+          title: 'Виникла помилка',
+          description: `Товар ${queryResult.product_name} (${queryResult.product_id}) має меншу кількість, ніж ви намагаєтесь придбати: максимум ${queryResult.products_amount}`,
+        };
+      }
+    }
+
+    try {
+      await this.databaseService.query(`
+        INSERT INTO Receipt (receipt_id, employee_id, card_number, print_date, sum_total) 
+        VALUES (
+                '${createReceiptDTO.receipt_id}',
+                '${createReceiptDTO.employee_id}',
+                '${createReceiptDTO.card_number}',
+                '${new Date().toISOString().slice(0, 10)}',
+                ${sumTotal}
+               )
+      `)
+    } catch (e) {
+      return {
+        success: false,
+        title: 'Виникла помилка',
+        description: `При створенні чеку виникла помилка`,
+      };
+    }
+
+    for (const [key, value] of Object.entries(createReceiptDTO.checkout)) {
+      let queryResult = await this.suppliesService.findByUPC(key);
+
+      try {
+        await this.databaseService.query(`
+          UPDATE Store_Product
+          SET products_amount = ${queryResult.products_amount - Number(value)}
+          WHERE UPC = '${queryResult.UPC}';
+        `)
+      } catch (e) {
+        return {
+          success: false,
+          title: 'Виникла помилка',
+          description: `При оновленні кількості продуктів виникла помилка`,
+        };
+      }
+
+      try {
+        await this.databaseService.query(`
+            INSERT INTO Sale (UPC, receipt_id, products_amount, selling_price)
+            VALUES ('${queryResult.UPC}',
+                    '${createReceiptDTO.receipt_id}',
+                    ${value},
+                    ${queryResult.selling_price});
+        `)
+      } catch (e) {
+        return {
+          success: false,
+          title: 'Виникла помилка',
+          description: `При реєстрації факту продажі виникла помилка`,
+        };
+      }
+
+      sumTotal += queryResult.selling_price * Number(value);
+    }
+
+    let client = await this.clientsService.getClientCard(createReceiptDTO.card_number);
+    sumTotal = sumTotal * ((100 - client.customer_percent) / 100.0)
+
+    try {
+      await this.databaseService.query(`
+        UPDATE Receipt
+        SET sum_total = ${sumTotal}
+        WHERE receipt_id = '${createReceiptDTO.receipt_id}';
+      `)
+    } catch (e) {
+      return {
+        success: false,
+        title: 'Виникла помилка',
+        description: `При реєстрації факту продажі виникла помилка`,
+      };
+    }
+
+    return {
+      success: true,
+      title: 'Чек створено',
+      description: `Чек було успішно створено з ID ${createReceiptDTO.receipt_id}`,
     };
   }
 }

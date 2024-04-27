@@ -237,4 +237,11 @@ export class ClientController {
       upc,
     );
   }
+
+  @Roles(Role.Cashier)
+  @Get('receipts/create-receipt')
+  @Render('add/receipt')
+  async renderCreateRecipePage(@Req() req) {
+    return await this.clientService.getCreateRecipeRendderObject(req);
+  }
 }

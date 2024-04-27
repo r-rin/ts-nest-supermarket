@@ -32,6 +32,10 @@ async function bootstrap() {
     return arg1 * arg2;
   });
 
+  hbs.registerHelper('normalize', function (arg1: any, arg2: any, options: any) {
+    return Number(arg1).toFixed(arg2);
+  });
+
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 

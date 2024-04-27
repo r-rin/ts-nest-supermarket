@@ -209,4 +209,13 @@ export class ClientsService {
       description: `До клієнта ${editClientDTO.customer_surname} ${editClientDTO.customer_name} з ID ${editClientDTO.card_number} було застосовано зміни`,
     };
   }
+
+  async getEveryClient() {
+    let queryResult = await this.databaseService.query(
+      `SELECT * 
+      FROM Customer_Card;`,
+    );
+
+    return queryResult;
+  }
 }

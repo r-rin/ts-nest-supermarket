@@ -1,0 +1,63 @@
+{{#> layout }}
+  {{#*inline "pageContent"}}
+    <section class="content-section mb-5">
+      <h1 class="text-center">Формування чеку</h1>
+    </section>
+
+    <section class="d-flex justify-content-center flex-column align-items-center h-75">
+      <section class="content-section p-3 my-2" style="width: 500px;">
+
+        <form id="createReceipt">
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="UPC" class="form-label text-center">ID Чеку</label>
+              <span style="color: red">*</span>
+              <input type="text" class="form-control text-center" placeholder="Наприклад: RECI567890" id="receipt_id"
+                     name="receipt_id"  minlength="10" maxlength="10" required>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <label for="card_number" class="form-label text-center">Картка клієнта</label>
+              <span style="color: red">*</span>
+              <select class="form-select text-center" id="card_number" name="card_number" required>
+                <option value="" disabled selected>Оберіть карту клієнта</option>
+                {{#each customers}}
+                  <option value="{{this.card_number}}">{{this.customer_surname}} {{this.customer_name}} ({{this.card_number}}): {{this.customer_percent}}%</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="btn-group w-100" role="group" aria-label="Actions">
+              <button type="submit" class="btn btn-primary w-50">
+                Додати товар
+              </button>
+            </div>
+          </div>
+
+          <input class="d-none" type="text" name="employee_id" value="{{currentUser.employee_id}}" readonly required></input>
+        </form>
+
+      </section>
+    </section>
+
+    <div class="modal fade" id="infoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="infoModalTitle">...</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="infoModalBody">
+            ...
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/inline}}
+{{/layout}}

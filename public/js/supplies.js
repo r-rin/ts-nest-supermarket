@@ -74,7 +74,7 @@ async function generateInteractionButtons(UPC, isProm, UPC_prom) {
 
   if (userRole === 0) {
     htmlContent = htmlContent.concat(
-      `<button class="btn btn-outline-success"><i class="fa-solid fa-basket-shopping"></i></button>`,
+      `<button class="btn btn-outline-success" data-upc="${UPC}" onclick="addToCart(this)"><i class="fa-solid fa-basket-shopping"></i></button>`,
     );
   }
 
@@ -209,6 +209,19 @@ function openEditSupply(button) {
   newTab.focus();
 }
 
+function addToCart(button) {
+  let upc = button.getAttribute('data-upc');
+  let checkoutObj = JSON.parse(localStorage.getItem('checkout'));
+
+  if (checkoutObj[upc]) {
+    checkoutObj[upc] += 1;
+  } else {
+    checkoutObj[upc] = 1;
+  }
+
+  localStorage.setItem('checkout', JSON.stringify(checkoutObj));
+}
+
 function openCreateProm(button) {
   let upc = button.getAttribute('data-upc');
 
@@ -301,4 +314,8 @@ function handlePrintButton() {
 function formatDate(inputDate) {
   const date = new Date(inputDate);
   return date.toLocaleDateString('en-GB');
+}
+
+document.querySelector("#basketBtn").onclick = () => {
+  loadCheckoutItems().then(r => {checkoutSidebar.style.transform = "translateX(0px)";});
 }

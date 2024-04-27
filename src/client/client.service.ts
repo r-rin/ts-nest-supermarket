@@ -186,7 +186,7 @@ export class ClientService {
       for (let i = 0; i < productsAmount; i++) {
         sum += rec.sold_products_amount_list[i] * rec.selling_price_list[i];
       }
-      return sum;
+      return sum.toFixed(2);
     };
 
     return {
@@ -304,6 +304,16 @@ export class ClientService {
       currentUser: req.currentEmployee,
       cashiersArr: await this.employeesService.getAllCashiers(),
       isStatistics: true,
+    };
+  }
+
+  async getCreateRecipeRendderObject(req) {
+    return {
+      script: 'create-receipt',
+      title: 'Злагода: Формування чеку',
+      currentUser: req.currentEmployee,
+      customers: await this.clientsService.getEveryClient(),
+      isReceipts: true,
     };
   }
 }

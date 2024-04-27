@@ -1,0 +1,50 @@
+<div id="checkoutSidebar" style="transform: translateX(350px);">
+  <div id="checkoutHeader">
+    <span class="headerTitle">
+      Вміст чеку
+    </span>
+    <button class="btn-secondary" id="closeCheckout"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div id="checkoutBody">
+
+  </div>
+  <div id="checkoutFooter">
+    <div>
+      <span style="font-weight: bold;">Сума: </span><span id="checkOutSum"></span><span> грн.</span>
+    </div>
+    <div>
+      <button id="createReceipt" onclick="openCreateReceipt()">Сформувати чек</button>
+    </div>
+  </div>
+</div>
+
+<template id="checkoutItemTemplate">
+  <div class="checkoutItem" data-upc="">
+    <div>
+      <span class="checkoutProductName"></span>
+      <span class="checkoutProductId fst-italic text-muted"></span>
+    </div>
+    <div class="d-flex justify-content-between">
+      <span>
+        <span class="productQuantity"></span>
+        <span> по </span>
+        <span class="pricePerItem"></span>
+      </span>
+      <span class="checkoutMultiplyResult">
+
+      </span>
+    </div>
+    <div class="checkoutItemUPC fst-italic text-muted">
+
+    </div>
+    <div class="checkoutItemControls">
+      <span style="width: 60%">
+        <button class="increaseButton" onclick="increaseItemAmount(this)"><i class="fa-solid fa-plus"></i></button>
+        <button class="decreaseButton" onclick="decreaseItemAmount(this)"><i class="fa-solid fa-minus"></i></button>
+      </span>
+      <span style="width: 40%">
+          <button class="removeButton" onclick="removeCheckoutItem(this)"><i class="fa-solid fa-trash"></i></button>
+      </span>
+    </div>
+  </div>
+</template>
