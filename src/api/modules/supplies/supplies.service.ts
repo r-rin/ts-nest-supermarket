@@ -142,12 +142,28 @@ export class SuppliesService {
   async addNewSupply(addSupplyDTO: AddSupplyDTO): Promise<IResponseInterface> {
     const doExists = await this.findByUPC(addSupplyDTO.UPC);
 
-    if (doExists)
+    if (doExists) {
+      try {
+        await this.databaseService.query(`
+          UPDATE Store_Product
+          SET selling_price = ${addSupplyDTO.selling_price},
+              products_amount = ${doExists.products_amount + addSupplyDTO.products_amount}
+          WHERE UPC = '${addSupplyDTO.UPC}';
+        `)
+      } catch (err) {
+        return {
+          success: false,
+          title: 'Помилка при оновленні ',
+          description: `При оновленні вже існуючого товару виникла помилка`,
+        };
+      }
+
       return {
-        success: false,
-        title: 'Неможливо створити товар',
-        description: `Товар з UPC ${addSupplyDTO.UPC} вже існує`,
+        success: true,
+        title: 'Товар оновлено',
+        description: `Товар з таким UPC вже існує, тому його було оновлено`,
       };
+    }
 
     let manDate = new Date(addSupplyDTO.manufacturing_date);
     let expDate = new Date(addSupplyDTO.expiration_date);

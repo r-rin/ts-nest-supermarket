@@ -190,12 +190,12 @@ export class ReceiptsService {
     const queryResult = await this.databaseService.query(query);
     const allQueryResult = await this.databaseService.query(allQuery);
 
-    if (queryResult.length !== 0) {
-      queryResult.forEach((result) => {
-        const tempDate = new Date(result.print_date);
-        result.print_date = `${tempDate.toLocaleDateString('en-GB')} ${tempDate.toLocaleTimeString('en-GB')}`;
-      });
-    }
+    // if (queryResult.length !== 0) {
+    //   queryResult.forEach((result) => {
+    //     const tempDate = new Date(result.print_date);
+    //     result.print_date = `${tempDate.toLocaleDateString('en-GB')} ${tempDate.toLocaleTimeString('en-GB')}`;
+    //   });
+    // }
 
     return {
       rows: queryResult,
